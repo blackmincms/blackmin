@@ -1,0 +1,127 @@
+/*
+//
+//					braund - szablon kaskadowy css
+//								V.1.0
+//				  Wszelkie Prawa Zaszczeżone by Timonix
+//
+*/
+
+	.braund-namescape-img {
+		background-color: #ffffff8c;
+		padding: 10px;
+		width: fit-content;
+		float: left;
+		margin-top: 10px;
+	}
+	
+	.blackmin-text {
+		width: 100%;		
+		padding: 10px;
+		float: left;
+	}
+	
+	.blackmin-obrazek {
+		width: 100%;
+		float: left;
+	}
+	
+	.blackmin-container-obrazek {
+		width: auto;
+		float: left;
+		padding: 10px;
+		background-color: #ffffff4f;
+		margin: 10px;
+	}
+
+	.blackmin-galeria {
+		width: 100%;
+		float: left;
+	}
+	
+	.blackmin-container-galeria {
+		width: 22.5%;
+		float: left;
+		padding: 10px;
+		background-color: #ffffff4f;
+		margin: 10px;
+	}
+
+@media (max-width: 1600px) {
+	
+}
+
+@media (max-width: 1200px) {
+	.blackmin-container-galeria {
+		width: 30%;
+	}	
+}
+
+@media (max-width: 992px) {
+		.blackmin-container-galeria {
+		width: 45%;
+		padding: 7.5px;
+		margin: 7.5px;
+	}	
+}
+
+@media (max-width: 768px) {
+	.blackmin-container-galeria {
+		width: 40%;
+	}		
+}
+
+@media (max-width: 576px) {
+	.blackmin-container-galeria {
+		width: 100%;
+		padding: 5px;
+		margin: 5px;
+	}		
+}	
+
+	.blackmin-cytat {
+		width: 100%;		
+		padding: 10px 20px;
+		margin-left: 10px;
+		border-left-style: solid;
+		border-width: 2px;
+		padding-left: 15px;
+		float: left;
+	}
+	
+	.blackmin-naglowek {
+		width: 100%;		
+		padding: 10px;
+		font-size: 24px;
+		float: left;
+	}
+	
+	.blackmin-plik {
+		width: 100%;
+		padding: 10px;
+		margin: 10px 15px;
+		float: left;
+	}
+
+	.blackmin-button-plik {
+		width: 100%;
+	}
+
+	.blackmin-kod {
+		width: 100%;		
+		padding: 10px;
+		float: left;
+	}
+
+	.blackmin-wlasny-kod {
+		width: 100%;		
+		padding: 10px;
+		float: left;
+	}
+	
+	.blackmin-kod-home {
+		max-height: 250px;
+		box-shadow: inset 0px -20px 10px -25px black;
+		margin-bottom: 10px;
+		float: left;
+		overflow: hidden;
+	}
