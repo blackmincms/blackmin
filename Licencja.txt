@@ -1,0 +1,24 @@
+/*
+*
+*	U¿ywasz oprogramowania cms stworzonego przez Timonix'a na oficialnej dystrybucji z strony https://blackmin.timonix.pl/
+*
+* 	wersja cms: V.1.0
+*									nowa licencja "Shared Source"
+*/
+
+wersja: v.1.0
+nazwa cms: Black min
+twórca cms: Timonix
+strona www: https://timonix.pl/
+strona cms'a: https://blackmin.timonix.pl/
+
+Licencja na oprogramowanie cms nazwane "Black Min" stworzone przez Timonix'a opublikowana na oficialnej stronie https://blackmin.timonix.pl/ dostêpne do pobrania za darmo!
+CMS'a nie mo¿esz zmieniaæ ani ingerowaæ w kod Ÿród³owy CMS'a "Black Min", mo¿esz jedynie pobieraæ aktualizacje z oficialnej witryny black min'a 
+https://blackmin.timonix.pl/aktualizacja/ mo¿esz tworzyæ, instalowaæ i rozprzestrzeniaæ: Motywy, Pluginy, Biblioteki i skrypty bez ¿adnych przeszkód prawnych. 
+Twórcy CMS'a Black min nie ponosz¹ ¿adnej odpowiedzialnoœci za treœæi umieszczane na twojej stronie z wykorzystaniem powy¿szego CMS's "Black Min'a" do celów nie zgodnym 
+z prawem. Je¿yli owa strona naruszy regulamin mo¿e zostaæ zbanowana, zablokowana lub usuniêta. w³aœæiciel strony internetowej na której opiera siê jego strona www 
+wykorzystuj¹ca powy¿szy cms "Black Min" jest zobowi¹zana na wygenerowanie klucza Prywatnego i Publicznego na stronie https://panel.timonix.pl/blackmin/ klucz mo¿esz póŸniej 
+zmieniæ w bazie danych CMS'a "Black Min" bez ¿adnych przeszkód. Powy¿szy CMS "Black Min" nale¿¹cy do https://timonix.pl/ mo¿e u¿ywaæ ka¿da osoba do puki nie z³amie prawa 
+publikuj¹c treœæi nie zgodne z prawem lub ³ami¹cy regulamin powy¿szego CMS'a "Blac Min'a".
+
+autor zastrzega sobie prawo do zmiany i uaktualnienia licencji.

@@ -1,0 +1,1 @@
+powy¿szy cms jest w wersji V.1.0 nale¿¹cy do Timonix'a. U¿ywaj¹c CMS'a "Black Min'a" zobowi¹zujesz siê do korzystania z niego zgodnie z regulaminem
