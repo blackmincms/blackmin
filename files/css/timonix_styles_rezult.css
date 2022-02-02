@@ -65,7 +65,7 @@
 		unicode-bidi: isolate;
 	}
 	
-	*,.animation-cler*, *.animation-cler, .animation-cler, .animation-cler::before, .animation-cler::after, .animation-cler:hover {
+	*,.animation-cler *, *.animation-cler, .animation-cler, .animation-cler::before, .animation-cler::after, .animation-cler:hover {
 		-webkit-transition-property: unset; /* Safari */
 		-webkit-transition-duration: 0s; /* Safari */
 		-webkit-transition-delay: 0s; /* Safari */
@@ -11395,7 +11395,7 @@
 	}
 
 	.tsr-pr-15pro {
-		padding-right: 12.5$;
+		padding-right: 12.5%;
 	}
 	
 	.tsr-pr-20pro {
