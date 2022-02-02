@@ -1,1 +1,1 @@
-powyøszy cms jest w wersji V.1.0 naleøπcy do Timonix'a. Uøywajπc CMS'a "Black Min'a" zobowiπzujesz siÍ do korzystania z niego zgodnie z regulaminem
+powy≈ºszy cms jest w wersji V.1.0 nale≈º≈°cy do Timonix'a. U≈ºywaj≈°c CMS'a "Black Min'a" zobowi≈°zujesz siƒô do korzystania z niego zgodnie z regulaminem.
