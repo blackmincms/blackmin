@@ -9,6 +9,8 @@
 	#plik: 1.2
 */
 
+	// depraced class codes
+	// przejść na nowszy standart z class_db i wszystkimi jego funkcjami
 
 	class get_status_bm {
 

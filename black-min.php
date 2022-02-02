@@ -30,6 +30,11 @@
 	// tworzenie wyświetlanej zmienej black min cms
 	// Cobright - Wszelkie Prawa Zastrzeżone
 	$black_min = "Black Min cms";
+	$black_min_version = [
+							"bm" => "2.0",
+							"bmdb" => "2.0",
+							"bm_refferer" => "dostosować bm do nowego rozwiązania (by Timonix)"
+						];
 	
 	// tworzenie zmienej globalnej do przechowywania informacji czy ma zostać załadowany kontent strony
 	$bm_content_load = true;
@@ -63,6 +68,7 @@
 	$class_get_ustawienia_bm = new get_ustawienia_bm(); 
 	$get_ustawienia_bm = $class_get_ustawienia_bm->get_ustawienia();
 	$ustawienia_bm = $get_ustawienia_bm;
+
 	// oddawnie zmiennej ssl_bm do zmiennej sesyinej
 	$_SESSION['bm_ssl'] = $get_ustawienia_bm["bm_ssl"];	
 	// ładowanie klasy odpowiedzialnej za url w blackmin'ie
@@ -77,6 +83,9 @@
 	require_once BMPATH . BM . LADUJ ."class-pr4.php";
 	
 	$pr4 = new pr4();
+
+	// depraced codes
+	// przejść na nowszy standart z define | restrykcja do status_bm i ustawienia_bm
 
 	// tworzenie zmiennych odpowiedzialnych za konfiguracje statusu na serwerze bm
 	$bm_nick_admin_bm = $status_bm["bm_installation_admin"];
@@ -95,6 +104,8 @@
 	// zmienne sesyine przechowywujące url instalacji bm i url witryny bm
 	$_SESSION['url_instalacji_bm'] = $url_instalacji_bm ;
 	$_SESSION['url_witryny_bm'] = $url_witryny_bm ;
+
+	// usunąć ustawienia.php i status.php | restrykcja na nowszy standard
 	
 	// ładowanie ustawień black min'a dostępnych i łatwych do użycja dla programisty bm
 	require_once BMPATH . BM . LADUJ . "ustawienia.php";
@@ -102,23 +113,27 @@
 	// ładowanie statusu black min'a dostępnych i łatwych do użycja dla programisty bm
 	require_once BMPATH . BM . LADUJ . "status.php";
 
+	// stworzyć w pełni generowane menu dla programistów bm (plugin, wtyczek i tp)
+
 	// ładowanie głównego menu black mina dla dostępnych i łatwych do użycja dla programisty bm
 	require_once BMPATH . BM . LADUJ . "class-menu.php";
 	
 	// ładowanie głównego silnika ładującego posta black mina dla dostępnych i łatwych do użycja dla programisty bm
 	require_once BMPATH . BM . LADUJ . "class-post.php";
 
+	// przeglądnąć klasy class-plugin.php i  plugin-bm.php
+
 	// ładowanie głównego silnika ładującego pluginów (widget) dla dostępnych i łatwych do użycja dla programisty bm
 	require_once BMPATH . BM . LADUJ . "class-plugin.php";
 	// ładowanie pluginów (widget) wgranych w blackmin i posegrowanych dla dostępnych i łatwych do użycja dla programisty bm
 	require_once BMPATH . BM . LADUJ . "plugin-bm.php";
 
+	// dodać nowe standardy
+
 	// ładowanie klasy odpowiedzialnej za zarządzaniem za generowanie i kontrolowanie nagłówka head w szoblonie html_entity_decode	
 	require_once BMPATH . BM . LADUJ . "class-head-load.php";
 		
 		
-		// ati  aplkacyjiny Timonix'a identyfikator
-		// atpi aplikacyjiny Timonix'a protokuł identyfikacyiny
 		$admin_url_sp = [
 			"admin-panel",
 			"admin-add-post",
