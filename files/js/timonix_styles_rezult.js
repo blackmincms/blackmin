@@ -159,6 +159,46 @@
 		}
 	}
 
+	Array.prototype.remove=function(s){
+		for(i=0;i<s.length;i++){
+		if(s==this[i]) this.splice(i, 1);
+		}
+	}
+
+	// ready scrol bar animation
+	$(document).ready(function() { 
+
+		$('a[href^="#"]').on('click', function(event) {
+		
+			var target = $( $(this).attr('href') );
+		
+			if( target.length ) {
+				event.preventDefault();
+				$('html, body').animate({
+					scrollTop: target.offset().top
+				}, 1500);
+			}
+		});
+	});
+
+	function odliczanie()
+	{
+		var dzisiaj = new Date();
+		
+		var godzina = dzisiaj.getHours();
+		if (godzina<10) godzina = "0"+godzina;
+		
+		var minuta = dzisiaj.getMinutes();
+		if (minuta<10) minuta = "0"+minuta;
+		
+		var sekunda = dzisiaj.getSeconds();
+		if (sekunda<10) sekunda = "0"+sekunda;
+		
+		document.getElementById("zegar").innerHTML = godzina+":"+minuta+":"+sekunda;
+		 
+		 setTimeout("odliczanie()",1000);
+	}
+
 	/* funckja zaznaczająca zmieniony checkbox ON */
 	$(document).ready(function(){
 		$(document).on("click", ".checkbox:not(:disabled)", function(){
