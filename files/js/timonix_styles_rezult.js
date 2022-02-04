@@ -110,7 +110,7 @@
 	$(document).on("click", ".tsr-alert, .tsr-error, .tsr-warn, .tsr-warning, .tsr-success, .tsr-info", function(t){	
 		t.preventDefault();
 		
-		$(this).animate({opacity: "0"}, 1000).delay(100).hide(50, function () { $(this).remove(); });
+		$(this).not(".tsr-button").animate({opacity: "0"}, 1000).delay(100).hide(50, function () { $(this).remove(); });
 	});	
 	/* tsr-alert OFF */
 
@@ -929,7 +929,7 @@ $(function() {
 	}
 
 	// funckja ładujące strony do kontenerów i zarządzanie nimi
-	function tsr_load_page(url, p = null){
+	async function tsr_load_page(url, p = null){
 	// zmienne przechowywujące konfiguracje ładowania strony
 	var count_strona_load = 0,
 		strona_load_akcja = "ajax.php",
@@ -945,7 +945,7 @@ $(function() {
 			
 			$.ajax({
 				type:"POST",
-				url:"ajax.php",
+				url:"ajax.php" + window.location.search,
 				data:{
 					akcja:"load_page",
 					strona_laduj:url,
@@ -1247,7 +1247,7 @@ $(function() {
 				setTimeout( function(event){
 					// sprawdzanie czy checkbox = zaznaczonymi checkbox
 					// jeśli tak zaznaczanie głównego checkbox jeśli nie odznaczonie głównego checkbox
-					if($(pchec_container).find('input[type="checkbox"]:not(:disabled)'+chec).length == $(pchec_container).find('input[type="checkbox"]:not(:disabled)'+chec+":checked").length){
+					if($(pchec_container).find('input[type="checkbox"]:not(:disabled)'+chec).length == $(pchec_container).find('input[type="checkbox"][checked="checked"]'+ chec +':not(:disabled)').length){
 						$(pchec_container).find(pchec+':checkbox:not(:disabled)').not("[disabled]").prop('checked', true).attr("checked", true);  
 					}else{
 						$(pchec_container).find(pchec+':checkbox:not(:disabled)').not("[disabled]").prop('checked', false).attr("checked", false);  
@@ -2409,6 +2409,27 @@ $(function() {
 
 	// menu mobile OFF //
 	
+	// menu left nts ON //
+	
+	$(document).ready(function(){
+	
+		$(".menu-item-size-button").click(function(){
+			$(this).toggleClass("menu-item-size-button-rotate");
+			$(this).closest(".tsr-nav-menu-left-nts").toggleClass("tsr-nav-menu-left-nts-minimalize");
+			$(".container-right").toggleClass("tsr-navigation-right-minimalize");
+			$(".container-left").toggleClass("tsr-navigation-left-minimalize");
+			$(".tsr-stopka-navigation-right").toggleClass("tsr-navigation-right-minimalize");
+			$(".tsr-stopka-navigation-left").toggleClass("tsr-navigation-left-minimalize");
+		});
+		
+		$(".tsr-menu-left-button").click(function(){
+			$(".tsr-nav-menu-left-nts").toggleClass("tsr-nav-menu-left-nts-active");
+		});
+	
+	});
+  
+	// menu left nts OFF //
+
 	// menu left ON //
 	
 	$(document).ready(function(){
