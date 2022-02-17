@@ -69,10 +69,6 @@
 	$get_ustawienia_bm = $class_get_ustawienia_bm->get_ustawienia();
 	$ustawienia_bm = $get_ustawienia_bm;
 
-	// ładowanie pliku sfl (class)
-	require_once ("laduj/sfl.php");
-	$sfl = new sfl();
-
 	// oddawnie zmiennej ssl_bm do zmiennej sesyinej
 	$_SESSION['bm_ssl'] = $get_ustawienia_bm["bm_ssl"];	
 	// ładowanie klasy odpowiedzialnej za url w blackmin'ie
@@ -87,6 +83,11 @@
 	require_once BMPATH . BM . LADUJ ."class-pr4.php";
 	
 	$pr4 = new pr4();
+
+	// ładowanie pliku sfl (class)
+	require_once ("laduj/sfl.php");
+	$sfl = new sfl();
+	$sfl->add(BMPATH . BM . LADUJ . "ustawienia.php", 0);
 
 	// depraced codes
 	// przejść na nowszy standart z define | restrykcja do status_bm i ustawienia_bm

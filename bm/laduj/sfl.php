@@ -130,23 +130,23 @@
 		}
 
 		// funkcjia ładowania plików php
-		public function load_php($t = "lvl", $a = SORT_ASC){
+		public function load_php($a = SORT_ASC, $t = "lvl"){
 			return sfl::load ("php", $t, $a);
 		}
-		public function load_css($t = "lvl", $a = SORT_ASC){
+		public function load_css($a = SORT_ASC, $t = "lvl"){
 			return sfl::load ("css", $t, $a);
 		}
-		public function load_js($t = "lvl", $a = SORT_ASC){
+		public function load_js($a = SORT_ASC, $t = "lvl"){
 			return sfl::load ("js", $t, $a);
 		}
 
-		public function load ($array, $on, $order = SORT_ASC) {
+		public function load ($array, $order = SORT_ASC, $on = "lvl") {
 			if (!is_string(strtolower($array))){
 				$this->error = "file_path_wrong";
 				return false;
 			}else{
 				if (strtolower($array) === "php") {
-					if ($sort = sfl::array_sort($this->pliki_php, 'lvl', $order)) {
+					if ($sort = sfl::array_sort($this->pliki_php, $on, $order)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
 							require_once ($this->pliki_php[$i]['src']) ;
@@ -157,7 +157,7 @@
 						return false;
 					}
 				}elseif (strtolower($array) === "js") {
-					if ($sort = sfl::array_sort($this->pliki_js, 'lvl', $order)) {
+					if ($sort = sfl::array_sort($this->pliki_js, $on, $order)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
 							require_once ($this->pliki_js[$i]['src']) ;
@@ -168,7 +168,7 @@
 						return false;
 					}
 				}elseif (strtolower($array) === "css") {
-					if ($sort = sfl::array_sort($this->pliki_css, 'lvl', $order)) {
+					if ($sort = sfl::array_sort($this->pliki_css, $on, $order)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
 							require_once ($this->pliki_css[$i]['src']) ;
