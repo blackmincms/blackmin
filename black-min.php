@@ -57,8 +57,10 @@
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
 	$class_status_bm = new bm_status(); 
 	$bm_status = $class_status_bm->get();
+	define("BM_STATUS", $bm_status, true);
+	
 
-	var_dump($bm_status);
+	var_dump(BM_STATUS);
 	
 	// przyłączanie klasy odpiwiedzialnej za ustawienia serwera
 	require_once BMPATH . BM . LADUJ ."class-ustawienia.php"; 
@@ -66,8 +68,10 @@
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
 	$class_settings_bm = new bm_settings(); 
 	$bm_settings = $class_settings_bm->get();
+	define("BM_SETTINGS", $bm_settings, true);
+	
 
-	var_dump($bm_settings);
+	var_dump(BM_SETTINGS);
 	exit();
 
 	// oddawnie zmiennej ssl_bm do zmiennej sesyinej

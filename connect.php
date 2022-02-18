@@ -8,10 +8,10 @@
 	$db_name = "blackmin";
 
 	// nowa restrykcja define (owzględnić ją w nowej wersji)
-	define("host", "localhost", false);
-	define("db_user", "root", false);
-	define("db_password", "", false);
-	define("db_name", "blackmin", false);
+	define("HOST", "localhost", false);
+	define("DB_USER", "root", false);
+	define("DB_PASSWORD", "", false);
+	define("DB_NAME", "blackmin", false);
 	
 	
 	
@@ -20,7 +20,7 @@
 	$prefix_table = "";
 
 	// nowa restrykcja define (owzględnić ją w nowej wersji)
-	define("prefix_table", "");
+	define("PREFIX_TABLE", "");
 	
 	
 ?>

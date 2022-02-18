@@ -34,11 +34,11 @@
 				// sprawdzanie czy istnieje istnieje już zajncludowany plik konfiguracyiny
 				// jeżeli zmienna jest pusta pobieranie zmiennych z pliku
 				if( defined("host")){
-					$this->host = host;
-					$this->db_user =  db_user;
-					$this->db_password =  db_password;
-					$this->db_name =  db_name;	
-					$this->db_prefix =  prefix_table;	
+					$this->host = HOST;
+					$this->db_user =  DB_USER;
+					$this->db_password =  DB_PASSWORD;
+					$this->db_name =  DB_NAME;	
+					$this->db_prefix =  PREFIX_TABLE;	
 				}elseif( $GLOBALS['host'] != ""){
 					$this->host = $GLOBALS['host'];
 					$this->db_user =  $GLOBALS['db_user'];
