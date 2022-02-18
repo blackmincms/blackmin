@@ -57,7 +57,7 @@
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
 	$class_status_bm = new bm_status(); 
 	$bm_status = $class_status_bm->get();
-	define("BM_STATUS", $bm_status, true);
+	define("BM_STATUS", $bm_status, false);
 	
 
 	var_dump(BM_STATUS);
@@ -68,7 +68,7 @@
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
 	$class_settings_bm = new bm_settings(); 
 	$bm_settings = $class_settings_bm->get();
-	define("BM_SETTINGS", $bm_settings, true);
+	define("BM_SETTINGS", $bm_settings, false);
 	
 
 	var_dump(BM_SETTINGS);
