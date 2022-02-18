@@ -33,7 +33,7 @@
 			if($host == null){
 				// sprawdzanie czy istnieje istnieje już zajncludowany plik konfiguracyiny
 				// jeżeli zmienna jest pusta pobieranie zmiennych z pliku
-				if( defined("host")){
+				if( defined("HOST")){
 					$this->host = HOST;
 					$this->db_user =  DB_USER;
 					$this->db_password =  DB_PASSWORD;
