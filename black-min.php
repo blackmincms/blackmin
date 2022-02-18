@@ -59,9 +59,6 @@
 	$bm_status = $class_status_bm->get();
 	define("BM_STATUS", $bm_status, false);
 	
-
-	var_dump(BM_STATUS);
-	
 	// przyłączanie klasy odpiwiedzialnej za ustawienia serwera
 	require_once BMPATH . BM . LADUJ ."class-ustawienia.php"; 
 
@@ -69,13 +66,7 @@
 	$class_settings_bm = new bm_settings(); 
 	$bm_settings = $class_settings_bm->get();
 	define("BM_SETTINGS", $bm_settings, false);
-	
 
-	var_dump(BM_SETTINGS);
-	exit();
-
-	// oddawnie zmiennej ssl_bm do zmiennej sesyinej
-	$_SESSION['bm_ssl'] = $get_ustawienia_bm["bm_ssl"];	
 	// ładowanie klasy odpowiedzialnej za url w blackmin'ie
 	require_once BMPATH . BM . LADUJ ."class-get-url.php"; 
 	// wywoływanie klasy url bm
@@ -92,92 +83,51 @@
 	// ładowanie pliku sfl (class)
 	require_once (BMPATH . BM . LADUJ . "sfl.php");
 	$sfl = new sfl();
-	$sfl->add(BMPATH . BM . LADUJ . "ustawienia.php", 0);
-	$sfl->add(BMPATH . BM . LADUJ . "status.php", 0);
+	$sfl->add(BMPATH . BM . LADUJ . "class-menu.php", 0); // ładowanie głównego menu black mina dla dostępnych i łatwych do użycja dla programisty bm
+	$sfl->add(BMPATH . BM . LADUJ . "class-post.php", 0); // ładowanie głównego silnika ładującego posta black mina dla dostępnych i łatwych do użycja dla programisty bm
+	$sfl->add(BMPATH . BM . LADUJ . "class-plugin.php", 0); // ładowanie głównego silnika ładującego pluginów (widget) dla dostępnych i łatwych do użycja dla programisty bm
+	$sfl->add(BMPATH . BM . LADUJ . "plugin-bm.php", 0); // ładowanie pluginów (widget) wgranych w blackmin i posegrowanych dla dostępnych i łatwych do użycja dla programisty bm
+	$sfl->add(BMPATH . BM . LADUJ . "class-head-load.php", 0); // ładowanie klasy odpowiedzialnej za zarządzaniem za generowanie i kontrolowanie nagłówka head w szoblonie html_entity_decode	
 	$sfl->load("php");
 
-	// depraced codes
-	// przejść na nowszy standart z define | restrykcja do status_bm i ustawienia_bm
-
-	// tworzenie zmiennych odpowiedzialnych za konfiguracje statusu na serwerze bm
-	$bm_nick_admin_bm = $status_bm["bm_installation_admin"];
-	$bm_mail_admin_bm = $status_bm["bm_admin_mail"];
-	$bm_wersja_db = $status_bm["bm_version_db"];
-	$bm_aupt_public = $status_bm["bm_public_aupt"];
-	$bm_aupt_private = $status_bm["bm_private_aupt"];
-	$bm_aupt_acces = $status_bm["bm_aupt_acces"];
-	$bm_data_instalacji = $status_bm["bm_date_installation"];
-	$bm_wersja_black_min = $status_bm["bm_version"];
-	// tworzenie zmiennych odpowiedzialnych za konfiguracje statusu na serwerze bm
-	$get_settings_bm = $ustawienia_bm;
-	$settings_bm = $ustawienia_bm;
-	$url_instalacji_bm = $ustawienia_bm["bm_url_server"];
-	$url_witryny_bm = $ustawienia_bm["bm_url_site"];
-	// zmienne sesyine przechowywujące url instalacji bm i url witryny bm
-	$_SESSION['url_instalacji_bm'] = $url_instalacji_bm ;
-	$_SESSION['url_witryny_bm'] = $url_witryny_bm ;
-
-	// usunąć ustawienia.php i status.php | restrykcja na nowszy standard
-	
-	// ładowanie ustawień black min'a dostępnych i łatwych do użycja dla programisty bm
-	//require_once BMPATH . BM . LADUJ . "ustawienia.php";
-
-	// ładowanie statusu black min'a dostępnych i łatwych do użycja dla programisty bm
-	//require_once BMPATH . BM . LADUJ . "status.php";
-
+	// #note @note
 	// stworzyć w pełni generowane menu dla programistów bm (plugin, wtyczek i tp)
-
-	// ładowanie głównego menu black mina dla dostępnych i łatwych do użycja dla programisty bm
-	require_once BMPATH . BM . LADUJ . "class-menu.php";
-	
-	// ładowanie głównego silnika ładującego posta black mina dla dostępnych i łatwych do użycja dla programisty bm
-	require_once BMPATH . BM . LADUJ . "class-post.php";
-
 	// przeglądnąć klasy class-plugin.php i  plugin-bm.php
-
-	// ładowanie głównego silnika ładującego pluginów (widget) dla dostępnych i łatwych do użycja dla programisty bm
-	require_once BMPATH . BM . LADUJ . "class-plugin.php";
-	// ładowanie pluginów (widget) wgranych w blackmin i posegrowanych dla dostępnych i łatwych do użycja dla programisty bm
-	require_once BMPATH . BM . LADUJ . "plugin-bm.php";
-
 	// dodać nowe standardy
-
-	// ładowanie klasy odpowiedzialnej za zarządzaniem za generowanie i kontrolowanie nagłówka head w szoblonie html_entity_decode	
-	require_once BMPATH . BM . LADUJ . "class-head-load.php";
 		
 		
-		$admin_url_sp = [
-			"admin-panel",
-			"admin-add-post",
-			"admin-all-post",
-			"admin-kategorie-tagi-post",
-			"admin-ustawienia",
-			"admin-black-min",
-			"admin-socialmedia",
-			"admin-statystyki",
-			"admin-user-all",
-			"admin-add-user",
-			"admin-ustawienia-posta",
-			"admin-update-bm",
-			"admin-dysk",
-			"admin-add-dane",
-			"admin-komentarze",
-			"admin-motywy-bm",
-			"admin-pluginy",
-			"admin-add-plugin",
-			"admin-skrypty",
-			"admin-add-skrypt",
-			"admin-edit-skrypt",
-			"admin-moj-profil",
-			"admin-baza-danych",
-			"admin-import-baza-danych",
-			"admin-eksport-baza-danych",
-			"admin-meil",
-			"admin-ustawienia-spoleczne",
-			"admin-ustawienia-linki-i-czas",
-			"admin-ustawienia-prywatnosc",
-			"",
-		];
+	$admin_url_sp = [
+		"admin-panel",
+		"admin-add-post",
+		"admin-all-post",
+		"admin-kategorie-tagi-post",
+		"admin-ustawienia",
+		"admin-black-min",
+		"admin-socialmedia",
+		"admin-statystyki",
+		"admin-user-all",
+		"admin-add-user",
+		"admin-ustawienia-posta",
+		"admin-update-bm",
+		"admin-dysk",
+		"admin-add-dane",
+		"admin-komentarze",
+		"admin-motywy-bm",
+		"admin-pluginy",
+		"admin-add-plugin",
+		"admin-skrypty",
+		"admin-add-skrypt",
+		"admin-edit-skrypt",
+		"admin-moj-profil",
+		"admin-baza-danych",
+		"admin-import-baza-danych",
+		"admin-eksport-baza-danych",
+		"admin-meil",
+		"admin-ustawienia-spoleczne",
+		"admin-ustawienia-linki-i-czas",
+		"admin-ustawienia-prywatnosc",
+		"",
+	];
 		
 	// sprawdzenie zmienych globalnych czy istnieje 
 	// jezeli zmiena super globalna istnieje ładowanie black mina rozpocznie się!
