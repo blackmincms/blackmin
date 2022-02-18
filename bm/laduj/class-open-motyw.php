@@ -15,9 +15,7 @@
 
 	class open_motyw_bm{
 		public function open_aktywny_motyw_bm() {
-			global $ustawienia_bm;
-			$open_kmblackmin = bm_theme_active();
-			require_once BMPATH . A . MOTYWY . $open_kmblackmin . "/" ."index.php";
+			require_once BMPATH . A . MOTYWY . BM_SETTINGS["bm_theme_active"] . "/" ."index.php";
 		}
 	}
 		

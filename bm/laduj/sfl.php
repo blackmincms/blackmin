@@ -146,10 +146,12 @@
 				return false;
 			}else{
 				if (strtolower($array) === "php") {
-					if ($sort = sfl::array_sort($this->pliki_php, $on, $order)) {
+					$sort = sfl::array_sort($this->pliki_php, $on, $order);
+					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							echo '<link rel="stylesheet" href="'. $this->pliki_php[$i]['src'] .'" bm-type="async"> \n';
+							var_dump($this->pliki_php[$i]['src']);
+							require_once ($this->pliki_php[$i]['src']) ;
 						}
 						return true;
 					}else{
@@ -157,7 +159,8 @@
 						return false;
 					}
 				}elseif (strtolower($array) === "js") {
-					if ($sort = sfl::array_sort($this->pliki_js, $on, $order)) {
+					$sort = sfl::array_sort($this->pliki_js, $on, $order);
+					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
 							echo '<script src="'. $this->pliki_js[$i]['src'] .'" bm-type="async"></script> \n';
@@ -168,10 +171,11 @@
 						return false;
 					}
 				}elseif (strtolower($array) === "css") {
-					if ($sort = sfl::array_sort($this->pliki_css, $on, $order)) {
+					$sort = sfl::array_sort($this->pliki_css, $on, $order);
+					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							require_once ($this->pliki_css[$i]['src']) ;
+							echo '<link rel="stylesheet" href="'. $this->pliki_css[$i]['src'] .'" bm-type="async"> \n';
 						}
 						return true;
 					}else{
@@ -218,6 +222,10 @@
 			}
 
 			return $new_array;
+		}
+
+		public function error () {
+			echo $this->error;
 		}
 		
 	}

@@ -10,8 +10,6 @@
 //	bm_versions: V.1.5
 //
 ////////////////////// 
-	
-	global $get_ustawienia_bm;
 
 	$ur = new url_bm();
 	
@@ -20,7 +18,7 @@
 	
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $get_ustawienia_bm["bm_lang_site"]; ?>" class="">
+<html lang="<?php echo BM_SETTINGS["bm_lang_site"]; ?>" class="">
 <head>
 	
 	<?php
@@ -30,7 +28,7 @@
 		$tr->add_description("motyw braund");
 		$tr->add_keywords("motyw braund");
 		$tr->add_css("jquery_ui");
-		$tr->add_css(url_serwer_bm()."files/css/timonix_styles_rezult.css", "bm");
+		$tr->add_css(BM_SETTINGS["url_server"]."files/css/timonix_styles_rezult.css", "bm");
 		$tr->add_css("css/braund.css", NULL);
 		$tr->add_script("jquery", "bm");
 		$tr->add_script("jquery_ui", "bm");
@@ -66,15 +64,15 @@
 		<section class="overlay tsr-mt-10 tsr-mb-20">
 			<section class="col-inp-75 tsr-p-10px">
 				<section class="col-ms60">
-					<img src="<?php echo $get_ustawienia_bm["bm_banner"];?>" alt="<?php echo $get_ustawienia_bm["bm_banner"];?>">
+					<img src="<?php echo BM_SETTINGS["bm_banner"];?>" alt="<?php echo BM_SETTINGS["bm_banner"];?>">
 				</section>
 				<section class="col-ms40">
-					<img src="<?php echo $get_ustawienia_bm["bm_logo"];?>" alt="<?php echo $get_ustawienia_bm["bm_logo"];?>">
+					<img src="<?php echo BM_SETTINGS["bm_logo"];?>" alt="<?php echo BM_SETTINGS["bm_logo"];?>">
 				</section>
 			</section>
 			<section class="col-inp-25 tsr-p-10px">
 				<section class="tsr tsr-mt-20 fs-90">
-					<a href="<?php echo $get_ustawienia_bm["bm_url_server"];?>bm/logowanie.php">
+					<a href="<?php echo BM_SETTINGS["bm_url_server"];?>bm/logowanie.php">
 						Logowanie
 					</a>
 				</section>
@@ -82,7 +80,7 @@
 					<form accept-charset="UTF-8" action="" method="get" id="search_form" autocomplete="off" class="tsr-p-10px">	
 						<section class="tsr tsr-position-relative">						
 							<input type="search" name="search" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Szukaj" value="<?php if($ur->bm_url()["checked_url"] == "search_page"){echo $ur->bm_url()["path"];};?>">
-							<input type="image" name="search" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" src="<?php echo $get_ustawienia_bm["bm_url_server"];?>pliki/ikony/szukaj.png" >
+							<input type="image" name="search" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" src="<?php echo BM_SETTINGS["bm_url_server"];?>pliki/ikony/szukaj.png" >
 						</section>
 					</form>
 				</section>
@@ -109,7 +107,7 @@
 	
 	</header>
 
-	<?php if($get_ustawienia_bm["bm_top_widget"] != '"NULL"'){?><div class="top-box tsr tsr-p-10px tsr-mt-10 tsr-mb-10 background-white"><?php echo $pl->bm_top_widget($get_ustawienia_bm["bm_top_widget"]); ?></div><?php };?>
+	<?php if(BM_SETTINGS["bm_top_widget"] != '"NULL"'){?><div class="top-box tsr tsr-p-10px tsr-mt-10 tsr-mb-10 background-white"><?php echo $pl->bm_top_widget(BM_SETTINGS["bm_top_widget"]); ?></div><?php };?>
 
 	<main id="container">
 		<article class="container tsr-p-10px">
@@ -138,39 +136,39 @@
 				
 			?>	
 			</section>	
-			<div class="right-box tsr tsr-p-10px tsr-mt-10 tsr-mb-10 background-white col-inp-25 "><?php echo $pl->bm_right_widget($get_ustawienia_bm["bm_right_widget"]); ?></div>
+			<div class="right-box tsr tsr-p-10px tsr-mt-10 tsr-mb-10 background-white col-inp-25 "><?php echo $pl->bm_right_widget(BM_SETTINGS["bm_right_widget"]); ?></div>
 		</article>
 	</main>
 	
-	<?php if($get_ustawienia_bm["bm_bottom_widget"] != '"NULL"'){?><div class="bottom-box tsr tsr-p-10px tsr-mt-10 tsr-mb-10 background-white"><?php echo $pl->bm_bottom_widget($get_ustawienia_bm["bm_bottom_widget"]);?></div><?php };?>
+	<?php if(BM_SETTINGS["bm_bottom_widget"] != '"NULL"'){?><div class="bottom-box tsr tsr-p-10px tsr-mt-10 tsr-mb-10 background-white"><?php echo $pl->bm_bottom_widget(BM_SETTINGS["bm_bottom_widget"]);?></div><?php };?>
 
 	<footer class="tsr-mt-100 tsr-stopka-navigation" >
 		<footer class="tsr-stopka-navigation">
-			<?php if($get_ustawienia_bm["bm_footer_widget"] != '"NULL"'){?>
+			<?php if(BM_SETTINGS["bm_footer_widget"] != '"NULL"'){?>
 			<section class="tsr-stopka-auto">
 				<section class="tsr-stopka-text  tsr tsr-p-10px tsr-mt-10 tsr-mb-10">
-					<div class="fother-box"><?php echo $pl->bm_footer_widget($get_ustawienia_bm["bm_footer_widget"]);?></div>
+					<div class="fother-box"><?php echo $pl->bm_footer_widget(BM_SETTINGS["bm_footer_widget"]);?></div>
 				</section>
 			</section>
 			<?php };?>
 			<section class="tsr-stopka-auto">
 			<section class="tsr-stopka-text">
 				<section class="col-3 tsr-mt-10">
-					<?php echo $get_ustawienia_bm["bm_name_site"];?>
+					<?php echo BM_SETTINGS["bm_name_site"];?>
 					<section class="fs-70 tsr-mt-10">
 						Kontakt z nami znajdziesz w zakładce kontakt 
 					</section>
 					<section class="tsr tsr-mt-20 fs-150 tsr-stopka-text background-green tsr-p-10px">
-						<a href="<?php echo $get_ustawienia_bm["bm_url_server"];?>bm/logowanie.php">
+						<a href="<?php echo BM_SETTINGS["bm_url_server"];?>bm/logowanie.php">
 							Logowanie
 						</a>
 					</section>
 					<section class="tsr tsr-mt-20">
-						<form accept-charset="UTF-8" action="<?php echo $get_ustawienia_bm["bm_url_site"];?>" method="get" id="search_form" autocomplete="off" class="tsr-p-10px">	
+						<form accept-charset="UTF-8" action="<?php echo BM_SETTINGS["bm_url_site"];?>" method="get" id="search_form" autocomplete="off" class="tsr-p-10px">	
 							<section class="tsr tsr-position-relative">
 								<input type="search" name="szukaj_post" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Szukaj" value="<?php if($ur->bm_url()["checked_url"] == "search_page"){echo $ur->bm_url()["path"];};?>">
 								<section type="search" name="szukaj" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" id="search">
-									<img src="<?php echo $get_ustawienia_bm["bm_url_server"];?>pliki/ikony/szukaj.png">
+									<img src="<?php echo BM_SETTINGS["bm_url_server"];?>pliki/ikony/szukaj.png">
 								</section>
 							</section>
 						</form>

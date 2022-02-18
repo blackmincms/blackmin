@@ -88,7 +88,12 @@
 	$sfl->add(BMPATH . BM . LADUJ . "class-plugin.php", 0); // ładowanie głównego silnika ładującego pluginów (widget) dla dostępnych i łatwych do użycja dla programisty bm
 	$sfl->add(BMPATH . BM . LADUJ . "plugin-bm.php", 0); // ładowanie pluginów (widget) wgranych w blackmin i posegrowanych dla dostępnych i łatwych do użycja dla programisty bm
 	$sfl->add(BMPATH . BM . LADUJ . "class-head-load.php", 0); // ładowanie klasy odpowiedzialnej za zarządzaniem za generowanie i kontrolowanie nagłówka head w szoblonie html_entity_decode	
-	$sfl->load("php");
+	$sfl->load_php();
+	// sprawdzanie błędów pod czas ładowania plików
+	if ($sfl->error() != null) {
+		echo "Wystąpił błąd pod czas ładowanie plików rdzenia black min";
+		exit();
+	}
 
 	// #note @note
 	// stworzyć w pełni generowane menu dla programistów bm (plugin, wtyczek i tp)
