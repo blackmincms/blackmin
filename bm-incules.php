@@ -9,11 +9,9 @@
 	#plik: 1.1
 */
 
-	# ladowanie procesora bm
+	# ladowanie rdzenia bm
 
 	require_once "black-min.php";
-	
-	# wyzwalanie klasy pr4
 	
 	# ladowanie plików bm
 	# sprawdzanie czy ma zostać załadowany kontent black mina i czy nie ma błędów

@@ -149,7 +149,7 @@
 					if ($sort = sfl::array_sort($this->pliki_php, $on, $order)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							require_once ($this->pliki_php[$i]['src']) ;
+							echo '<link rel="stylesheet" href="'. $this->pliki_php[$i]['src'] .'" bm-type="async"> \n';
 						}
 						return true;
 					}else{
@@ -160,7 +160,7 @@
 					if ($sort = sfl::array_sort($this->pliki_js, $on, $order)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							require_once ($this->pliki_js[$i]['src']) ;
+							echo '<script src="'. $this->pliki_js[$i]['src'] .'" bm-type="async"></script> \n';
 						}
 						return true;
 					}else{

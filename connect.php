@@ -8,10 +8,10 @@
 	$db_name = "blackmin";
 
 	// nowa restrykcja define (owzględnić ją w nowej wersji)
-	define("host", "localhost");
-	define("db_user", "root");
-	define("db_password", "");
-	define("db_name", "blackmin");
+	define("host", "localhost", false);
+	define("db_user", "root", false);
+	define("db_password", "", false);
+	define("db_name", "blackmin", false);
 	
 	
 	

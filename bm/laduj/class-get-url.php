@@ -8,7 +8,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.2
+	#plik: 2.0
 */
 
 	# includowanie wybranego motywu przez administratora
@@ -143,7 +143,7 @@
 
 		// alias funkcji relativeToAbsolute
 		public function reltoabs($inurl, $absolute) {
-			relativeToAbsolute($inurl, $absolute);
+			url_bm::relativeToAbsolute($inurl, $absolute);
 		}
 		
 		// funkcja sprawdzająca url blackmin

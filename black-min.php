@@ -8,7 +8,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.2.1.1
+	#plik: 2.0
 */
 
 	if(!defined('BMPATH')) {
@@ -41,8 +41,6 @@
 	
 	// plik konfikuracyjny bazy danych sql
 	require_once "connect.php";
-	// pobieranie glbalnych ustawień
-	global $host, $db_user, $db_password, $db_name, $polaczenie, $rezultat;
 	
 	// ładowanie ścieżek plików
 	require_once BMPATH . BM . LADUJ ."class-db.php";
@@ -54,20 +52,23 @@
 	$db_bm->db_error(false);
 	
 	// przyłączanie klasy odpiwiedzialnej za status serwera cms
-	require_once BMPATH . BM . LADUJ ."class-get-status.php"; 
+	require_once BMPATH . BM . LADUJ ."class-status.php"; 
 	
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$class_get_status_bm = new get_status_bm(); 
-	$get_status_bm = $class_get_status_bm->get_status();
-	$status_bm = $get_status_bm;
+	$class_status_bm = new bm_status(); 
+	$bm_status = $class_status_bm->get();
+
+	var_dump($bm_status);
 	
 	// przyłączanie klasy odpiwiedzialnej za ustawienia serwera
-	require_once BMPATH . BM . LADUJ ."class-get-ustawienia.php"; 
+	require_once BMPATH . BM . LADUJ ."class-ustawienia.php"; 
 
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$class_get_ustawienia_bm = new get_ustawienia_bm(); 
-	$get_ustawienia_bm = $class_get_ustawienia_bm->get_ustawienia();
-	$ustawienia_bm = $get_ustawienia_bm;
+	$class_settings_bm = new bm_settings(); 
+	$bm_settings = $class_settings_bm->get();
+
+	var_dump($bm_settings);
+	exit();
 
 	// oddawnie zmiennej ssl_bm do zmiennej sesyinej
 	$_SESSION['bm_ssl'] = $get_ustawienia_bm["bm_ssl"];	
@@ -85,9 +86,11 @@
 	$pr4 = new pr4();
 
 	// ładowanie pliku sfl (class)
-	require_once ("laduj/sfl.php");
+	require_once (BMPATH . BM . LADUJ . "sfl.php");
 	$sfl = new sfl();
 	$sfl->add(BMPATH . BM . LADUJ . "ustawienia.php", 0);
+	$sfl->add(BMPATH . BM . LADUJ . "status.php", 0);
+	$sfl->load("php");
 
 	// depraced codes
 	// przejść na nowszy standart z define | restrykcja do status_bm i ustawienia_bm
@@ -113,10 +116,10 @@
 	// usunąć ustawienia.php i status.php | restrykcja na nowszy standard
 	
 	// ładowanie ustawień black min'a dostępnych i łatwych do użycja dla programisty bm
-	require_once BMPATH . BM . LADUJ . "ustawienia.php";
+	//require_once BMPATH . BM . LADUJ . "ustawienia.php";
 
 	// ładowanie statusu black min'a dostępnych i łatwych do użycja dla programisty bm
-	require_once BMPATH . BM . LADUJ . "status.php";
+	//require_once BMPATH . BM . LADUJ . "status.php";
 
 	// stworzyć w pełni generowane menu dla programistów bm (plugin, wtyczek i tp)
 
