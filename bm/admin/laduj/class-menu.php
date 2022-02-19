@@ -2,21 +2,18 @@
 /*
 	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
 	
-	ten plik służy do pobrania informacji o ustawionym motywie
-	
-	load kmblackmin
+	ten plik służy do zarządzania generowanym menu lewym
 	
 	Black Min cms,
 	
 	#plik: 1.0
 */
 
-	# includowanie wybranego motywu przez administratora
-
+	// zaktulizować klasę w kolejnej aktulizaji
 
 	class get_admin_menu_left_bm {
 
-	$admin_menu_left = [
+	protected $admin_menu_left = [
 		"panel",
 		"add-post",
 		"all-post",
@@ -49,7 +46,7 @@
 		"ustawienia-prywatnosc",
 	];
 
-	$admin_menu_left_sciezka = [
+	protected $admin_menu_left_sciezka = [
 		"admin-panel",
 		"admin-add-post",
 		"admin-all-post",
@@ -82,30 +79,6 @@
 		"admin-ustawienia-prywatnosc",
 	];
 	
-	$ile_laduj2 = count($admin_menu_sciezka);
-		
-		public $admin_menu_left;
-		
-		public $admin_menu_left_sciezka;
-		
-		public function get_admin_menu_left_bm() {
-			
-		for($i=0; $i<$ile_laduj; $i++){
-
-			echo $admin_menu_left[$i];
-			
-		}
-			
-		}
-		
-		public function get_admdn_menu_left_sciezka_bm() {
-			
-		for($i2=0; $i2<$ile_laduj2; $i2++){
-			
-			
-		}
-			
-		}
 	}
 		
 ?>

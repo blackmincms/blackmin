@@ -51,10 +51,10 @@
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
 							<select name="tryb" class="select" utocomplete="off">
-								<?php if($get_ustawienia_bm["bm_maintenance_mode"] == "false"){?>
+								<?php if(BM_SETTINGS["bm_maintenance_mode"] == "false"){?>
 									<option value="false">nie</option>
 									<option value="true">tak</option>
-								<?php }else if($get_ustawienia_bm["bm_maintenance_mode"] == "true"){?>
+								<?php }else if(BM_SETTINGS["bm_maintenance_mode"] == "true"){?>
 									<option value="true">tak</option>
 									<option value="false">nie</option>
 								<?php }; ?>
@@ -68,7 +68,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="text" name="tryb_tytul" class="input" placeholder="Black Min CMS" value="<?php echo $get_ustawienia_bm["bm_maintenance_mode_title"]; ?>" autocomplete="off"/>
+							<input type="text" name="tryb_tytul" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["bm_maintenance_mode_title"]; ?>" autocomplete="off"/>
 						</section>
 					</section>
 					<section class="tsr">
@@ -78,7 +78,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<textarea name="tryb_opis" rows="10" cols="80" placeholder="Wpisz Opis" autocomplete="off"><?php echo $get_ustawienia_bm["bm_maintenance_mode_description"]; ?></textarea>
+							<textarea name="tryb_opis" rows="10" cols="80" placeholder="Wpisz Opis" autocomplete="off"><?php echo BM_SETTINGS["bm_maintenance_mode_description"]; ?></textarea>
 						</section>
 					</section>
 					<section class="tsr">					
@@ -88,7 +88,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="datetime-local" name="tryb_datetime" class="input" placeholder="Black Min" value="<?php echo $get_ustawienia_bm["bm_maintenance_mode_datetime"]; ?>" autocomplete="off"/>
+							<input type="datetime-local" name="tryb_datetime" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_maintenance_mode_datetime"]; ?>" autocomplete="off"/>
 						</section>
 					</section>
 					

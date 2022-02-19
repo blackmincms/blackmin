@@ -14,7 +14,7 @@
 	
 	require_once "../laduj/class-get-ustawienia.php";
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$url_serwera_bm = $ustawienia_bm["bm_url_server"];
+	$url_serwera_bm = BM_SETTINGS["url_server"];
 	
 	// sprawdzanie danych do dodania post czy przyszły sprawdzanie poprawnośći wpsianych danych z standardem określonym przez Timoni'x
 	

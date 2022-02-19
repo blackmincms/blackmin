@@ -59,7 +59,7 @@
 		evt1.preventDefault();
 		var edit_file_theme = $('#edit_file_theme').text();
 		var save_file = '<?php echo "$src"?>';
-		var theme_active_bm = '<?php echo theme_active_bm();?>';
+		var theme_active_bm = '<?php echo BM_SETTINGS["bm_theme_active"];?>';
 		console.log(edit_file_theme);
 		$.ajax({
 			type:"POST",

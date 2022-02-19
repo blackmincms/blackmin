@@ -8,7 +8,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.0
+	#plik: 1.5
 */
 
 	// sciezki pol

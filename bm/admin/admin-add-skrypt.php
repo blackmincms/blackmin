@@ -12,6 +12,8 @@
 	// ładowanie jądra black mina
 	require_once "black-min.php";
 	
+	// depraced_file
+	// przejść na nowszy standart i zaktulizować funkcję w wersji 3.0 >
 ?>
 
 

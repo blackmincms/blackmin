@@ -58,8 +58,7 @@
 		// funkcjia aktulizująca bazę danych mysql
 		private function aktulizuj_baze_danych_black_min($sql){
 			
-			// inicowanie klasy do aktulizacji bazy danych
-			$db_bm = new db_bm;
+			global $db_bm;
 			
 			// pobieranie dancyh do tablicy po ( ; )
 			$aktulizacja_db = explode(";", $sql);
@@ -355,7 +354,7 @@
 									';							
 									
 									// przekierowanie
-									$connect = url_serwer_bm()."bm/admin/admin-aktulizacja.php?sp=aktulizacja_blackmina_nowa_wersja";
+									$connect = BM_SETTINGS["url_server"]."bm/admin/admin-aktulizacja.php?sp=aktulizacja_blackmina_nowa_wersja";
 									echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL='.$connect.'">';
 
 									

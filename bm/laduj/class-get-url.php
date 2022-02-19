@@ -248,7 +248,7 @@
 				}		
 			}elseif($c == "admin_bm"){
 				// przekierowanie do panelu BlackMin'a
-				header("Location:".BM_SETTINGS["bm_url_server"]. "bm/admin/admin-panel.php");
+				header("Location:".BM_SETTINGS["url_server"]. "bm/admin/admin-panel.php");
 				exit();
 			}elseif($c == "post_page"){
 				$t["path"] = $s[$z-1];
@@ -264,6 +264,29 @@
 			// zwracanie wyniku 
 			return $t;
 		}
+
+			// validowanie adresu url funkcja(php)
+			public function validate_url($t){
+				if(filter_var($t, FILTER_VALIDATE_URL)){
+					return true;
+				}else{
+					return false;
+				}
+			}
+			// validowanie adresu url funkcja(preg_match)
+			public function validateurl($input) {
+				return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $input);
+			}
+			
+			// sanitezowanie url a następnie validowanie
+			// czyli Najpierw usuń wszystkie niedozwolone znaki ze zmiennej $ url, a następnie sprawdź, czy jest to prawidłowy adres URL
+			public function sentize_url($t){
+				if(filter_var($t, FILTER_SANITIZE_URL)){
+					return true;
+				}else{
+					return false;
+				}
+			}
 	}
 		
 ?>

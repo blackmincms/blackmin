@@ -14,8 +14,6 @@
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
 
-	require_once "class-get-ustawienia.php";
-
 	// Tworzenie struktury logiczenej do zawansowanego wszyszukiwania w bazie danych
 
 	$kategoria_aktywny = false;
@@ -248,8 +246,8 @@ END;
 						};	
 
 						if($bm_miniaturka == "null"){
-							$bm_miniaturka = $ustawienia_bm["bm_url_server"]."pliki/banner/placeholder.jpg";
-							$sciezka2 = $ustawienia_bm["bm_url_server"]."pliki/banner/placeholder.jpg";
+							$bm_miniaturka = BM_SETTINGS["url_server"]."pliki/banner/placeholder.jpg";
+							$sciezka2 = BM_SETTINGS["url_server"]."pliki/banner/placeholder.jpg";
 						}
 						
 						if ($datetime_wgrania === $datetime_zmiany) {
@@ -263,6 +261,7 @@ END;
 						
 						$row2 = mysqli_fetch_assoc($wynik2);
 						$autor = $row2['nick'];
+						$url_serwera_bm = BM_SETTINGS["url_server"];
 
 				 if ( $i % 2 == 0 )
 				{

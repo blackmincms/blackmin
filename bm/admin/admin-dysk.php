@@ -61,7 +61,7 @@
 								<section class="tsr tsr-position-relative">
 									<input type="search" name="folder" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Folder">
 									<section type="search" name="folders" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10 load_post" id="load_post">
-										<img src="<?php echo $ustawienia_bm["bm_url_server"];?>pliki/ikony/szukaj.png">
+										<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/szukaj.png">
 									</section>
 								</section>
 							</section>
@@ -69,7 +69,7 @@
 								<section class="tsr tsr-position-relative">
 									<input type="search" name="szukaj" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Szukaj">
 									<section type="search" name="szukaj" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10 load_post" id="load_post">
-										<img src="<?php echo $ustawienia_bm["bm_url_server"];?>pliki/ikony/szukaj.png">
+										<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/szukaj.png">
 									</section>
 								</section>
 							</section>

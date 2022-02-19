@@ -108,7 +108,7 @@
 									<?php
 									
 										// rozkładanie na czyniki pierwsze struktury menu głównego for id
-										$bm_plugin = json_decode($bm_ustawienia["bm_plugin"], true);	
+										$bm_plugin = json_decode(BM_SETTINGS["bm_plugin"], true);	
 										
 										// wyświetlanie wszystkich aktywnych pluginów
 										for ($i = 0; $i < count($bm_plugin); $i++) {
@@ -132,9 +132,9 @@
 									
 									<?php
 										// sprawdzanie czy widget nie jest pusty
-										if(json_decode(top_widget_bm())  !== "NULL"){
+										if(json_decode(BM_SETTINGS["bm_top_widget"])  !== "NULL"){
 											// rozkładanie na czyniki pierwsze struktury menu głównego for id
-											$bm_plugin = json_decode(top_widget_bm(), true);	
+											$bm_plugin = json_decode(BM_SETTINGS["bm_top_widget"], true);	
 											
 											// wyświetlanie wszystkich aktywnych pluginów
 											for ($i = 0; $i < count($bm_plugin); $i++) {
@@ -156,9 +156,9 @@
 								<div class="tsr-psort-container r4 tsr-sortbox4 tsr-m0">
 									<?php
 										// sprawdzanie czy widget nie jest pusty
-										if(json_decode(left_widget_bm()) !== "NULL"){
+										if(json_decode(BM_SETTINGS["bm_left_widget"]) !== "NULL"){
 												// rozkładanie na czyniki pierwsze struktury menu głównego for id
-												$bm_plugin = json_decode(left_widget_bm(), true);	
+												$bm_plugin = json_decode(BM_SETTINGS["bm_left_widget"], true);	
 												
 												// wyświetlanie wszystkich aktywnych pluginów
 												for ($i = 0; $i < count($bm_plugin); $i++) {
@@ -179,9 +179,9 @@
 								<div class="tsr-psort-container r5 tsr-sortbox4 tsr-m0">
 									<?php
 										// sprawdzanie czy widget nie jest pusty
-										if(json_decode(right_widget_bm()) !== "NULL"){
+										if(json_decode(BM_SETTINGS["bm_right_widget"]) !== "NULL"){
 												// rozkładanie na czyniki pierwsze struktury menu głównego for id
-												$bm_plugin = json_decode(right_widget_bm(), true);	
+												$bm_plugin = json_decode(BM_SETTINGS["bm_right_widget"], true);	
 												
 												// wyświetlanie wszystkich aktywnych pluginów
 												for ($i = 0; $i < count($bm_plugin); $i++) {
@@ -202,9 +202,9 @@
 								<div class="tsr-psort-container r6 tsr-sortbox4 tsr-m0">
 									<?php
 										// sprawdzanie czy widget nie jest pusty
-										if(json_decode(bottom_widget_bm()) !== "NULL"){
+										if(json_decode(BM_SETTINGS["bm_bottom_widget"]) !== "NULL"){
 											// rozkładanie na czyniki pierwsze struktury menu głównego for id
-											$bm_plugin = json_decode(bottom_widget_bm(), true);	
+											$bm_plugin = json_decode(BM_SETTINGS["bm_bottom_widget"], true);	
 											
 											// wyświetlanie wszystkich aktywnych pluginów
 											for ($i = 0; $i < count($bm_plugin); $i++) {
@@ -225,9 +225,9 @@
 								<div class="tsr-psort-container r7 tsr-sortbox4 tsr-m0">
 									<?php
 										// sprawdzanie czy widget nie jest pusty
-										if(json_decode(footer_widget_bm()) !== "NULL"){
+										if(json_decode(BM_SETTINGS["bm_footer_widget"]) !== "NULL"){
 											// rozkładanie na czyniki pierwsze struktury menu głównego for id
-											$bm_plugin = json_decode(footer_widget_bm(), true);	
+											$bm_plugin = json_decode(BM_SETTINGS["bm_footer_widget"], true);	
 											
 											// wyświetlanie wszystkich aktywnych pluginów
 											for ($i = 0; $i < count($bm_plugin); $i++) {

@@ -56,28 +56,28 @@
 					if ($wszystko_ok == true)
 					{
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji' WHERE `bm_nazwa` = 'bm_tryb_konserwacji'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji' WHERE `bm_nazwa` = 'bm_maintenance_mode'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Tryb Konserwacji został zmieniony poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji_tytul' WHERE `bm_nazwa` = 'bm_tryb_konserwacji_tytul'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji_tytul' WHERE `bm_nazwa` = 'bm_maintenance_mode_title'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Tytuł Konserwacji został zmieniony poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji_opis' WHERE `bm_nazwa` = 'bm_tryb_konserwacji_opis'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji_opis' WHERE `bm_nazwa` = 'bm_maintenance_mode_description'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Opis Konserwacji został zmieniony poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji_datetime' WHERE `bm_nazwa` = 'bm_tryb_konserwacji_datetime'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_tryb_konserwacji_datetime' WHERE `bm_nazwa` = 'bm_maintenance_mode_datetime'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Data i czas Zakończenia Konserwacji został zmieniony poprawnie! </section>';

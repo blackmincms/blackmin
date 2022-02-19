@@ -59,21 +59,21 @@
 						//Hurra, wszystkie testy zaliczone, dodajemy gracza do bazy
 
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_domysny_format_posta' WHERE `bm_nazwa` = 'bm_domysny_format_posta'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_domysny_format_posta' WHERE `bm_nazwa` = 'bm_default_format_post'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_domysny_status_posta' WHERE `bm_nazwa` = 'bm_domysny_status_posta'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_domysny_status_posta' WHERE `bm_nazwa` = 'bm_default_status_post'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_domysne_laduj_posty' WHERE `bm_nazwa` = 'bm_domysne_laduj_posty'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_domysne_laduj_posty' WHERE `bm_nazwa` = 'bm_default_load_post'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';

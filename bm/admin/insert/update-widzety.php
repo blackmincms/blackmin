@@ -170,34 +170,34 @@
 					{
 
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_top_box_' WHERE `bm_nazwa` = 'bm_top_box'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_top_box_' WHERE `bm_nazwa` = 'bm_top_widget'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Top Widżet został zmieniony poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_left_box_' WHERE `bm_nazwa` = 'bm_left_box'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_left_box_' WHERE `bm_nazwa` = 'bm_left_widget'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Left Widżet został zmieniony poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_right_box_' WHERE `bm_nazwa` = 'bm_right_box'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_right_box_' WHERE `bm_nazwa` = 'bm_right_widget'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Right Widżet został zmieniony poprawnie! </section>';
 						};	
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_bottom_box_' WHERE `bm_nazwa` = 'bm_bottom_box'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_bottom_box_' WHERE `bm_nazwa` = 'bm_bottom_widget'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Bottom Widżet został zmieniony poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_footer_box_' WHERE `bm_nazwa` = 'bm_footer_box'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tab_footer_box_' WHERE `bm_nazwa` = 'bm_footer_widget'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Footer Widżet został zmieniony poprawnie! </section>';

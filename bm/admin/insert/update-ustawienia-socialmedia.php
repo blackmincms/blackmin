@@ -9,6 +9,9 @@
 	#plik: 1.2
 */
 				
+    // depracet_file
+	// przejść na nowszą wersję funkcji w wersji 3.0
+
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
 	

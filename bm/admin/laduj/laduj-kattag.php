@@ -169,7 +169,7 @@ echo<<<END
 							<section class="tsr">
 							</section>
 						</section>
-						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="$url_serwera_bm/pliki/img/control-img/zamknij.png" class="img" /></a>
+						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="BM_SETTINGS["url_server"]/pliki/img/control-img/zamknij.png" class="img" /></a>
 					</div>	
 					
 					<div id="ptz_$id_KT" class="tsr modal modal-auto">
@@ -205,7 +205,7 @@ echo<<<END
 								$KT_KT 
 							</section>
 						</section>
-						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="$url_serwera_bm/pliki/img/control-img/zamknij.png" class="img" /></a>
+						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="BM_SETTINGS["url_server"]/pliki/img/control-img/zamknij.png" class="img" /></a>
 					</div>	
 					
 					<div id="pte_$id_KT" class="tsr modal modal-auto">
@@ -246,7 +246,7 @@ echo<<<END
 						</section>	
 						</form>
 						<div id="KT-edit-$id_KT"></div>
-						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="$url_serwera_bm/pliki/img/control-img/zamknij.png" class="img" /></a>
+						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="BM_SETTINGS["url_server"]/pliki/img/control-img/zamknij.png" class="img" /></a>
 					</div>	
 
 					<script type="text/javascript">
@@ -371,7 +371,7 @@ echo<<<END
 							<section class="tsr">
 							</section>
 						</section>
-						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="$url_serwera_bm/pliki/img/control-img/zamknij.png" class="img" /></a>
+						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="BM_SETTINGS["url_server"]/pliki/img/control-img/zamknij.png" class="img" /></a>
 					</div>	
 					
 					<div id="ptz_$id_KT" class="tsr modal modal-auto">
@@ -407,7 +407,7 @@ echo<<<END
 								$KT_KT 
 							</section>
 						</section>
-						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="$url_serwera_bm/pliki/img/control-img/zamknij.png" class="img" /></a>
+						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="BM_SETTINGS["url_server"]/pliki/img/control-img/zamknij.png" class="img" /></a>
 					</div>	
 					
 					<div id="pte_$id_KT" class="tsr modal modal-auto">
@@ -448,7 +448,7 @@ echo<<<END
 						</section>	
 						</form>
 						<div id="KT-edit-$id_KT"></div>
-						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="$url_serwera_bm/pliki/img/control-img/zamknij.png" class="img" /></a>
+						<a href="" class="close-modal2 tsr-aufle-close " rel="modal:close"><img src="BM_SETTINGS["url_server"]/pliki/img/control-img/zamknij.png" class="img" /></a>
 					</div>	
 
 					<script type="text/javascript">

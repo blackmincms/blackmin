@@ -11,56 +11,6 @@
 
 	// ładowanie jądra black mina
 	require_once "black-min.php";
-
-	mysqli_report(MYSQLI_REPORT_STRICT);
-		
-	try 
-	{
-		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-		if ($polaczenie->connect_errno!=0)
-		{
-			throw new Exception(mysqli_connect_errno());
-		}
-		else
-		{		
-			mysqli_query($polaczenie, "SET CHARSET utf8");
-			mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");		
-				
-			$rezultat2 = "SELECT * FROM `".$prefix_table."bm_ustawienia_bm`";
-			$wynik2 = $polaczenie->query($rezultat2);
-			
-			$ile2 = mysqli_num_rows($wynik2);
-				
-				for ($i=0; $i < $ile2; $i++) {
-					$row2 = mysqli_fetch_assoc($wynik2);
-					$bm_nazwa = $row2['bm_nazwa'];
-					
-					if ($bm_nazwa == "bm_spolecznosc_opis") {
-						$bm_spolecznosc_opis = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_spolecznosc_link") {
-						$bm_spolecznosc_link = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_spolecznosc_link_info_cookies") {
-						$bm_spolecznosc_link_info_cookies = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_spolecznosc_text_akcept") {
-						$bm_spolecznosc_text_akcept = $row2['bm_wartosc'];
-					}
-					
-				}	
-					
-			$polaczenie->close();
-		}
-		
-	}
-	catch(Exception $e)
-	{
-		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o powtórzenie działań póżniej!</span>';
-	}	
 	
 ?>
 
@@ -100,7 +50,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="bm_spolecznosc_opis" class="input" placeholder="Black Min CMS" value="<?php echo $bm_spolecznosc_opis; ?>" autocomplete="off"/>
+								<input type="text" name="bm_spolecznosc_opis" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["bm_cookie_description"]; ?>" autocomplete="off"/>
 							</section>
 						</section>
 						<section class="tsr">
@@ -110,7 +60,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="bm_spolecznosc_link" class="input" placeholder="Black Min CMS" value="<?php echo $bm_spolecznosc_link; ?>" autocomplete="off"/>
+								<input type="text" name="bm_spolecznosc_link" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["bm_cookie_link"]; ?>" autocomplete="off"/>
 							</section>
 						</section>
 						<section class="tsr">					
@@ -120,7 +70,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="bm_spolecznosc_link_info_cookies" class="input" placeholder="Black Min" value="<?php echo $bm_spolecznosc_link_info_cookies; ?>" autocomplete="off"/>
+								<input type="text" name="bm_spolecznosc_link_info_cookies" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_cookie_privacy_policy_link"]; ?>" autocomplete="off"/>
 							</section>
 						</section>
 						<section class="tsr">					
@@ -130,7 +80,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="bm_spolecznosc_text_akcept" class="input" placeholder="Black Min" value="<?php echo $bm_spolecznosc_text_akcept; ?>" autocomplete="off"/>
+								<input type="text" name="bm_spolecznosc_text_akcept" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_cookie_accept"]; ?>" autocomplete="off"/>
 							</section>
 						</section>
 						

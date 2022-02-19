@@ -9,6 +9,10 @@
 	#plik: 1.1
 */
 
+	// depracet_file
+	// przeiść na nowszą wersjię pliku
+	// zaktulizować funkcję cookies
+
 	$polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
 	
 	if ($polaczenie->connect_errno!=0)

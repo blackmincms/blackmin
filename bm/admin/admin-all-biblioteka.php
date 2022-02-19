@@ -14,6 +14,8 @@
 	
 	// renderowanie strony która odpowiada za wszystkie pliki (bibliotek) na serwerze
 	
+	// depraced_file
+	// przejść na nowszy standart i zaktulizować funkcję w wersji 3.0 >
 ?>
 
 <!DOCTYPE html>

@@ -15,7 +15,7 @@
 	require_once "../../../connect.php";
 	require_once "../laduj/class-get-ustawienia.php";
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$url_serwera_bm = $ustawienia_bm["bm_url_server"];
+	$url_serwera_bm = BM_SETTINGS["url_server"];
 	
 	// sprawdzenia czy coś przyszło do pliku 
 	// usuwanie wybranych rekordów po id rekordu

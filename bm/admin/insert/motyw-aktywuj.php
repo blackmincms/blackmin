@@ -41,7 +41,7 @@
 
 				
 				if ($rezultat = $polaczenie->query(
-				sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$motyw_aktywuj' WHERE `bm_nazwa` = 'bm_motyw_aktywny'")
+				sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$motyw_aktywuj' WHERE `bm_nazwa` = 'bm_theme_active'")
 				 ))
 				{
 					echo '

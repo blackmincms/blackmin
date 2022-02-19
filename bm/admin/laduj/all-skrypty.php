@@ -11,16 +11,13 @@
 	#plik: 1.1
 */
 
+	// depracet_file
+	// zaktulizować i dodać w wersji 3.0
+
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
 	
-	require_once "class-get-ustawienia.php";
 	require_once "cut.php";
-	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$get_ustawienia_bm = new get_ustawienia_bm(); 
-	$get_ustawienia_bm->get_ustawienia();
-	$ustawienia_bm = $get_ustawienia_bm->get_ustawienia();
-	$url_serwera_bm = $ustawienia_bm["bm_wartosc"][0];
 	
 	// odbieranie od skryptu metodą post informacji na temat poszukiwanych rekordów w bacie danych
 	

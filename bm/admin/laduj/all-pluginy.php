@@ -14,10 +14,6 @@
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
 	
-	require_once "class-get-ustawienia.php";
-	require_once "class-timonix-ttk.php";
-	require_once "cut.php";
-	
 	// iniciowanie klasy token class-timonix-ttk
 	//$token_ttk = new blackmin_token_access();
 	
@@ -199,15 +195,15 @@
 		$check_img = file_exists($bm_plugin_path . $all_katolog[$i] . "/miniaturka.png");
 		
 		if ($check_img === false) {
-			$bm_miniaturka = $url_serwera_bm."/pliki/banner/placeholder.jpg";
+			$bm_miniaturka = BM_SETTINGS["url_server"]."/pliki/banner/placeholder.jpg";
 		}else{
-			$bm_miniaturka = $url_serwera_bm."a/pluginy/$all_katolog[$i]/miniaturka.png";
+			$bm_miniaturka = BM_SETTINGS["url_server"]."a/pluginy/$all_katolog[$i]/miniaturka.png";
 		}
 
 		$check_img = file_exists($bm_plugin_path . $all_katolog[$i] . "/thumbnail.png");
 		
 		if ($check_img === true) {
-			$bm_miniaturka = $url_serwera_bm."a/pluginy/$all_katolog[$i]/thumbnail.png";
+			$bm_miniaturka = BM_SETTINGS["url_server"]."a/pluginy/$all_katolog[$i]/thumbnail.png";
 		}	
 		
 		$schemat_skrypt = [

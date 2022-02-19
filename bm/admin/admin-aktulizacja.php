@@ -13,12 +13,11 @@
 	require_once "black-min.php";
 	
 	require_once "laduj/class-camparet-xray.php";
-	require_once "laduj/class-db.php";
 	require_once "laduj/class-aktulizacja.php";
 	// otwieranie nowego połączenia (iniciowanie klasy odpowiedzialenj za sprawdzanie i aktulizowanie black min'a)
 	$aupdate_blackmin = new blackmin_aktulizacja;
 	// pobieranie danych do sprawdzenia aktulizacjiach
-	$aupdate_blackmin->get_info_blackmin(url_serwer_bm(), version_bm(), version_db_bm(), private_aupt_bm());
+	$aupdate_blackmin->get_info_blackmin(BM_SETTINGS["url_server"], BM_STATUS["bm_version"], BM_STATUS["bm_version_db"], BM_STATUS["bm_aupt_private"]);
 	
 	// pobieranie informacji o danej akcji
 	if(isset($_GET['sp'])){
@@ -62,7 +61,7 @@
 						</section>
 						<section class="tsr tsr-mt-20">
 							<section class="tsr-button tsr-normal sprawdz-update-blackmin">
-								<a href="<?php echo url_serwer_bm();?>bm/admin/admin-aktulizacja.php?sp=sprawdz_update">
+								<a href="<?php echo BM_SETTINGS["url_server"];?>bm/admin/admin-aktulizacja.php?sp=sprawdz_update">
 									Sprawdź Dostępne Aktulizacje BM
 								</a>
 							</section>
@@ -75,7 +74,7 @@
 							</section>
 
 							<section class="tsr tsr-mt-10 fs-70">
-								Obecnie używasz: V.<?php echo version_bm();?>  wersji black min'a i V.<?php echo version_db_bm();?> wersji bazy danych!
+								Obecnie używasz: V.<?php echo BM_STATUS["bm_version"];?>  wersji black min'a i V.<?php echo BM_STATUS["bm_version_db"];?> wersji bazy danych!
 							</section>
 						</section>
 					</section>
@@ -93,7 +92,7 @@
 						</section>
 						<section class="tsr tsr-mt-20">
 							<section class="tsr-button tsr-normal sprawdz-update-blackmin">
-								<a href="<?php echo url_serwer_bm();?>bm/admin/admin-aktulizacja.php?sp=sprawdz_update">
+								<a href="<?php echo BM_SETTINGS["url_server"];?>bm/admin/admin-aktulizacja.php?sp=sprawdz_update">
 									Sprawdź Dostępne Aktulizacje BM
 								</a>
 							</section>
@@ -106,7 +105,7 @@
 							</section>
 
 							<section class="tsr tsr-mt-10 fs-70">
-								Obecnie używasz: V.<?php echo version_bm();?>  wersji black min'a i V.<?php echo version_db_bm();?> wersji bazy danych!
+								Obecnie używasz: V.<?php echo BM_STATUS["version_db"];?>  wersji black min'a i V.<?php echo BM_STATUS["bm_version_db"];?> wersji bazy danych!
 							</section>
 						</section>
 					</section>
@@ -120,15 +119,12 @@
 
 	<script>
 	
-	$('.sprawdz-update-blackmin').click('submit', function(){
-		var szukaj_post = $('input[name="szukaj_post"]').val();
-		location.href="<?php echo url_site_bm();?>?szukaj_post="+szukaj_post+"";
-		
-	});	
-	
-	$(document).ready(function() { 
-		console.clear()
-	});
+		$('.sprawdz-update-blackmin').click('submit', function(){
+			var szukaj_post = $('input[name="szukaj_post"]').val();
+			location.href="<?php echo BM_SETTINGS["url_site"];?>?szukaj_post="+szukaj_post+"";
+			
+		});	
+
 	</script>	
 
 </body>

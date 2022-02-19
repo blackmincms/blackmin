@@ -27,7 +27,7 @@
 					<section class="tsr menu-left">
 						<a href="admin-panel.php">
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/home.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/home.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> panel </section>
 							</section>
 						</a>
@@ -44,7 +44,7 @@
 					<section class="tsr menu-left">
 						<a <?php  if($_SESSION['flaga'] >= 25 AND $_SESSION['flaga'] <=30 OR $_SESSION['flaga'] >= 10 AND $_SESSION['flaga'] <=14 ){ ?>href="admin-add-post.php"<?php };?>>
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/post.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/post.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Dodaj Post </section>
 							</section>
 						</a>	
@@ -73,7 +73,7 @@
 					<section class="tsr menu-left">
 						<a <?php  if($_SESSION['flaga'] >= 15 AND $_SESSION['flaga'] <=30 ){ ?>	href="admin-dysk.php"<?php };?>>
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/dysk.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/dysk.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Dysk </section>
 							</section>
 						</a>	
@@ -91,7 +91,7 @@
 					<section class="tsr menu-left">
 						<a <?php  if($_SESSION['flaga'] >= 25 AND $_SESSION['flaga'] <=30 ){ ?>href="admin-all-motyw.php"<?php };?>>
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/motywy.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/motywy.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Motyw </section>
 							</section>
 						</a>	
@@ -123,7 +123,7 @@
 					<section class="tsr menu-left">
 						<a href="admin-all-plugin.php">
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/plugin.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/plugin.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Pluginy </section>
 							</section>
 						</a>	
@@ -132,7 +132,7 @@
 					<section class="tsr menu-left">
 						<a <?php  if($_SESSION['flaga'] >= 25 AND $_SESSION['flaga'] <=30 ){ ?> href="admin-all-uzytkownicy.php" <?php };?>>
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/uzytkownicy.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/uzytkownicy.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Użytkownicy </section>
 							</section>
 						</a>	
@@ -155,7 +155,7 @@
 					<section class="tsr menu-left">
 						<a href="admin-ustawienia-serwera-black-min.php">
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/ustawienia.png" class="tsr-nav-menu-img-left">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/ustawienia.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Ustawienia BM </section>
 							</section>
 						</a>	
@@ -194,7 +194,7 @@
 					<section class="tsr menu-left tsr-button-menu-left-minimalize">
 						<a >
 							<section class="menu-item">
-								<img src="<?php echo url_server_bm();?>pliki/ikony/szczalka2.png" class="tsr-nav-menu-img">
+								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/szczalka2.png" class="tsr-nav-menu-img">
 								<section class="tsr-nav-menu-size"> Zwiń menu </section>
 							</section>
 						</a>	

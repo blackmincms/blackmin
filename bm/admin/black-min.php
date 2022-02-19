@@ -8,7 +8,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.2
+	#plik: 2.0
 */	
 
 	// pobieranie ścieżki katalogu głównego
@@ -34,12 +34,8 @@
 		header('Location: ../logowanie.php');
 		exit();
 	}
-	// ładowanie klasy odpowidzialnej za wszystkie url blackmin'a
- 	require_once BMPATH  . LADUJ ."class-get-url.php";
-	// pobieranie zmuennyc globalnych
-	global $host, $db_user, $db_password, $db_name, $polaczenie, $rezultat;
 	// ładowanie ścieżek plików
-	require_once BMPATH . LADUJ ."class-db.php";
+	require_once realpath(BMPATH .  "../../" . BM . LADUJ ."class-db.php");
 	// ładowanie ścieżek plików
 	require_once BMPATH . LADUJ ."define-sciezka.php";
 	// zmienna przechowywuje konfiguracje db
@@ -47,43 +43,61 @@
 	$db_bm->db_error_developers(true);
 	$db_bm->db_error(true);
 
-	require_once BMPATH  . LADUJ ."class-get-ustawienia.php";
- 	require_once BMPATH  . LADUJ ."class-get-status.php";
-	// konwertowanie danych pobranych z bazy sql  i przypisywanie ich do łatwiejszych zmienych
-	// wersja dołączenia V.1.0
+	// przyłączanie klasy odpiwiedzialnej za status serwera cms
+	require_once realpath(BMPATH . "../../" . BM . LADUJ ."class-status.php"); 
+
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$class_get_status_bm = new get_status_bm(); 
-	$get_status_bm = $class_get_status_bm->get_status();
-	$status_bm = $get_status_bm;
+	$class_status_bm = new bm_status(); 
+	$bm_status = $class_status_bm->get();
+	define("BM_STATUS", $bm_status, false);
+
+	// przyłączanie klasy odpiwiedzialnej za ustawienia serwera
+	require_once realpath(BMPATH . "../../" . BM . LADUJ ."class-ustawienia.php"); 
+
 	// Tworzenie nowej klasy i wywołanie jej w celu pobrania ustawień Black Mina
-	$class_get_ustawienia_bm = new get_ustawienia_bm(); 
-	$get_ustawienia_bm = $class_get_ustawienia_bm->get_ustawienia();
-	$ustawienia_bm = $get_ustawienia_bm;
-	$bm_ustawienia = $ustawienia_bm;
-	// oddawnie zmiennej ssl_bm do zmiennej sesyinej
-	$_SESSION['bm_ssl'] = $get_ustawienia_bm["bm_ssl"];
+	$class_settings_bm = new bm_settings(); 
+	$bm_settings = $class_settings_bm->get();
+	define("BM_SETTINGS", $bm_settings, false);
+
+	// ładowanie klasy odpowidzialnej za wszystkie url blackmin'a
+	require_once realpath(BMPATH . "../../" . BM  . LADUJ ."class-get-url.php");
+
 	// pobieranie wartośći z paska url i udostępnianie jej innym algorytmom 
 	$get_url_bm = new url_bm();
 	$url_sprawdz = $get_url_bm->get_url_bm();
 	// sprawdzanie protokołu ssl_bm
-	$get_url_bm->check_ssl(true);
-	// ładującej klasy ładującej wszystko :D
-	require_once BMPATH  . LADUJ ."laduj.php"; 
+	$get_url_bm->check_ssl(true); 
 	// ładowanie klasy pr4
 	require_once BMPATH. LADUJ ."class-pr4.php";
 	// wyzwalanie klasy pr4
 	$pr4 = new pr4();
-	// ładowanie aktulizjącej online użytkowników na bieżąco
-	require_once BMPATH  . INSERT ."update-user-online.php"; 
+
 	// pobieranie  uprawnieiń blackmin'a
 	require_once BMPATH . "black-min-uprawnienia.php";
 
-	// przypisywanie zmiennych
-	$url_serwera_bm = $ustawienia_bm["bm_url_server"];
-	$url_witryny_bm = $ustawienia_bm["bm_url_site"];
-	$bm_nazwa_strony_bm = $ustawienia_bm["bm_name_site"];
+	// ładowanie pliku sfl (class)
+	require_once (realpath(BMPATH . "../../" . BM . LADUJ . "sfl.php"));
+	$sfl = new sfl();
+	$sfl->add_php( BMPATH . LADUJ . "ostatni-post.php", 0);
+	$sfl->add_php(realpath(BMPATH . "../../" . BM . LADUJ . "date-format.php"), 0);
+	$sfl->add_php(BMPATH . LADUJ . "text-wrap.php", 0);
+	$sfl->add_php(BMPATH . LADUJ . "cut.php", 0);
+	$sfl->add_php(BMPATH . LADUJ . "get-kategoria-tag.php", 0);
+	
+	$loadphp = $sfl->load_php();
+	// sprawdzanie błędów pod czas ładowania plików
+	if (!$loadphp) {
+		if ($sfl->error() != null) {
+			echo "Wystąpił błąd pod czas ładowanie plików rdzenia black min";
+			exit();
+		}
+	}
+
+	// ładowanie aktulizjącej online użytkowników na bieżąco
+	require_once BMPATH  . INSERT ."update-user-online.php"; 
+
 	// zmienna przechowywuje skruconą nazwę strony
-	$bm_nazwa_strony_bm_skrucona = cut($bm_nazwa_strony_bm, 28);
+	$bm_nazwa_strony_bm_skrucona = cut(BM_SETTINGS["bm_name_site"], 28);
 		
 	$admin_url_sp = [
 	"admin-panel",

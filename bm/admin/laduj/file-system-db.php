@@ -51,7 +51,7 @@
 			$u_replace = $db_bm->query2("SELECT `id`, `nick`  FROM `_prefix_bm_uzytkownicy` WHERE `id` IN (".$db_bm->super_unique($w,"bm_autor", true).")");
 			// sprawdzanie czy zwrucono błąd zapytania
 			if($u_replace === false AND $w["num_rows"] !== 0){
-				echo '<section class="tsr tsr-alert tsr-alert-error">Kod błędu - [ERROR_SQL_QUERY] -  Błąd serwera! </section>';
+				echo '<section class="tsr tsr-alert tsr-alert-error">Kod błędu - [ERROR_SQL_QUERY] -  Błąd serwera!! </section>';
 				exit();
 			}
 			// zamienianie id użytkownika na nick`
@@ -60,7 +60,7 @@
 			$col_rep = $db_bm->replace_collumn($w_copy, "bm_autor", $u_replace, "id", "nick", true);
 			// sprawdzanie czy zwrucono błąd zapytania
 			if($col_rep === false AND $w["num_rows"] !== 0){
-				echo '<section class="tsr tsr-alert tsr-alert-error">Kod błędu - [ERROR_NOT_DATA_AVALIABLE] -  Błąd serwera! </section>';
+				echo '<section class="tsr tsr-alert tsr-alert-error">Kod błędu - [ERROR_NOT_DATA_AVALIABLE] -  Błąd serwera!!! </section>';
 				exit();
 			}			
 			
@@ -102,7 +102,7 @@ END;
 					// sprawdzanie czy edytowano post
 					$bm_datetime_wgrania = ($bm_datetime_wgrania === $bm_datetime_zmiany ? $bm_datetime_wgrania : "Edytowano: \n" . $bm_datetime_zmiany);
 					// sprawdzanie czy istnieje miniaturka
-					$bm_miniaturka = ($bm_miniaturka === "null" ? $ustawienia_bm["bm_url_server"]."pliki/banner/placeholder.jpg" : $bm_miniaturka);
+					$bm_miniaturka = ($bm_miniaturka === "null" ? BM_SETTINGS["url_server"]."pliki/banner/placeholder.jpg" : $bm_miniaturka);
 					// sprawdzanie czy istnieje opis
 					$bm_opis = ($bm_opis === "" ? "Brak opisu" : $bm_opis);
 					// sprawdzanie czy istnieje folder domysny

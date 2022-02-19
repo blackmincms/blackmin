@@ -29,7 +29,7 @@
 				</select>
 			</section>
 			<section class="tsr-p-5px col-flex-1 tsr-width-min-content col-fl-50-3 col-fl-100-2">
-				<input type="number" name="ile_load" class="input" value="<?php echo $get_ustawienia_bm["bm_default_load_upload_file"]; ?>" placeholder="ile załadować?">
+				<input type="number" name="ile_load" class="input" value="<?php echo BM_SETTINGS["bm_default_load_upload_file"]; ?>" placeholder="ile załadować?">
 			</section>
 			<section class="col-ms30 tsr-p-5px col-fl-50-3 col-fl-100-2">
 				<section class="tsr tsr-position-relative">

@@ -17,7 +17,7 @@
 		require_once "../../../connect.php";
 		require_once "../laduj/class-get-ustawienia.php";
 		
-		$url_serwera_bm = $ustawienia_bm["bm_url_server"];
+		$url_serwera_bm = BM_SETTINGS["url_server"];
 		
 		// pobieranie id autora pliku
 		$autor_id = $_SESSION['id'];
@@ -31,7 +31,7 @@
 		// Podawanjie ścieżki do zapisu 
 		$target_dir = realpath("../../../")."/pliki/uploads/";
 		$target_dir2 = realpath("../../../")."/pliki/uploads/";
-		$target_dir_www = $ustawienia_bm["bm_url_server"]."pliki/uploads/";
+		$target_dir_www = BM_SETTINGS["url_server"]."pliki/uploads/";
 		
 		// sprawdzanie czy katalog z rokiem został stworzony
 		// jeżeli tak potwierdza 

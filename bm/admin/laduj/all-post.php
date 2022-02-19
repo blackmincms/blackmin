@@ -13,8 +13,6 @@
 
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
-	
-	require_once "class-get-ustawienia.php";
 
 	// Tworzenie struktury logiczenej do zawansowanego wszyszukiwania w bazie danych
 
@@ -114,6 +112,7 @@
 			
 		try 
 		{
+			global $host, $db_user, $db_password, $db_name, $prefix_table;
 			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 			if ($polaczenie->connect_errno!=0)
 			{
@@ -240,6 +239,8 @@ END;
 						}else{
 							$data_all_post = '<section class="tsr fs-100">Edytowano Post Dnia: </section>'. $datetime_zmiany_post;
 						}
+
+						$url_serwera_bm = BM_SETTINGS["url_server"];
 
 				 if ( $i % 2 == 0 )
 				{

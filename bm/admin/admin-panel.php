@@ -97,22 +97,22 @@
 						</section>		
 						<section class="tsr-ma fs-60 l-0" style=" height: 125px;overflow: hidden;">
 							<section class="fs-110">
-								Tytuł posta: <?php echo $ostatni_post_admin['tytul']; ?>
+								Tytuł posta: <?php echo LAST_POST[0]['tytul']; ?>
 							</section>
 							<section class="">
-								Post dodał: <?php echo $ostatni_post_admin['dodajacy']; ?> Dnia: <?php echo data_format($ostatni_post_admin['datetime'], 'd-m-Y H:i'); ?>
+								Post dodał: <?php echo LAST_POST[0]['dodajacy']; ?> Dnia: <?php echo data_format(LAST_POST[0]['datetime'], BM_SETTINGS["bm_date"]. " " . BM_SETTINGS["bm_time"]); ?>
 							</section>
 							<section class="fs-130">
-								Treść posta: <?php echo $ostatni_post_admin['tresc']; ?>
+								Treść posta: <?php echo LAST_POST[0]['tresc']; ?>
 							</section>
 							<section class="tsr r-0 fs-100 tsr-visable-hover">
 								<section class="tsr-fr tsr-button tsr-visable-hover-element">
-									<a href="admin-edit-post.php?edit=<?php echo $ostatni_post_admin['id']; ?>">
+									<a href="admin-edit-post.php?edit=<?php echo LAST_POST[0]['id']; ?>">
 										Edytuj post
 									</a>
 								</section>
 								<section class="tsr-fr tsr-button tsr-visable-hover-element">
-									<a href="<?php echo $get_ustawienia_bm["bm_url_site"] . $ostatni_post_admin['url']; ?>">
+									<a href="<?php echo BM_SETTINGS["url_site"] . LAST_POST[0]['url']; ?>">
 										Zobacz post
 									</a>
 								</section>

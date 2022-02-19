@@ -13,8 +13,6 @@
 
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
-	
-	require_once "class-get-ustawienia.php";
 
 	// Tworzenie struktury logiczenej do zawansowanego wszyszukiwania w bazie danych
 
@@ -153,7 +151,8 @@ END;
 						//array_push($all_id, $id_KT);
 						//echo $all_id[$i];
 						$all_id .= '"'.$id_KT.'",';
-
+						$url_serwera_bm = BM_SETTINGS["url_server"];
+ 
 				 if ( $i % 2 == 0 )
 				{
 	

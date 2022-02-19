@@ -25,9 +25,9 @@
     <meta property="og:description" content="<?php echo "Admin Panel &gt;&gt; ".$black_min; ?>">
 	<meta property="og:keywords" content="<?php echo "Admin Panel &gt;&gt; ".$black_min; ?>">
     <meta property="og:url" content="<?php echo $black_min; ?>">
-	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $url_serwera_bm . PLIKI.LOGO . "logo_bm_white_2_100_100.png"; ?>"/>               
-	<link rel="icon" type="image/png" href="<?php echo $url_serwera_bm . PLIKI.LOGO . "logo_bm_white_2_100_100.png"; ?>" />
-    <meta property="og:image" content="<?php echo $url_serwera_bm. PLIKI . LOGO ."logo_bm_white_2_100_100.png"; ?>">
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo BM_SETTINGS["url_server"] . PLIKI.LOGO . "logo_bm_white_2_100_100.png"; ?>"/>               
+	<link rel="icon" type="image/png" href="<?php echo BM_SETTINGS["url_server"] . PLIKI.LOGO . "logo_bm_white_2_100_100.png"; ?>" />
+    <meta property="og:image" content="<?php echo BM_SETTINGS["url_server"]. PLIKI . LOGO ."logo_bm_white_2_100_100.png"; ?>">
     <meta property="og:image:width" content="100">
     <meta property="og:image:height" content="100">
     <meta property="og:type" content="website">

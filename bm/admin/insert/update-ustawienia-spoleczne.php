@@ -56,28 +56,28 @@
 					if ($wszystko_ok == true)
 					{
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_opis' WHERE `bm_nazwa` = 'bm_spolecznosc_opis'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_opis' WHERE `bm_nazwa` = 'bm_cookie_description'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_link' WHERE `bm_nazwa` = 'bm_spolecznosc_link'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_link' WHERE `bm_nazwa` = 'bm_cookie_link'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_link_info_cookies' WHERE `bm_nazwa` = 'bm_spolecznosc_link_info_cookies'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_link_info_cookies' WHERE `bm_nazwa` = 'bm_cookie_privacy_policy_link'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_text_akcept' WHERE `bm_nazwa` = 'bm_spolecznosc_text_akcept'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_spolecznosc_text_akcept' WHERE `bm_nazwa` = 'bm_cookie_accept'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';

@@ -27,7 +27,7 @@
 	}
 
 	// zmienna przchowywująca dane o aktywnym motywie
-	$aktywny_motyw_bm = bm_theme_active();
+	$aktywny_motyw_bm = BM_SETTINGS["bm_theme_active"];
 	
 	// renderowanie odpowiedniego wyniku szukanychh informacji przez użytkownika
 
@@ -189,15 +189,15 @@
 		$check_img = file_exists($bm_motyw_path . $all_katolog[$i] . "/miniaturka.png");
 		
 		if ($check_img === false) {
-			$bm_miniaturka = $url_serwera_bm."/pliki/banner/placeholder.jpg";
+			$bm_miniaturka = BM_SETTINGS["url_server"]."/pliki/banner/placeholder.jpg";
 		}else{
-			$bm_miniaturka = $url_serwera_bm."a/motywy/$all_katolog[$i]/miniaturka.png";
+			$bm_miniaturka = BM_SETTINGS["url_server"]."a/motywy/$all_katolog[$i]/miniaturka.png";
 		}
 
 		$check_img = file_exists($bm_motyw_path . $all_katolog[$i] . "/thumbnail.png");
 		
 		if ($check_img === true) {
-			$bm_miniaturka = $url_serwera_bm."a/motywy/$all_katolog[$i]/thumbnail.png";
+			$bm_miniaturka = BM_SETTINGS["url_server"]."a/motywy/$all_katolog[$i]/thumbnail.png";
 		}
 
 		$schemat_motyw = [

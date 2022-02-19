@@ -10,69 +10,7 @@
 */
 
 	// ładowanie jądra black mina
-	require_once "black-min.php";
-
-	mysqli_report(MYSQLI_REPORT_STRICT);
-		
-	try 
-	{
-		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-		if ($polaczenie->connect_errno!=0)
-		{
-			throw new Exception(mysqli_connect_errno());
-		}
-		else
-		{		
-			mysqli_query($polaczenie, "SET CHARSET utf8");
-			mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");		
-				
-			$rezultat2 = "SELECT * FROM `".$prefix_table."bm_ustawienia_bm`";
-			$wynik2 = $polaczenie->query($rezultat2);
-			
-			$ile2 = mysqli_num_rows($wynik2);
-				
-				for ($i=0; $i < $ile2; $i++) {
-					$row2 = mysqli_fetch_assoc($wynik2);
-					$bm_nazwa = $row2['bm_nazwa'];
-					
-					if ($bm_nazwa == "bm_nazwa_strony") {
-						$bm_nazwa_strony = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_opis_strony") {
-						$bm_opis_strony = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_icon_ico") {
-						$bm_icon_ico = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_icon_png") {
-						$bm_icon_png = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_slowa_kluczowe") {
-						$bm_slowa_kluczowe = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_logo") {
-						$bm_logo = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_banner") {
-						$bm_banner = $row2['bm_wartosc'];
-					}
-					
-				}	
-					
-			$polaczenie->close();
-		}
-		
-	}
-	catch(Exception $e)
-	{
-		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o powtórzenie działań póżniej!</span>';
-	}	
+	require_once "black-min.php";	
 	
 ?>
 
@@ -112,7 +50,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="tytul_witryny" class="input" placeholder="Black Min CMS" value="<?php echo $bm_nazwa_strony; ?>" autocomplete="off"/>
+								<input type="text" name="tytul_witryny" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["bm_name_site"]; ?>" autocomplete="off"/>
 							</section>
 						</section>
 						<section class="tsr">
@@ -122,7 +60,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<textarea name="opis_witryny" rows="10" cols="80" placeholder="Wpisz Opis" autocomplete="off"><?php echo $bm_opis_strony; ?></textarea>
+								<textarea name="opis_witryny" rows="10" cols="80" placeholder="Wpisz Opis" autocomplete="off"><?php echo BM_SETTINGS["bm_description_site"]; ?></textarea>
 							</section>
 						</section>
 						<section class="tsr">
@@ -132,7 +70,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="slowa_kluczowe_witryny" class="input" placeholder="Black Min CMS" value="<?php echo $bm_slowa_kluczowe; ?>" autocomplete="off"/>
+								<input type="text" name="slowa_kluczowe_witryny" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["bm_keywords"]; ?>" autocomplete="off"/>
 								<label class="fs-70">Słowa kluczowe odzielone po "," przecinku.</label>
 							</section>
 						</section>
@@ -143,7 +81,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="icone_ico_witryny" class="input" placeholder="Black Min" value="<?php echo $bm_icon_ico; ?>" autocomplete="off"/>
+								<input type="text" name="icone_ico_witryny" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_icon_site"]; ?>" autocomplete="off"/>
 								<label class="fs-70">Typ pliku (.ico).</label>
 							</section>
 						</section>
@@ -154,7 +92,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="icone_witryny" class="input" placeholder="Black Min" value="<?php echo $bm_icon_png; ?>" autocomplete="off"/>
+								<input type="text" name="icone_witryny" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_icon_png_site"]; ?>" autocomplete="off"/>
 								<label class="fs-70">Typ pliku (.png, .jpg).</label>
 							</section>
 						</section>
@@ -165,7 +103,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="logo_witryny" class="input" placeholder="Black Min" value="<?php echo $bm_logo; ?>" autocomplete="off"/>
+								<input type="text" name="logo_witryny" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_logo"]; ?>" autocomplete="off"/>
 								<label class="fs-70">Typ pliku (.png, jpg, itp).</label>
 							</section>
 						</section>
@@ -176,7 +114,7 @@
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
-								<input type="text" name="banner_witryny" class="input" placeholder="Black Min" value="<?php echo $bm_banner; ?>" autocomplete="off"/>
+								<input type="text" name="banner_witryny" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_banner"]; ?>" autocomplete="off"/>
 								<label class="fs-70">Typ pliku (.png, .jpg, itp).</label>
 							</section>
 						</section>

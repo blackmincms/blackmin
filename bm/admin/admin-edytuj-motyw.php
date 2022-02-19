@@ -61,7 +61,7 @@
 						<pre class="col-ms85 tsr-p-10px fs-70" id="edit_file_theme" name="edit_file_theme" <?php if($load_plik_spr == "true"){ echo 'contenteditable="true"'; } ?>><?php
 							
 							if($load_plik_spr == "true"){
-								$lines = file("../../a/motywy/".bm_theme_active()."/".$src);
+								$lines = file("../../a/motywy/".BM_SETTINGS["bm_theme_active"]."/".$src);
 								
 								foreach ($lines as $line_num => $line) {
 									echo htmlspecialchars($line, ENT_QUOTES);
@@ -96,7 +96,7 @@
 		evt1.preventDefault();
 		var edit_file_theme = $('#edit_file_theme').text();
 		var save_file = '<?php echo "$src"?>';
-		var theme_active_bm = '<?php echo bm_theme_active();?>';
+		var theme_active_bm = '<?php echo BM_SETTINGS["bm_theme_active"];?>';
 		console.log(edit_file_theme);
 		$.ajax({
 			type:"POST",

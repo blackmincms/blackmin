@@ -85,15 +85,14 @@
 		// funkcjia do ładowania menu
 		public function load_menu(){
 			// przyłączanie danych
-			// pobieranie zmiennych globalnych
-			global $prefix_table,$db_bm,$get_ustawienia_bm;
+			global $db_bm;
 			// pobieranie wszysatkich itemów z menu
-			$q = $db_bm->query("SELECT * FROM `".$prefix_table."bm_postmeta` WHERE `bm_kontent` LIKE 'menu'");
+			$q = $db_bm->query("SELECT * FROM `|prefix|bm_postmeta` WHERE `bm_kontent` LIKE 'menu'");
 			
 			// sprawdzanie czy menu zawiera elmenty
-			if((count(json_decode($get_ustawienia_bm["bm_get_menu_structur"], true))) AND (count($q)) != 0){
+			if((count(json_decode(BM_SETTINGS["bm_menu_structur"], true))) AND (count($q)) != 0){
 				// renderowanie i zwracanie wyniku
-				return '<'. $this->rodzic_tag_menu .' class="'. $this->class_rodzic_menu .'">' . menu_bm::menu_sort($q, json_decode($get_ustawienia_bm["bm_get_menu_structur"], true)) .  '</'. $this->rodzic_tag_menu .' ">';		
+				return '<'. $this->rodzic_tag_menu .' class="'. $this->class_rodzic_menu .'">' . menu_bm::menu_sort($q, json_decode(BM_SETTINGS["bm_menu_structur"], true)) .  '</'. $this->rodzic_tag_menu .' ">';		
 			}else{
 				return null;
 			}

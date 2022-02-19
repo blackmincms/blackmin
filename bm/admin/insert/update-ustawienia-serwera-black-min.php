@@ -90,42 +90,42 @@
 					//Hurra, wszystkie testy zaliczone, dodajemy gracza do bazy
 
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$url_serwera' WHERE `bm_nazwa` = 'url_serwera'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$url_serwera' WHERE `bm_nazwa` = 'url_server'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};	
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$url_witryny' WHERE `bm_nazwa` = 'url_witryny'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$url_witryny' WHERE `bm_nazwa` = 'url_site'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$mail_witryny' WHERE `bm_nazwa` = 'bm_email_witryny'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$mail_witryny' WHERE `bm_nazwa` = 'bm_mail_site'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};	
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$ranga_witryny' WHERE `bm_nazwa` = 'bm_nowy_uzytkownik'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$ranga_witryny' WHERE `bm_nazwa` = 'bm_new_user'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$jezyk_witryny' WHERE `bm_nazwa` = 'bm_jezyk_witryny'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$jezyk_witryny' WHERE `bm_nazwa` = 'bm_lang_site'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$strefa_czasowa_witryny' WHERE `bm_nazwa` = 'bm_strefa_czasowa'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$strefa_czasowa_witryny' WHERE `bm_nazwa` = 'bm_timezone'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
@@ -146,14 +146,14 @@
 					};
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_status` SET `bm_wartosc`='$admin_witryny' WHERE `bm_nazwa` = 'bm_nick_admin_bm'")
+					sprintf("UPDATE `".$prefix_table."bm_status` SET `bm_wartosc`='$admin_witryny' WHERE `bm_nazwa` = 'bm_installation_admin'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};	
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_status` SET `bm_wartosc`='$email_admin_witryny' WHERE `bm_nazwa` = 'bm_mail_admin_bm'")
+					sprintf("UPDATE `".$prefix_table."bm_status` SET `bm_wartosc`='$email_admin_witryny' WHERE `bm_nazwa` = 'bm_admin_mail'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';

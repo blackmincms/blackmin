@@ -11,91 +11,6 @@
 
 	// ładowanie jądra black mina
 	require_once "black-min.php";
-
-	mysqli_report(MYSQLI_REPORT_STRICT);
-		
-	try 
-	{
-		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-		if ($polaczenie->connect_errno!=0)
-		{
-			throw new Exception(mysqli_connect_errno());
-		}
-		else
-		{		
-			mysqli_query($polaczenie, "SET CHARSET utf8");
-			mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");		
-
-			$rezultat = "SELECT * FROM `".$prefix_table."bm_status` WHERE `bm_nazwa` LIKE 'bm_mail_admin_bm' OR `bm_nazwa` LIKE 'bm_nick_admin_bm'";
-			$wynik = $polaczenie->query($rezultat);
-				
-				$ile = mysqli_num_rows($wynik);
-				
-				for ($i=0; $i < $ile; $i++) {
-					$row = mysqli_fetch_assoc($wynik);
-					$bm_wartosc = $row['bm_nazwa'];
-					
-					if ($bm_wartosc == "bm_nick_admin_bm") {
-						$bm_nick_admin_bm = $row['bm_wartosc'];
-					}
-					
-					if ($bm_wartosc == "bm_mail_admin_bm") {
-						$bm_mail_admin_bm = $row['bm_wartosc'];
-					}
-					
-				}
-				
-			$rezultat2 = "SELECT * FROM `".$prefix_table."bm_ustawienia_bm`";
-			$wynik2 = $polaczenie->query($rezultat2);
-			
-			$ile2 = mysqli_num_rows($wynik2);
-				
-				for ($i=0; $i < $ile2; $i++) {
-					$row2 = mysqli_fetch_assoc($wynik2);
-					$bm_nazwa = $row2['bm_nazwa'];
-					
-					if ($bm_nazwa == "url_serwera") {
-						$url_serwera = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "url_witryny") {
-						$url_witryny = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_email_witryny") {
-						$bm_email_witryny = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_nowy_uzytkownik") {
-						$bm_nowy_uzytkownik = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_jezyk_witryny") {
-						$bm_jezyk_witryny = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_strefa_czasowa") {
-						$bm_strefa_czasowa = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_date") {
-						$bm_date = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_time") {
-						$bm_time = $row2['bm_wartosc'];
-					}
-					
-				}	
-					
-			$polaczenie->close();
-		}
-		
-	}
-	catch(Exception $e)
-	{
-		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o powtórzenie działań póżniej!</span>';
-	}	
 	
 ?>
 
@@ -137,7 +52,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="url" name="url_serwera_bm" class="input" placeholder="Black Min" value="<?php echo $url_serwera; ?>" autocomplete="off"/>
+							<input type="url" name="url_serwera_bm" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["url_server"]; ?>" autocomplete="off"/>
 						</section>
 					</section>	
 					<section class="tsr">
@@ -147,7 +62,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="url" name="url_witryny_bm" class="input" placeholder="Black Min CMS" value="<?php echo $url_witryny; ?>" autocomplete="off"/>
+							<input type="url" name="url_witryny_bm" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["url_site"]; ?>" autocomplete="off"/>
 						</section>
 					</section>
 					<section class="tsr">
@@ -157,7 +72,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="email" name="mail_witryny" class="input" placeholder="Black Min CMS" value="<?php echo $bm_email_witryny; ?>" autocomplete="off"/>
+							<input type="email" name="mail_witryny" class="input" placeholder="Black Min CMS" value="<?php echo BM_SETTINGS["bm_mail_site"]; ?>" autocomplete="off"/>
 							<label class="fs-70">Mail będzie używany do celach administracyjnych i powiadomień.</label>
 						</section>
 					</section>
@@ -170,7 +85,7 @@
 						<section class="col-inp-75 tsr-p-10px fs-90" >
 							<select name="ranga_witryny" class="select" utocomplete="off">
 							<?php 
-								if ($bm_nowy_uzytkownik == "współpracownik") {
+								if (BM_SETTINGS["bm_new_user"] == "współpracownik") {
 									echo '
 										<option value="współpracownik">Współpracownik</option>
 										<option value="redaktor">Redaktor</option>
@@ -180,7 +95,7 @@
 									';
 								}
 								
-								if ($bm_nowy_uzytkownik == "redaktor") {
+								if (BM_SETTINGS["bm_new_user"] == "redaktor") {
 									echo '
 										<option value="redaktor">Redaktor</option>
 										<option value="współpracownik">Współpracownik</option>
@@ -190,7 +105,7 @@
 									';
 								}
 								
-								if ($bm_nowy_uzytkownik == "moderator") {
+								if (BM_SETTINGS["bm_new_user"] == "moderator") {
 									echo '
 										<option value="moderator">Moderator</option>
 										<option value="redaktor">Redaktor</option>
@@ -200,7 +115,7 @@
 									';
 								}
 								
-								if ($bm_nowy_uzytkownik == "administrator") {
+								if (BM_SETTINGS["bm_new_user"] == "administrator") {
 									echo '
 										<option value="administrator" >Administrator</option>
 										<option value="moderator">Moderator</option>
@@ -210,7 +125,7 @@
 									';
 								}
 								
-								if ($bm_nowy_uzytkownik == "właśćiciel") {
+								if (BM_SETTINGS["bm_new_user"] == "właśćiciel") {
 									echo '
 										<option value="właśćiciel" >Właśćiciel</option>
 										<option value="administrator" >Administrator</option>
@@ -243,7 +158,7 @@
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
 							<select name="strefa_czasowa_witryny" class="select" utocomplete="off">
-								<option value="rzeszów">Reszów</option>
+								<option value="warsaw">Warszawa</option>
 							</select>
 						</section>
 					</section>
@@ -254,7 +169,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="text" name="date_witryny" class="input" placeholder="m.d.Y" value="<?php echo $bm_date; ?>" autocomplete="off"/>
+							<input type="text" name="date_witryny" class="input" placeholder="m.d.Y" value="<?php echo BM_SETTINGS["bm_date"]; ?>" autocomplete="off"/>
 						</section>
 					</section>
 					<section class="tsr">					
@@ -264,7 +179,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="text" name="time_witryny" class="input" placeholder="H:i" value="<?php echo $bm_time; ?>" autocomplete="off"/>
+							<input type="text" name="time_witryny" class="input" placeholder="H:i" value="<?php echo BM_SETTINGS["bm_time"]; ?>" autocomplete="off"/>
 						</section>
 					</section>
 					<section class="tsr">					
@@ -274,7 +189,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="text" name="admin_witryny" class="input" placeholder="Black Min" value="<?php echo $bm_nick_admin_bm; ?>" autocomplete="off"/>
+							<input type="text" name="admin_witryny" class="input" placeholder="Black Min" value="<?php echo BM_STATUS["bm_installation_admin"]; ?>" autocomplete="off"/>
 							<label class="fs-70">Nick głównego administratora witryny. Będzie on wykorzystywany do kontaktu w razie problemów z stroną (Dostęp Tylko dla administracji).</label>
 						</section>
 					</section>
@@ -285,7 +200,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="email" name="email_admin_witryny" class="input" placeholder="Black Min" value="<?php echo $bm_mail_admin_bm; ?>" autocomplete="off"/>
+							<input type="email" name="email_admin_witryny" class="input" placeholder="Black Min" value="<?php echo BM_STATUS["bm_admin_mail"]; ?>" autocomplete="off"/>
 							<label class="fs-70">Email głównego administratora witryny. Będzie on wykorzystywany do kontaktu w razie problemów z stroną (Będzie wyświetlany w razie ploblemów z witryną).</label>
 						</section>
 					</section>

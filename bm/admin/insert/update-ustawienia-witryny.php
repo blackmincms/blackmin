@@ -62,35 +62,35 @@
 					{
 
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tytul_witryny' WHERE `bm_nazwa` = 'bm_nazwa_strony'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$tytul_witryny' WHERE `bm_nazwa` = 'bm_name_site'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$opis_witryny' WHERE `bm_nazwa` = 'bm_opis_strony'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$opis_witryny' WHERE `bm_nazwa` = 'bm_description_site'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$slowa_kluczowe_witryny' WHERE `bm_nazwa` = 'bm_slowa_kluczowe'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$slowa_kluczowe_witryny' WHERE `bm_nazwa` = 'bm_keywords'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$icone_ico_witryny' WHERE `bm_nazwa` = 'bm_icon_ico'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$icone_ico_witryny' WHERE `bm_nazwa` = 'bm_icon_site'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 						};	
 						
 						if ($rezultat = $polaczenie->query(
-						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$icone_witryny' WHERE `bm_nazwa` = 'bm_icon_png'")
+						sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$icone_witryny' WHERE `bm_nazwa` = 'bm_icon_png_site'")
 						 ))
 						{
 							echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';

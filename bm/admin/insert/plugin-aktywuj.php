@@ -72,7 +72,7 @@
 
 				//Hurra, wszystkie testy zaliczone, aktulizujemy rekord			
 				if ($rezultat = $polaczenie->query(
-				sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_plugin' WHERE `bm_nazwa` = 'bm_wtyczka'")
+				sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_plugin' WHERE `bm_nazwa` = 'bm_plugin'")
 				 ))
 				{
 					// pokazywanie odpowiedniego komunikatu

@@ -72,7 +72,7 @@
 			</section>
 			<section class="col-inp-25 tsr-p-10px">
 				<section class="tsr tsr-mt-20 fs-90">
-					<a href="<?php echo BM_SETTINGS["bm_url_server"];?>bm/logowanie.php">
+					<a href="<?php echo BM_SETTINGS["url_site"];?>bm/logowanie.php">
 						Logowanie
 					</a>
 				</section>
@@ -80,7 +80,7 @@
 					<form accept-charset="UTF-8" action="" method="get" id="search_form" autocomplete="off" class="tsr-p-10px">	
 						<section class="tsr tsr-position-relative">						
 							<input type="search" name="search" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Szukaj" value="<?php if($ur->bm_url()["checked_url"] == "search_page"){echo $ur->bm_url()["path"];};?>">
-							<input type="image" name="search" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" src="<?php echo BM_SETTINGS["bm_url_server"];?>pliki/ikony/szukaj.png" >
+							<input type="image" name="search" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/szukaj.png" >
 						</section>
 					</form>
 				</section>
@@ -159,16 +159,16 @@
 						Kontakt z nami znajdziesz w zakładce kontakt 
 					</section>
 					<section class="tsr tsr-mt-20 fs-150 tsr-stopka-text background-green tsr-p-10px">
-						<a href="<?php echo BM_SETTINGS["bm_url_server"];?>bm/logowanie.php">
+						<a href="<?php echo BM_SETTINGS["url_server"];?>bm/logowanie.php">
 							Logowanie
 						</a>
 					</section>
 					<section class="tsr tsr-mt-20">
-						<form accept-charset="UTF-8" action="<?php echo BM_SETTINGS["bm_url_site"];?>" method="get" id="search_form" autocomplete="off" class="tsr-p-10px">	
+						<form accept-charset="UTF-8" action="<?php echo BM_SETTINGS["url_server"];?>" method="get" id="search_form" autocomplete="off" class="tsr-p-10px">	
 							<section class="tsr tsr-position-relative">
 								<input type="search" name="szukaj_post" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Szukaj" value="<?php if($ur->bm_url()["checked_url"] == "search_page"){echo $ur->bm_url()["path"];};?>">
 								<section type="search" name="szukaj" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" id="search">
-									<img src="<?php echo BM_SETTINGS["bm_url_server"];?>pliki/ikony/szukaj.png">
+									<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/szukaj.png">
 								</section>
 							</section>
 						</form>
@@ -202,7 +202,7 @@
 			<section class="tsr tsr-stopka-text2 tsr-mt-20">
 				<section class="tsr col-2 fs-80">
 					Powyższa Strona Używa Black Min CMS \ 
-					Wszelkie prawa zastrzeżone © 2019/2021 - <?php echo name_site_bm();?>
+					Wszelkie prawa zastrzeżone © 2019/2021 - <?php echo BM_SETTINGS["bm_name_site"];?>
 				</section>
 				<section class="tsr col-2 fs-80 r-0">
 					Projekt i wykonanie: Zespół Black Min cms z oficialnym motywem braund

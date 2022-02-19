@@ -14,6 +14,8 @@
 	
 	// renderowanie strony która odpowiada za wszystkie pliki (sktyptów) na serwerze
 	
+	// depracet_file
+	// przejść na nowszt standard i zaktulizować funkcjie w wesji 3.0 >
 ?>
 
 

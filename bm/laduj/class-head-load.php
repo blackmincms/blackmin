@@ -10,9 +10,7 @@
 */
 
 
-	class head_bm extends get_ustawienia_bm {
-		private $get_ustawienia;
-		
+	class head_bm extends bm_settings {
 		// tworzenie zmienych odpowiedzialnych za dodawanie nowych zawartośći do head
 		protected $add_to_head = "";
 		protected $add_to_title = "";
@@ -28,25 +26,22 @@
 		
 		// funkcja konstrukcyina
 		function __construct(){
-			// pobieranie ustawień bm globalnych
-			global $get_ustawienia_bm, $get_status_bm;
-			$this->get_ustawienia = $get_ustawienia_bm;
 			// ładowanie podstawowych ustawień blackmin'a 
-			$this->add_to_title = $get_ustawienia_bm["bm_name_site"] . " | Black Min CMS";
-			$this->add_description = $get_ustawienia_bm["bm_description_site"]. " "; 
-			$this->add_keywords = $get_ustawienia_bm["bm_keywords"]; 
-			$this->set_lang = $get_ustawienia_bm["bm_lang_site"]; 
-			$this->set_icon = $get_ustawienia_bm["bm_icon_png_site"]; 
-			$this->set_icon_ico = $get_ustawienia_bm["bm_icon_ico_site"]; 
-			$this->set_robots = $get_ustawienia_bm["bm_robots"]; 
+			$this->add_to_title = BM_SETTINGS["bm_name_site"] . " | Black Min CMS";
+			$this->add_description = BM_SETTINGS["bm_description_site"]. " "; 
+			$this->add_keywords = BM_SETTINGS["bm_keywords"]; 
+			$this->set_lang = BM_SETTINGS["bm_lang_site"]; 
+			$this->set_icon = BM_SETTINGS["bm_icon_png_site"]; 
+			$this->set_icon_ico = BM_SETTINGS["bm_icon_site"]; 
+			$this->set_robots = BM_SETTINGS["bm_robots"]; 
 			
 			// ustawienie autora i narzędzi BlackMinCMS
-			$this->autor_Timonix_BM = "BlackMinCMS " . $get_status_bm["bm_version"];
+			$this->autor_Timonix_BM = "BlackMinCMS " . BM_STATUS["bm_version"];
 			
 			// ładowanie pliku odpowiedzialnego za inpretetacjie kodu napisanego przez autora posta
-			$this->add_script .= '<script src="'.$get_ustawienia_bm["bm_url_server"]. "files/js/" .'blackmin_extention.js"></script>'. " \n ";
+			$this->add_script .= '<script src="'.BM_SETTINGS["url_server"]. "files/js/" .'blackmin_extention.js"></script>'. " \n ";
 			// ładowanie domyśnego wyglądu motywu
-			$this->add_css .= '<link rel="stylesheet" href="'.$get_ustawienia_bm["bm_url_server"].'files/css/default-style-theme-blackmin.css" />'. " \n ";			
+			$this->add_css .= '<link rel="stylesheet" href="'.BM_SETTINGS["url_server"].'files/css/default-style-theme-blackmin.css" />'. " \n ";			
 		}
 		
 		// funkcja chowająca wersję BlackMinCMS
@@ -130,12 +125,12 @@
 		public function add_css($add, $flaga = null) {
 			
 			if ($add == "jquery_ui"){
-				$this->add_css = '<link rel="stylesheet" href="'.$this->get_ustawienia["bm_url_server"].'files/global/jquery/jquery-ui.css" />'. " \n ";
+				$this->add_css = '<link rel="stylesheet" href="'.BM_SETTINGS["url_server"].'files/global/jquery/jquery-ui.css" />'. " \n ";
 			}else{
 				if($flaga == "bm" OR $flaga == "black_min" OR $flaga == "blackmin"){
 					$this->add_css .= '<link rel="stylesheet" href="'. $add .'">'. " \n ";
 				}else{
-					$this->add_css .= '<link rel="stylesheet" href="'.$this->get_ustawienia["bm_url_server"]. "a/motywy/" . $this->get_ustawienia["bm_theme_active"] . "/" . $add .'">'. " \n ";
+					$this->add_css .= '<link rel="stylesheet" href="'.BM_SETTINGS["url_server"]. "a/motywy/" . BM_SETTINGS["bm_theme_active"] . "/" . $add .'">'. " \n ";
 				}
 			}	
 		}
@@ -144,14 +139,14 @@
 		public function add_script($add, $flaga = null) {
 			
 			if ($add == "jquery"){
-				$this->add_script .= '<script src="'.$this->get_ustawienia["bm_url_server"].'/files/global/jquery/jquery.min.js"></script>'. " \n ";
+				$this->add_script .= '<script src="'.BM_SETTINGS["url_server"].'/files/global/jquery/jquery.min.js"></script>'. " \n ";
 			}else if($add == "jquery_ui"){
-				$this->add_script .= '<script src="'.$this->get_ustawienia["bm_url_server"].'/files/global/jquery/jquery-ui.min.js"></script>'. " \n ";
+				$this->add_script .= '<script src="'.BM_SETTINGS["url_server"].'/files/global/jquery/jquery-ui.min.js"></script>'. " \n ";
 			}else{
 				if($flaga == "bm" OR $flaga == "black_min" OR $flaga == "blackmin"){
 					$this->add_script .= '<script src="'. $add .'"></script>'. " \n ";
 				}else{
-					$this->add_script .= '<script src="'.$this->get_ustawienia["bm_url_server"]. "a/motywy/" . $this->get_ustawienia["bm_theme_active"]  . "/" . $add .'"></script>'. " \n ";
+					$this->add_script .= '<script src="'.BM_SETTINGS["url_server"]. "a/motywy/" . BM_SETTINGS["bm_theme_active"]  . "/" . $add .'"></script>'. " \n ";
 				}	
 			}	
 		}
@@ -159,7 +154,7 @@
 		// funkcja odpowiedzialna za generowanie wyniku seo i ładowanie jej do strony
 		public function load_head() {
 			// zmienna przechowywuje url strony bm
-			$url_site_bm = $this->get_ustawienia["bm_url_site"];
+			$url_site_bm = BM_SETTINGS["url_server"];
 ECHO<<<END
 	<!-- roszerzenie aplikacj strony KODOWANIE -->
 	<meta charset="utf-8" />

@@ -12,56 +12,6 @@
 	// ładowanie jądra black mina
 	require_once "black-min.php";
 	
-
-	mysqli_report(MYSQLI_REPORT_STRICT);
-		
-	try 
-	{
-		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-		if ($polaczenie->connect_errno!=0)
-		{
-			throw new Exception(mysqli_connect_errno());
-		}
-		else
-		{		
-			mysqli_query($polaczenie, "SET CHARSET utf8");
-			mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");		
-				
-			$rezultat2 = "SELECT * FROM `".$prefix_table."bm_ustawienia_bm`";
-			$wynik2 = $polaczenie->query($rezultat2);
-			
-			$ile2 = mysqli_num_rows($wynik2);
-				
-				for ($i=0; $i < $ile2; $i++) {
-					$row2 = mysqli_fetch_assoc($wynik2);
-					$bm_nazwa = $row2['bm_nazwa'];
-					
-					if ($bm_nazwa == "bm_domysny_status_posta") {
-						$bm_domysny_status_posta = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_domysny_format_posta") {
-						$bm_domysny_format_posta = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_domysne_laduj_posty") {
-						$bm_domysne_laduj_posty = $row2['bm_wartosc'];
-					}
-					
-					if ($bm_nazwa == "bm_serwer_mail_port") {
-						$bm_serwer_mail_port = $row2['bm_wartosc'];
-					}
-					
-				}	
-					
-			$polaczenie->close();
-		}
-		
-	}
-	catch(Exception $e)
-	{
-		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o powtórzenie działań póżniej!</span>';
-	}	
 	
 ?>
 
@@ -102,7 +52,7 @@
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
 							<?php
-								if ($bm_domysny_status_posta == "public") {
+								if (BM_SETTINGS["bm_default_format_post"] == "public") {
 									echo '
 										<select name="bm_domysny_status_posta" id="status_post">
 											<option value="public">Publiczny</option>
@@ -113,7 +63,7 @@
 									';
 								}
 								
-								if ($bm_domysny_status_posta == "private") {
+								if (BM_SETTINGS["bm_default_format_post"] == "private") {
 									echo '
 										<select name="bm_domysny_status_posta" id="status_post">
 											<option value="private">Prywatny</option>
@@ -124,7 +74,7 @@
 									';
 								}
 								
-								if ($bm_domysny_status_posta == "protect_password") {
+								if (BM_SETTINGS["bm_default_format_post"] == "protect_password") {
 									echo '
 										<select name="bm_domysny_status_posta" id="status_post">
 											<option value="protect_password" >Zabezpieczony hasłem</option>
@@ -135,7 +85,7 @@
 									';
 								}
 								
-								if ($bm_domysny_status_posta == "szkic") {
+								if (BM_SETTINGS["bm_default_format_post"] == "szkic") {
 									echo '
 										<select name="bm_domysny_status_posta" id="status_post">
 											<option value="szkic" >szkic</option>
@@ -156,7 +106,7 @@
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
 							<?php
-								if ($bm_domysny_format_posta == "post") {
+								if (BM_SETTINGS["bm_default_status_post"] == "post") {
 									echo '
 										<select name="bm_domysny_format_posta" id="kategoria">
 											<option value="post">zwykły post</option>
@@ -168,7 +118,7 @@
 									';
 								}
 								
-								if ($bm_domysny_format_posta == "info") {
+								if (BM_SETTINGS["bm_default_status_post"] == "info") {
 									echo '
 										<select name="bm_domysny_format_posta" id="kategoria">
 											<option value="info">informacja</option>
@@ -180,7 +130,7 @@
 									';
 								}
 								
-								if ($bm_domysny_format_posta == "wazne_info") {
+								if (BM_SETTINGS["bm_default_status_post"] == "wazne_info") {
 									echo '
 										<select name="bm_domysny_format_posta" id="kategoria">
 											<option value="wazne_info">ważna informacja</option>
@@ -192,7 +142,7 @@
 									';
 								}
 								
-								if ($bm_domysny_format_posta == "ostrzezenie") {
+								if (BM_SETTINGS["bm_default_status_post"] == "ostrzezenie") {
 									echo '
 										<select name="bm_domysny_format_posta" id="kategoria">
 											<option value="ostrzezenie">ostrzeżenie</option>
@@ -204,7 +154,7 @@
 									';
 								}
 								
-								if ($bm_domysny_format_posta == "najwazniejsze_info") {
+								if (BM_SETTINGS["bm_default_status_post"] == "najwazniejsze_info") {
 									echo '
 										<select name="bm_domysny_format_posta" id="kategoria">
 											<option value="najwazniejsze_info">najważniejsza informacja</option>
@@ -216,7 +166,7 @@
 									';
 								}
 								
-								if ($bm_domysny_format_posta == "szkic") {
+								if (BM_SETTINGS["bm_default_status_post"] == "szkic") {
 									echo '
 										<select name="bm_domysny_format_posta" id="kategoria">
 											<option value="szkic">szkic</option>
@@ -238,7 +188,7 @@
 							</span>
 						</section>
 						<section class="col-inp-75 tsr-p-10px fs-90" >
-							<input type="number" name="bm_domysne_laduj_posty" class="input" placeholder="Black Min" value="<?php echo $bm_domysne_laduj_posty; ?>" autocomplete="off"/>
+							<input type="number" name="bm_domysne_laduj_posty" class="input" placeholder="Black Min" value="<?php echo BM_SETTINGS["bm_default_load_post"]; ?>" autocomplete="off"/>
 						</section>
 					</section>
 					

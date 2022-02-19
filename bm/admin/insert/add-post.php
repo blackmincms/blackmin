@@ -12,8 +12,6 @@
 	// ładowanie jądra black mina
 	require_once "../black-min.php";
 	
-	
-	//$url_serwera_bm = $_SESSION['url_serwera_bm'];
 	require_once "../../../connect.php";
 	require_once "../../../files/global/timonix-aquay-edytor/aquay-black-min-compiler.php";
 	

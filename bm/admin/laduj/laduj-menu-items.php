@@ -25,8 +25,6 @@
 				$ile_sort = count($x);
 				// sprawdzanie czy tablica nie jest pusta
 				if($ile_sort != 0){
-					// sprawdzanie czy poprawnie dodano element
-					// if (array_key_exists("id", $x[0])) {
 						// zmienna przechowywująca strukture menu
 						$r = "";
 						// pętla do operacji na danych
@@ -95,9 +93,6 @@
 						
 						// zwracanie danych posortowanych
 						return $r;
-					// }else{
-						// return false;
-					// }
 				}else{
 					return "error_data_is_empty";
 				}
@@ -126,7 +121,7 @@
 				mysqli_query($polaczenie, "SET CHARSET utf8");
 				mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");		
 				
-				$menu_structur = $ustawienia_bm["bm_get_menu_structur"];
+				$menu_structur = BM_SETTINGS["bm_menu_structur"];
 				
 				// rozkładanie na czyniki pierwsze struktury menu głównego for id
 				$menu_structur = json_decode($menu_structur, true);

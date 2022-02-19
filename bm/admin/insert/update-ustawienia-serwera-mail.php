@@ -65,28 +65,28 @@
 				if ($wszystko_ok == true)
 				{
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail' WHERE `bm_nazwa` = 'bm_serwer_mail'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail' WHERE `bm_nazwa` = 'bm_server_mail'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};	
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail_login' WHERE `bm_nazwa` = 'bm_serwer_mail_login'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail_login' WHERE `bm_nazwa` = 'bm_server_mail_login'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};	
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail_hasło' WHERE `bm_nazwa` = 'bm_serwer_mail_hasło'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail_hasło' WHERE `bm_nazwa` = 'bm_server_mail_password'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';
 					};	
 					
 					if ($rezultat = $polaczenie->query(
-					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail_port' WHERE `bm_nazwa` = 'bm_serwer_mail_port'")
+					sprintf("UPDATE `".$prefix_table."bm_ustawienia_bm` SET `bm_wartosc`='$bm_serwer_mail_port' WHERE `bm_nazwa` = 'bm_server_mail_port'")
 					 ))
 					{
 						echo '<section class="tsr-alert tsr-alert-success"> Dane zostały zmienione poprawnie! </section>';

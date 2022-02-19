@@ -46,9 +46,8 @@
 
 		// funkcja construct
 		function __construct(){
-			global $get_settings_bm;
 			// aktulizacja ilośći ładowanych postów
-			$this->load_post = $get_settings_bm["bm_default_load_posts"];
+			$this->load_post = BM_SETTINGS["bm_default_load_post"];
 		}
 		
 		// funkcjia do aktulizowania hasła wpisanego przez użytkownika
@@ -68,7 +67,7 @@
 		// funkcjia do pobierania menu z bazy danych
 		public function load_post_bm() {	
 			// pobieranie zmiennych globalnych
-			global $prefix_table,$db_bm,$bm_url;
+			global $db_bm,$bm_url;
 			
 			// sprawdzanie danych do załadowania
 			if($bm_url["checked_url"] == "root"){
@@ -181,7 +180,7 @@
 				}else{
 					$s = $this->search_post;
 				}
-				$wynik = $db_bm->query2("SELECT * FROM `".$prefix_table."bm_data_posty` WHERE (`status`LIKE 'public' OR `status`LIKE 'protect_password' OR `status`LIKE 'private') AND `url` LIKE '%". $db_bm->valid($s) ."%' ORDER BY `id` DESC LIMIT ". $this->load_post, false);
+				$wynik = $db_bm->query2("SELECT * FROM `|prefix|bm_data_posty` WHERE (`status`LIKE 'public' OR `status`LIKE 'protect_password' OR `status`LIKE 'private') AND `url` LIKE '%". $db_bm->valid($s) ."%' ORDER BY `id` DESC LIMIT ". $this->load_post, false);
 				// dane opisowe do posta
 				$this->ile_query_post_load = $wynik["num_rows"];		
 				// sprawdzanie czy znaleziono posta
@@ -290,7 +289,7 @@
 				}else{
 					$s = $this->search_post;
 				}				
-				$wynik = $db_bm->query("SELECT * FROM `".$prefix_table."bm_data_posty` WHERE (`status`LIKE 'public' OR `status`LIKE 'protect_password' OR `status`LIKE 'private') AND `url` LIKE '". $db_bm->valid($s) ."' ORDER BY `id` DESC LIMIT 1", false);
+				$wynik = $db_bm->query("SELECT * FROM `|prefix|bm_data_posty` WHERE (`status`LIKE 'public' OR `status`LIKE 'protect_password' OR `status`LIKE 'private') AND `url` LIKE '". $db_bm->valid($s) ."' ORDER BY `id` DESC LIMIT 1", false);
 				
 				// dane opisowe do posta
 				$this->ile_query_post_load = $wynik["num_rows"];				

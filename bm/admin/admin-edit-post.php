@@ -309,84 +309,84 @@
 										</section>
 										
 										<section class="aquay-ikona blokada_edycj" onclick="aquay_edytor_toggle_edytuj();">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/button/hiddenfield-big.png" alt="Blokada Edycji" title="Blokada Edycji">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/button/hiddenfield-big.png" alt="Blokada Edycji" title="Blokada Edycji">
 										</section>
 										
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona wytnij" onclick="aquay_edytor('cut');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/clipboard/cut-big.png" alt="wytnij" title="wytnij">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/clipboard/cut-big.png" alt="wytnij" title="wytnij">
 										</section>
 										<section class="aquay-ikona kopiuj" onclick="aquay_edytor('copy');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/clipboard/copy-big.png" alt="kopiuj" title="kopiuj">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/clipboard/copy-big.png" alt="kopiuj" title="kopiuj">
 										</section>
 										<section class="aquay-ikona aquay-input-margin zaznacz_calosc" onclick="aquay_edytor('selectAll');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/text/selectall-big.png" alt="zaznacz całość" title="zaznacz całość">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/text/selectall-big.png" alt="zaznacz całość" title="zaznacz całość">
 										</section>
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona cofnij" onclick="aquay_edytor('undo');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/undo/undo-big.png" alt="cofnij" title="cofnij">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/undo/undo-big.png" alt="cofnij" title="cofnij">
 										</section>
 										<section class="aquay-ikona ponow" onclick="aquay_edytor('redo');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/undo/redo-big.png" alt="ponów" title="ponów">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/undo/redo-big.png" alt="ponów" title="ponów">
 										</section>
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona usun_formatowanie" onclick="aquay_edytor('removeFormat');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/clipboard/removeformat-big.png" alt="usuń formatowanie" title="usuń formatowanie">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/clipboard/removeformat-big.png" alt="usuń formatowanie" title="usuń formatowanie">
 										</section>
 									</section>	
 									<section class="aquay-sekcjia">
 										<section class="aquay-ikona pogrobienie" onclick="aquay_edytor('bold');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/stylize/bold-big.png" alt="pogróbienie" title="pogróbienie">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/stylize/bold-big.png" alt="pogróbienie" title="pogróbienie">
 										</section>
 										<section class="aquay-ikona pochylenie" onclick="aquay_edytor('italic');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/stylize/italic-big.png" alt="pochylenie" title="pochylenie">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/stylize/italic-big.png" alt="pochylenie" title="pochylenie">
 										</section>
 										<section class="aquay-ikona podkreslenie" onclick="aquay_edytor('underline');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/stylize/underline-big.png" alt="podkreślenie" title="podkreślenie">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/stylize/underline-big.png" alt="podkreślenie" title="podkreślenie">
 										</section>
 										<section class="aquay-ikona przekreslenie" onclick="aquay_edytor('strikeThrough');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/stylize/strike-big.png" alt="przekreśl" title="przekreśl" toltip="przekreśl">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/stylize/strike-big.png" alt="przekreśl" title="przekreśl" toltip="przekreśl">
 										</section>
 										<section class="aquay-ikona index_dolny" onclick="aquay_edytor('subscript');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/stylize/subscript-big.png" alt="index dolny" title="index dolny">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/stylize/subscript-big.png" alt="index dolny" title="index dolny">
 										</section>
 										<section class="aquay-ikona index_gorny" onclick="aquay_edytor('superscript');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/stylize/superscript-big.png" alt="index górny" title="index górny">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/stylize/superscript-big.png" alt="index górny" title="index górny">
 										</section>
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona wysrodkuj_do_lewej" onclick="aquay_edytor('justifyLeft');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/justify/justifycenter-big.png" alt="wyśrodkuj do lewej" title="wyśrodkuj do lewej">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/justify/justifycenter-big.png" alt="wyśrodkuj do lewej" title="wyśrodkuj do lewej">
 										</section>
 										<section class="aquay-ikona wysrodkuj" onclick="aquay_edytor('justifyCenter');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/justify/justifyleft-big.png" alt="wyśrodkuj" title="wyśrodkuj">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/justify/justifyleft-big.png" alt="wyśrodkuj" title="wyśrodkuj">
 										</section>
 										<section class="aquay-ikona wysrodkuj_do_prawej" onclick="aquay_edytor('justifyRight');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/justify/justifyright-big.png" alt="wyśrodkuj do prawej" title="wyśrodkuj do prawej">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/justify/justifyright-big.png" alt="wyśrodkuj do prawej" title="wyśrodkuj do prawej">
 										</section>
 										<section class="aquay-ikona wyjustuj" onclick="aquay_edytor('justifyFull');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/justify/justifyblock-big.png" alt="wyjustuj" title="wyjustuj">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/justify/justifyblock-big.png" alt="wyjustuj" title="wyjustuj">
 										</section>
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona akapit_od_lewej" onclick="aquay_edytor('indent');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/akapit/bidiltr-big.png" alt="akapit od lewej" title="akapit od lewej">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/akapit/bidiltr-big.png" alt="akapit od lewej" title="akapit od lewej">
 										</section>
 										<section class="aquay-ikona akapit_od_prawej" onclick="aquay_edytor('outdent');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/akapit/bidirtl-big.png" alt="akapit od prawej" title="akapit od prawej">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/akapit/bidirtl-big.png" alt="akapit od prawej" title="akapit od prawej">
 										</section>
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona lista_kropka" onclick="aquay_edytor('insertUnorderedList');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/list/bulletedlist-big.png" alt="lista kropkowana" title="lista kropkowana">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/list/bulletedlist-big.png" alt="lista kropkowana" title="lista kropkowana">
 										</section>
 										<section class="aquay-ikona lista_numer" onclick="aquay_edytor('insertOrderedList');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/list/numberedlist-big.png" alt="lista numerowana" title="lista numerowana">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/list/numberedlist-big.png" alt="lista numerowana" title="lista numerowana">
 										</section>
 										<section class="aquay-ikona przerwa" onclick="aquay_edytor('insertParagraph');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/linia/horizontalrule-big.png" alt="przerwa" title="przerwa">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/linia/horizontalrule-big.png" alt="przerwa" title="przerwa">
 										</section>
 										<div class="aquay-ikona aquay-bar"></div>
 										<div >
 											<section class="aquay-ikona link tsr-pmodal" tsr-modal-max="width" tsr-modal-close="true" tsr-modal-selected="false">
-												<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/flags/link-big.png" alt="link" title="link">
+												<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/flags/link-big.png" alt="link" title="link">
 												<section class="tsr-modal tsr-remove-selection">
 													<section class="tsr tsr-remove-selection">
 														<section class="tsr tsr-remove-selection">
@@ -442,7 +442,7 @@
 										</div>
 										
 										<section class="aquay-ikona usun_link" onclick="aquay_edytor_format('unlink');">
-											<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/flags/unlink-big.png" alt="usuń link" title="usuń link">
+											<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/flags/unlink-big.png" alt="usuń link" title="usuń link">
 										</section>
 									</section>	
 									<section class="aquay-sekcjia">
@@ -482,7 +482,7 @@
 										<div class="aquay-ikona aquay-bar"></div>
 										<section class="aquay-ikona aquay-input-margin">
 											<section class="aquay-edytor-menu">
-												<img src="<?php echo $url_serwera_bm; ?>files/global/timonix-aquay-edytor/ikony/add_element/showblocks-add.png" alt="dodaj diva" title="dodaj diva">
+												<img src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/ikony/add_element/showblocks-add.png" alt="dodaj diva" title="dodaj diva">
 											</section>
 											<section class="aquay-edytor-element-menu">
 												<section class="aquay-edytor-menu-icons aquay-blok-akapit" data-blok="akapit">

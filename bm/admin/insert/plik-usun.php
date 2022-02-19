@@ -35,8 +35,8 @@
 		
 		for($i = 0; $i < $ile; $i++){
 			// validate
-			$path_file = $db_bm->valid(str_replace($get_ustawienia_bm["bm_url_server"], $real_path, $pliki[$i]["path"]));
-			$path_thumbnail =$db_bm->valid(str_replace($get_ustawienia_bm["bm_url_server"], $real_path, $pliki[$i]["thumbnail"]));
+			$path_file = $db_bm->valid(str_replace(BM_SETTINGS["url_server"], $real_path, $pliki[$i]["path"]));
+			$path_thumbnail =$db_bm->valid(str_replace(BM_SETTINGS["url_server"], $real_path, $pliki[$i]["thumbnail"]));
 			
 			if(file_exists($path_file)){
 				if(@unlink($path_file)){

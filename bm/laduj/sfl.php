@@ -131,13 +131,13 @@
 
 		// funkcjia ładowania plików php
 		public function load_php($a = SORT_ASC, $t = "lvl"){
-			return sfl::load ("php", $t, $a);
+			return sfl::load ("php", $a, $t);
 		}
 		public function load_css($a = SORT_ASC, $t = "lvl"){
-			return sfl::load ("css", $t, $a);
+			return sfl::load ("css", $a, $t);
 		}
 		public function load_js($a = SORT_ASC, $t = "lvl"){
-			return sfl::load ("js", $t, $a);
+			return sfl::load ("js", $a, $t);
 		}
 
 		public function load ($array, $order = SORT_ASC, $on = "lvl") {
@@ -150,7 +150,6 @@
 					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							var_dump($this->pliki_php[$i]['src']);
 							require_once ($this->pliki_php[$i]['src']) ;
 						}
 						return true;
@@ -163,7 +162,7 @@
 					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							echo '<script src="'. $this->pliki_js[$i]['src'] .'" bm-type="async"></script> \n';
+							echo '<script src="'. $this->pliki_js[$i]['src'] .'" bm-type="async"></script>';
 						}
 						return true;
 					}else{
@@ -175,7 +174,7 @@
 					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
-							echo '<link rel="stylesheet" href="'. $this->pliki_css[$i]['src'] .'" bm-type="async"> \n';
+							echo '<link rel="stylesheet" href="'. $this->pliki_css[$i]['src'] .'" bm-type="async">';
 						}
 						return true;
 					}else{
@@ -189,8 +188,8 @@
 			}
 		}
 		
-		function array_sort($array, $on, $order=SORT_ASC){
-
+		public function array_sort($array, $on, $order=SORT_ASC){
+			
 		$new_array = [];
 		$sortable_array = [];
 

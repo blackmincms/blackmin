@@ -51,7 +51,7 @@
 	// dodawanie do szukania w folderze głównym
 	
 	// pobieranie wszystkich folderów w aktywnym motywie
-	foreach (glob('../../a/motywy/'.bm_theme_active().'/*', GLOB_ONLYDIR) as $katalog) {
+	foreach (glob('../../a/motywy/'.BM_SETTINGS["bm_theme_active"].'/*', GLOB_ONLYDIR) as $katalog) {
 		$katalog_reserch = explode("/", $katalog);
 		array_push($nazwa_katolog, $katalog_reserch[5]);
 		
@@ -67,7 +67,7 @@
 	$zlicz_folder = count($all_katolog);
 
 	// pętla do poierania plików z folderu domowego motywu
-	foreach (glob('../../a/motywy/'.bm_theme_active().'/*.*', GLOB_MARK) as $plik) {
+	foreach (glob('../../a/motywy/'.BM_SETTINGS["bm_theme_active"].'/*.*', GLOB_MARK) as $plik) {
 		$plik_reserch = explode("/", $plik);
 		
 		$roszerzenie_pliki = explode(".", $plik_reserch[5]);

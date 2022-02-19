@@ -23,7 +23,7 @@
 	
 	<?php require_once "laduj-pliki-admin.php"; ?>
 	
-	<link rel="stylesheet" href="<?php echo url_serwer_bm()?>files/css/default-style-theme-blackmin.css" />
+	<link rel="stylesheet" href="<?php echo BM_SETTINGS["url_server"]?>files/css/default-style-theme-blackmin.css" />
 
 </head>
 <body>

@@ -28,14 +28,12 @@
 		protected $naglowek_plugin = false;
 		
 		function __construct(){
-			// przyłączanie zmiennej globalnej
-			global $ustawienia_bm;
 			// pobieranie ustawień panelów z pluginami i przydzielanie ich do odpowedniej zmienej
-			$this->top_plugin = $ustawienia_bm["bm_top_widget"];
-			$this->left_plugin = $ustawienia_bm["bm_left_widget"];
-			$this->right_plugin = $ustawienia_bm["bm_right_widget"];
-			$this->bottom_plugin = $ustawienia_bm["bm_bottom_widget"];
-			$this->footer_plugin = $ustawienia_bm["bm_footer_widget"];
+			$this->top_plugin = BM_SETTINGS["bm_top_widget"];
+			$this->left_plugin = BM_SETTINGS["bm_left_widget"];
+			$this->right_plugin = BM_SETTINGS["bm_right_widget"];
+			$this->bottom_plugin = BM_SETTINGS["bm_bottom_widget"];
+			$this->footer_plugin = BM_SETTINGS["bm_footer_widget"];
 		}
 		// funckcja ukrywająca nagłowek konkretnego widgetu
 		public function header_hide($t){
