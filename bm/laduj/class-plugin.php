@@ -12,10 +12,10 @@
 	class bm_plugin {
 		// zmienne przchowywujące dane o zastosowanych widgetach
 		protected $top_plugin = [],
-						$left_plugin = [],
-						$right_plugin = [],
-						$bottom_plugin = [],
-						$footer_plugin = [];
+					$left_plugin = [],
+					$right_plugin = [],
+					$bottom_plugin = [],
+					$footer_plugin = [];
 		// zmienna przechwywuje dane o starcie indexu pluginów
 		protected $start_naglowek = '
 			<div class="tsr bm_plugins_container bm_widget_container">

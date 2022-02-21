@@ -6,7 +6,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.2
+	#plik: 1.5
 */
 
 
