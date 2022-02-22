@@ -138,7 +138,7 @@
 	];
 
 	// define lang site
-	if (!defined(BM_LANG)) {
+	if (!defined("BM_LANG")) {
 		define("BM_LANG", explode("_", BM_SETTINGS["bm_lang"][1]));
 		
 	}
