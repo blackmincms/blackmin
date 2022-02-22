@@ -136,7 +136,13 @@
 		"admin-ustawienia-prywatnosc",
 		"",
 	];
+
+	// define lang site
+	if (!defined(BM_LANG)) {
+		define("BM_LANG", explode("_", BM_SETTINGS["bm_lang"][1]));
 		
+	}
+	
 	// sprawdzenie zmienych globalnych czy istnieje 
 	// jezeli zmiena super globalna istnieje ładowanie black mina rozpocznie się!
 	

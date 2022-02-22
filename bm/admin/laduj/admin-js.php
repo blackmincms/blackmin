@@ -21,3 +21,7 @@
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay-black-min-compiler.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay-black-min-decompiler.js"></script>
+
+	<?php 
+		$sfl->load_js(); 
+	?>

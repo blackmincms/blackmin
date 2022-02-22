@@ -18,3 +18,7 @@
 	<link rel="stylesheet" href="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-suggestags/css/timonix-suggestags.css">
 	<link rel="stylesheet" href="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-sortiner/timonix-sortiner.css">
 	<link rel="stylesheet" href="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay.css">
+
+	<?php 
+		$sfl->load_css();
+	?>
