@@ -6,7 +6,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.0
+	#plik: 2.0
 */
 	
 	$bm_motyw=TRUE;

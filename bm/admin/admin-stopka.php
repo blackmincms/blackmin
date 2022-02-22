@@ -61,7 +61,7 @@
 			<section class="tsr-stopka ">
 			<section class="tsr tsr-stopka-text2 tsr-mt-20">
 				<section class="tsr col-2 fs-80">
-					Wszelkie prawa zastrzeżone © 2020/2021 - Black min cms
+					Wszelkie prawa zastrzeżone © 2020/2022 - Black min cms
 				</section>
 				<section class="tsr col-2 fs-80 tsr-algin-right">
 					Projekt i wykonanie: <a href="#">zespół Black Min cms</a> |

@@ -44,7 +44,7 @@
 						<form accept-charset="UTF-8"  action="" method="post" id="add_post" autocomplete="off">	
 						
 						<section class="tsr">
-							<section class="col-inp-25 tsr-p-10px fs-90 " >
+							<section class="col-inp-25 tsr-p-10px fs-70 " >
 								<span class="tsr-vertical-align-sub">
 									Skrócona Polityka Prywatnośći:
 								</span>
@@ -54,7 +54,7 @@
 							</section>
 						</section>
 						<section class="tsr">
-							<section class="col-inp-25 tsr-p-10px fs-90 " >
+							<section class="col-inp-25 tsr-p-10px fs-70 " >
 								<span class="tsr-vertical-align-sub">
 									Link do Polityki Prywatnośći:
 								</span>
@@ -64,7 +64,7 @@
 							</section>
 						</section>
 						<section class="tsr">					
-							<section class="col-inp-25 tsr-p-10px fs-90 " >
+							<section class="col-inp-25 tsr-p-10px fs-70 " >
 								<span class="tsr-vertical-align-sub">
 									Link do Informacji o Ciasteczkach:
 								</span>
@@ -74,9 +74,9 @@
 							</section>
 						</section>
 						<section class="tsr">					
-							<section class="col-inp-25 tsr-p-10px fs-90 " >
+							<section class="col-inp-25 tsr-p-10px fs-70 " >
 								<span class="tsr-vertical-align-sub">
-									Text Akceptujący Ciasteczka:
+									Tekst Akceptujący Ciasteczka:
 								</span>
 							</section>
 							<section class="col-inp-75 tsr-p-10px fs-90" >
