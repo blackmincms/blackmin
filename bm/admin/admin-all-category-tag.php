@@ -6,7 +6,7 @@
 	
 	Black Min cms,
 	
-	#plik: 1.2
+	#plik: 2.0
 */
 
 	// ładowanie jądra black mina
@@ -18,7 +18,7 @@
 
 
 <!DOCTYPE html>
-<html lang="pl" class="">
+<html lang="<?php echo BM_LANG; ?>" class="">
 <head>
 
 	<title>Wszystkie Kategorie/Tagi - Admin Panel - <?php echo $black_min ?></title>
@@ -37,12 +37,12 @@
 	<main class="container-right">
 		<section class="container tsr-p-10px">
 			<section class="tsr fs-130 l-0">
-				Wszystkie posty - Black Min 
+				Kategoria/tag - Black Min 
 			</section>
 			<section class="tsr tsr-p-10px background-white tsr-mt-20">
 				<section class="tsr fs-90 l-0 ">
 					
-					<form accept-charset="UTF-8"  action="" method="post" id="data-add-post">	
+					<form accept-charset="UTF-8"  action="all-kategoria-tag" method="post" id="blackminload">	
 						<section class="tsr tsr-p-5px tsr-mb-10">
 							<section class="col-ms25 tsr-p-5px">
 								<select name="kategoria_KT">
@@ -128,12 +128,6 @@
 	</main>
 
 	<?php require_once "admin-stopka.php"; ?>
-
-	<script>
-	$(document).ready(function() { 
-		console.clear()
-	});
-	</script>	
 
 </body>
 </html>

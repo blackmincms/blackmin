@@ -139,7 +139,7 @@
 
 	// define lang site
 	if (!defined("BM_LANG")) {
-		define("BM_LANG", explode("_", BM_SETTINGS["bm_lang"][1]));
+		define("BM_LANG", explode("_", BM_SETTINGS["bm_lang_site"][1]));
 		
 	}
 	

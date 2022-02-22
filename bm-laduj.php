@@ -16,10 +16,6 @@
 	
 	global $bm_motyw,$bm_plugin,$bm_jezyk;
 	
-	# urochomienie pliku ładującą zawartość bm
-	
-	require_once BMPATH . BM . LADUJ . "laduj.php";
-	
 	# ładowanie motywu bm
 	
 	require_once BMPATH . "bm-motyw.php";

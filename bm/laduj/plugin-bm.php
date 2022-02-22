@@ -17,7 +17,7 @@
 
 		// widget blackmin (login)
 		$bm_widget["logowanie"] = '
-			<section class="tsr fs-100 tsr-p-10px bm-logowanie"><a href="'.BM_SETTINGS["url_site"].'bm/logowanie.php">Logowanie</a></section>
+			<section class="tsr fs-100 tsr-p-10px bm-logowanie"><a href="'.BM_SETTINGS["url_server"].'bm/logowanie.php">Logowanie</a></section>
 		';
 		// widget blackmin (search)
 		$bm_widget["wyszukiwarka"] = '

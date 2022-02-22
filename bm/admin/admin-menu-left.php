@@ -62,7 +62,7 @@
 								</a>
 								<?php };?>
 							<?php  if($_SESSION['flaga'] >= 15 AND $_SESSION['flaga'] <=30 ){ ?>	
-								<a href="admin-all-kategoria-tag.php">
+								<a href="admin-all-category-tag.php">
 									<section class="menu-left-submenu">
 										Kategoria Tag Posta
 									</section>
