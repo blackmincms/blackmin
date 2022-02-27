@@ -207,6 +207,73 @@
 		});
 	});
 	/* funckja zaznaczająca zmieniony checkbox OFF */	
+
+	/* funkcja zarządzająca alertami tsr ON */
+
+	function tsr_alert(type = "error", message, pb = ".tsr-alert-box", ht = "append", h = true, ile = 500) {
+		// session storage
+		let ss = window.sessionStorage;
+		let li = 0;
+		if (ss.getItem('tsr_alert_count_schift') == null) {
+			ss.setItem('tsr_alert_count_schift', 0);
+			li = 0;
+		} else {
+			li = ss.getItem('tsr_alert_count_schift');
+			ss.setItem('tsr_alert_count_schift', li++);
+		}
+		if ((/^(error|info|warning|war|normal|success)$/).test(type.toString())) {
+			if (type === "war") {
+				type = "warning";
+			}
+			if (message.lenght == 0) {
+				console.warn("tsr Alert: brak wiadomośći");
+				return false;
+			}else if ((/^(append|prepend|before|after|text|html)$/).test(ht.toString()) === false) {
+				console.error("tsr Alert: Błedna metoda dodająca");
+				return false;
+			} else {
+				if (h === true) {
+					if (ht == "append") {
+						$(pb).append('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "prepend") {
+						$(pb).prepend('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "before") {
+						$(pb).before('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "after") {
+						$(pb).after('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "text") {
+						$(pb).text('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "html") {
+						$(pb).html('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					}
+					setTimeout (function (li) {
+						$(document).find(`div[tsr-alert-id='${li}']`).not(".tsr-button").animate({opacity: "0"}, 1000).delay(100).hide(50, function () { $(this).remove(); });
+					}, ile, li);
+				} else {
+					if (ht == "append") {
+						$(pb).append('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "prepend") {
+						$(pb).prepend('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "before") {
+						$(pb).before('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "after") {
+						$(pb).after('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "text") {
+						$(pb).text('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					} else if (ht == "html") {
+						$(pb).html('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
+					}
+				}
+				ss.setItem('tsr_alert_count_schift', li++);
+				return true;
+			}
+		} else {
+			console.error("tsr Alert: Błędny typ");
+			return false;
+		}
+	}
+
+	/* funkcja zarządzająca alertami tsr OFF */
 	
 	$(function() {
 		
@@ -1309,9 +1376,9 @@ $(function() {
 			
 		t["content"] = [];
 		
-		for(var i = 0; i< $(pchec_container).find(chec+":checked").length; i++){
-			if($(pchec_container).find(chec+":checked").eq(i).attr(data) != undefined){
-				t["content"][i] = $(pchec_container).find(chec+":checked").eq(i).attr(data);
+		for(var i = 0; i< $(pchec_container).find('input[checked="checked"]'+chec).length; i++){
+			if($(pchec_container).find('input[checked="checked"]'+chec).eq(i).attr(data) != undefined){
+				t["content"][i] = $(pchec_container).find('input[checked="checked"]'+chec).eq(i).attr(data);
 			}
 		}
 		
@@ -1319,13 +1386,23 @@ $(function() {
 	}
 
 	// czeba dopracować tabele żeby dopracować tą funkcje
-	function tsr_checkbox_del(data = "tsr-data", pchec_container = ".tsr-checkbox-container",chec = ".tsr-checkbox"){
-		var pchec_container = $(document).find(pchec_container);
-			
-		for(var i = 0; i< $(pchec_container).find(chec+":checked").length; i++){
-			if($(pchec_container).find(chec+":checked").eq(i).attr(data) != undefined){
-				console.info($(pchec_container).find(chec+":checked").eq(i));
-				$(pchec_container).find(chec+":checked").eq(i).animate({opacity: "0"}, 1000).delay(100).hide(50, function () { $(this).remove(); });
+	function tsr_checkbox_del(data = "tsr-data", pchec_container = ".tsr-checkbox-container",chec = ".tsr-checkbox", pchec = ".tsr-row-del"){
+		var t = $(document).find(pchec_container);
+		let a = $(t).find('input[checked="checked"]'+chec);
+		for(var i = 0; i< a.length; i++){
+			if(a.eq(i).attr(data) != undefined){
+				$(a[i]).closest(pchec).hide(1000, function () { $(this).remove(); });
+			}
+		}
+		return true;
+	}
+	// bez zaznaczonego checkbox
+	function tsr_checkbox_del2(data = "tsr-data", pchec_container = ".tsr-checkbox-container",chec = ".tsr-checkbox", pchec = ".tsr-row-del"){
+		var t = $(document).find(pchec_container);
+		let a = $(t).find(chec);
+		for(var i = 0; i< a.length; i++){
+			if(a.eq(i).attr(data) != undefined){
+				$(a[i]).closest(pchec).hide(1000, function () { $(this).remove(); });
 			}
 		}
 		return true;

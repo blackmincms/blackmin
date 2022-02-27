@@ -206,7 +206,7 @@
 
 		
 		// funkcja parsująca dane z podanego wzorca przeprowadzająca działania po tablicy
-		public function parse($q, $k){
+		public function parse($q, $k = null){
 			// $q = kwerenda, $k = klucz w tablicy
 			
 			// zmienna przehowywująca gotowy wynik
@@ -214,19 +214,39 @@
 			// sprawdzanie czy istnieje klucz zawierający liczbę rekordów tablicy
 			(array_key_exists("num_rows", $q) ? array_shift($q) : "");
 			// sprawdzanie czy dane są poprawne typy danych
-			if(is_array($q) && is_string($k)){
+			if(is_array($q)){
 				for($i = 0; $i < count($q); $i++){
-					// sprawdzanie czy dany klucz istnieje
-					if(array_key_exists($k, $q[$i])){
-						// sprawdzanie czy element jest ostani
-						if(0 == $i){
-							$r .= $q[$i][$k];
+					if ($k === null) {
+						// sprawdzanie czy dany klucz istnieje
+						if (is_string($q[$i])){
+							// sprawdzanie czy element jest ostani
+							if(0 == $i){
+								$r .= $q[$i];
+							}else{
+								$r .= "," . $q[$i];
+							}
 						}else{
-							$r .= "," . $q[$i][$k];
+							$r = false;
+							break;
 						}
 					}else{
-						$r = false;
-						break;
+						if (is_string($k)) {
+							// sprawdzanie czy dany klucz istnieje
+							if(array_key_exists($k, $q[$i])){
+								// sprawdzanie czy element jest ostani
+								if(0 == $i){
+									$r .= $q[$i][$k];
+								}else{
+									$r .= "," . $q[$i][$k];
+								}
+							}else{
+								$r = false;
+								break;
+							}
+						} else {
+							$r = false;
+							break;
+						}
 					}
 				}
 			}else{

@@ -19,6 +19,7 @@
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-suggestags/js/timonix-suggestags.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-checkall/timonix-checkall.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/js/blackmin-autoload.js"></script>
+	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/js/blackmin-autocommend.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay-black-min-compiler.js"></script>
 	<script src="<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/aquay-black-min-decompiler.js"></script>
