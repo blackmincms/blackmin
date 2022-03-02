@@ -14,6 +14,7 @@
 	
 	// renderowanie strony która odpowiada za wszystkie motywy na serwerze
 	
+	
 ?>
 
 

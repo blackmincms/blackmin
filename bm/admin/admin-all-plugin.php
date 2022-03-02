@@ -12,6 +12,7 @@
 	// ładowanie jądra black mina
 	require_once "black-min.php";
 	
+	
 	// renderowanie strony która odpowiada za wszystkie pliki (plugunów) na serwerze
 ?>
 

@@ -13,9 +13,6 @@
 	
 		// ładowanie jądra black mina
 		require_once "../black-min.php";
-	
-		require_once "../../../connect.php";
-		require_once "../laduj/class-get-ustawienia.php";
 		
 		$url_serwera_bm = BM_SETTINGS["url_server"];
 		
@@ -215,54 +212,17 @@
 					$target_file_miniaturs_http = "null";
 				}
 				
-				
 				// dodawanie nowego rekordu do bazy danych dysku
 				// jeżeli przeszedł poprawną walidacjie
 				
-				mysqli_report(MYSQLI_REPORT_STRICT);
-				
-				try 
-				{
-					$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-					if ($polaczenie->connect_errno!=0)
-					{
-						throw new Exception(mysqli_connect_errno());
-					}
-					else
-					{
-						
-						mysqli_query($polaczenie, "SET CHARSET utf8");
-						mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");	
-			
-						
-						// jeżeli wszystkie testy walidacyjne przeszły pomyśnie to dodajemy nowy post
-						// wyśiwtlamy informacje dla użytkownika że post został dodany do bazy danych
-						
-
-						//Hurra, wszystkie testy zaliczone, dodajemy gracza do bazy
-						
-						if ($polaczenie->query("INSERT INTO `".$prefix_table."bm_filemeta` VALUES (NULL, '$autor_id', '$file_name', '$replace_file_name', '$date2', '$date2', '', '$rozszerzenie', '$target_file_miniaturs_http', 'domyśny', '$target_file_http')"))
-						{
-							
-							$t = ["result" => "success", "message" => "Plik został przesłany! > ". basename($_FILES["file"]["name"])];
-							echo json_encode($t);	
-							
-						}else{
-							throw new Exception($polaczenie->error);
-						}
-						
-						$polaczenie->close();
-					}
-					
-				}
-				
-				  
-				catch(Exception $e)
-				{
-					
+				global $db_bm;
+				if ($db_bm->insert("INSERT INTO `".$prefix_table."bm_filemeta` VALUES (NULL, '$autor_id', '$file_name', '$replace_file_name', '$date2', '$date2', '', '$rozszerzenie', '$target_file_miniaturs_http', 'domyśny', '$target_file_http')")) {
+					$t = ["result" => "success", "message" => "Plik został przesłany! > ". basename($_FILES["file"]["name"])];
+					echo json_encode($t);	
+				}else{
 					$t = ["result" => "error", "message" => "Błąd serwera! Przepraszamy za niedogodności i prosimy o powtórzenie działań w później!"];
-					echo json_encode($t);						
-				}						
+					echo json_encode($t);	
+				}
 				
 			} else {
 

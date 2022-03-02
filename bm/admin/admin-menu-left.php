@@ -55,7 +55,7 @@
 									</section>
 								</a>
 								<?php  if($_SESSION['flaga'] >= 25 AND $_SESSION['flaga'] <=30 OR $_SESSION['flaga'] >= 10 AND $_SESSION['flaga'] <=14 ){ ?>
-								<a href="admin-add-kategoria-tag.php">
+								<a href="admin-add-category-tag.php">
 									<section class="menu-left-submenu">
 										Dodaj Kategoria Tag Posta
 									</section>
@@ -71,7 +71,7 @@
 							</section>
 					</section>
 					<section class="tsr menu-left">
-						<a <?php  if($_SESSION['flaga'] >= 15 AND $_SESSION['flaga'] <=30 ){ ?>	href="admin-dysk.php"<?php };?>>
+						<a <?php  if($_SESSION['flaga'] >= 15 AND $_SESSION['flaga'] <=30 ){ ?>	href="admin-disk.php"<?php };?>>
 							<section class="menu-item">
 								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/dysk.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Dysk </section>

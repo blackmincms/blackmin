@@ -67,10 +67,6 @@
 						
 					<section class="tsr checkall" id="blackminload_container">							
 					</section>	
-
-					<script type="text/javascript">
-
-					</script>
 					
 				</section>
 			</section>

@@ -10,6 +10,7 @@
 
     function bm_autocomment (e) {
         let t = document.querySelector("#blackminload_container #blackmin_action");
+        let tx = document.querySelector("#blackmin_change_action #akcja");
         // bm button action confirmed
         let ta = document.querySelectorAll("#blackminload_container .bm-row-delete");
         if (t != undefined) {
@@ -18,28 +19,41 @@
                 t.addEventListener("click", (e) => {
                     tsr_blocked_submit(2500,"#blackminload_container .bm-row-delete");
                     // pobieranie dancyhh z zaznaczonych checkbox
-                    let b = tsr_get_checkbox_data("bm-data", "#blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
+                    let x = tsr_get_checkbox_data("bm-data", "#blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
                     let a = t.getAttribute("action");
+                    // sprawdzaqnie czy istnieje zmiana akcji submit
+                    if (tx != undefined) {
+                        if (tx.value = "rename") {
+                            a = t.getAttribute("rename");
+                            // pobieranie inputa rename
+                            let k = document.querySelector("#blackmin_change_action #folder_zmien");
+                            if (k != undefined) {
+                                x.rename = k.value;
+                            } else {
+                                tsr_alert ("error", "Błąd pobierania danych do zmianny", document.querySelector("#blackmin_change_action"), "after", true, 1500);
+                            }
+                        }
+                    }
                     if (a != undefined) {
-                        tsr_ajax("insert/"+ a.trim() +".php", b, "", false, function (e){
-                            const b = JSON.parse(e);
-                            if (b["status"] == "error") {
-                                tsr_alert ("error", b["message"], t, "after", true, 2500);
-                            } else if (b["status"] == "info") {
-                                tsr_alert ("info", b["message"], t, "after", true, 1500);
-                            } else if (b["status"] == "warn") {
-                                tsr_alert ("warning", b["message"], t, "after", true, 2500);
-                            } else if (b["status"] == "warning") {
-                                tsr_alert ("warning", b["message"], t, "after", true, 2500);
-                            } else if (b["status"] == "normal") {
-                                tsr_alert ("normal", b["message"], t, "after", true, 1500);
-                            } else if (b["status"] == "success") {
-                                tsr_alert ("success", b["message"], t, "after", true, 1500);
+                        tsr_ajax("insert/"+ a.trim() +".php", x, "", false, function (e){
+                            const f = JSON.parse(e);
+                            if (f["status"] == "error") {
+                                tsr_alert ("error", f["message"], t, "after", true, 2500);
+                            } else if (f["status"] == "info") {
+                                tsr_alert ("info", f["message"], t, "after", true, 1500);
+                            } else if (f["status"] == "warn") {
+                                tsr_alert ("warning", f["message"], t, "after", true, 2500);
+                            } else if (f["status"] == "warning") {
+                                tsr_alert ("warning", f["message"], t, "after", true, 2500);
+                            } else if (f["status"] == "normal") {
+                                tsr_alert ("normal", f["message"], t, "after", true, 1500);
+                            } else if (f["status"] == "success") {
+                                tsr_alert ("success", f["message"], t, "after", true, 1500);
                                 // usuwanie danych
                                 tsr_checkbox_del("bm-data", "#blackminload_container", ".bm-checkbox", ".bm-row-dl");
                             } else {
                                 tsr_alert ("error", "Błąd serwera - nie prawidłowe dane!", t, "after", true, 1500);
-                                console.error();
+                                console.error("BlackMin autocommand: Błąd serwera - nie prawidłowe dane!");
                             }
                         });
                     }else{
@@ -65,7 +79,8 @@
                                         tsr_blocked_submit(2500, ".tsr-modal-active .bm-button-ac");
                                         // pobieranie dancyhh z zaznaczonych checkbox
                                         let c = tab.getAttribute("bm-action-data");
-                                        let c2 = {"name": "kt", "content": {"0" : c}};
+                                        let f = document.querySelector("#blackminload_container .bm-pcheckbox").getAttribute("bm-data");
+                                        let c2 = {"name": f, "content": {"0" : c}};
                                         let a = t.getAttribute("action");
                                         if (a != undefined) {
                                             tsr_ajax("insert/"+ a.trim() +".php", c2, "", false, function (e){

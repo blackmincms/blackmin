@@ -23,6 +23,7 @@
 				}else {
 					global $db_bm;
 					$a = $db_bm->parse($_POST["content"]);
+					$a = $db_bm->valid($a);
 					// usuwanie danych
 					if ($db_bm->delete("DELETE FROM `bm_metaposty` WHERE `id` IN (". $a .")")) {
 						echo json_encode(["status" => "success", "message" => "Dane zostały usunięte!"]);
