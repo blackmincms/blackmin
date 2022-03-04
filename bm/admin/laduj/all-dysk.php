@@ -68,22 +68,22 @@
 							<span class="checkbox "></span>
 						</label>
 					</th>
-					<td class="tsr-width-35 tsr-width-30-5 tsr-display-block-2 tsr-p-5px" bm-data="bm-tytul">
+					<td class="tsr-width-35 tsr-width-30-5 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-tytul">
 						Pełna Nazwa/Pełna Orginalna Nazwa
 					</td>
-					<td class="tsr-width-150px tsr-display-block-2 tsr-p-5px" bm-data="bm-dodajacy">
+					<td class="tsr-width-150px tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-dodajacy">
 						Autor
 					</td>
-					<td class="tsr-width-30 tsr-width-25-5 tsr-display-block-2 tsr-p-5px" bm-data="bm-roszerzenie">
+					<td class="tsr-width-30 tsr-width-25-5  tsr-width-100-2tsr-display-block-2 tsr-p-5px" bm-data="bm-roszerzenie">
 						Opis
 					</td>
-					<td class="tsr-width-100px tsr-width-150px-3 tsr-display-block-2 tsr-p-5px" bm-data="bm-kategoria">
+					<td class="tsr-width-100px tsr-width-150px-3 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-kategoria">
 						Folder
 					</td>
-					<td class="tsr-width-100px tsr-display-block-2 tsr-p-5px" bm-data="bm-tagi">
+					<td class="tsr-width-100px tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-tagi">
 						Rozszerzenie
 					</td>
-					<td class="tsr-width-100px tsr-width-50px-3 tsr-display-block-2 tsr-p-5px" bm-data="bm-datetime">
+					<td class="tsr-width-100px tsr-width-50px-3 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-datetime">
 						Data Opublikowania
 					</td>
 				</tr>

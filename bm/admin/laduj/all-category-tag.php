@@ -61,16 +61,16 @@
 							<span class="checkbox "></span>
 						</label>
 					</th>
-					<td class="tsr-display-block-2 tsr-p-5px" bm-data="bm-nazwa">
+					<td class="tsr-display-block-2 tsr-width-100-2 tsr-p-5px" bm-data="bm-nazwa">
 						Nazwa
 					</td>
-					<td class="tsr-display-block-2 tsr-p-5px" bm-data="bm-skr-nazwa">
+					<td class="tsr-display-block-2 tsr-width-100-2 tsr-p-5px" bm-data="bm-skr-nazwa">
 						Skr.Nazwa
 					</td>
-					<td class="tsr-width-40 tsr-display-block-2 tsr-p-5px" bm-data="bm-opis">
+					<td class="tsr-width-40 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-opis">
 						Opis
 					</td>
-					<td class="tsr-width-100px tsr-display-block-2 tsr-p-5px" bm-data="bm-kt">
+					<td class="tsr-width-100px tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-kt">
 						typ
 					</td>
 				</tr>

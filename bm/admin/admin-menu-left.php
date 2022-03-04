@@ -130,7 +130,7 @@
 					</section>
 					<?php };?>
 					<section class="tsr menu-left">
-						<a <?php  if($_SESSION['flaga'] >= 25 AND $_SESSION['flaga'] <=30 ){ ?> href="admin-all-uzytkownicy.php" <?php };?>>
+						<a <?php  if($_SESSION['flaga'] >= 25 AND $_SESSION['flaga'] <=30 ){ ?> href="admin-all-users.php" <?php };?>>
 							<section class="menu-item">
 								<img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/uzytkownicy.png" class="tsr-nav-menu-img-left">
 								<section class="tsr-nav-menu-size2"> Użytkownicy </section>

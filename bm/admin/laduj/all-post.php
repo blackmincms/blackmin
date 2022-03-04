@@ -68,25 +68,25 @@
 							<span class="checkbox "></span>
 						</label>
 					</th>
-					<td class="tsr-width-40 tsr-display-block-2 tsr-p-5px" bm-data="bm-tytul">
+					<td class="tsr-width-40 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-tytul">
 						Tytuł
 					</td>
-					<td class="tsr-width-150px tsr-display-block-2 tsr-p-5px" bm-data="bm-dodajacy">
+					<td class="tsr-width-150px tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-dodajacy">
 						Dodający
 					</td>
-					<td class="tsr-width-150px tsr-width-40 tsr-display-block-2 tsr-p-5px" bm-data="bm-status">
+					<td class="tsr-width-150px tsr-width-40 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-status">
 						Status
 					</td>
-					<td class="tsr-width-100px tsr-width-150px-3 tsr-display-block-2 tsr-p-5px" bm-data="bm-kategoria">
+					<td class="tsr-width-100px tsr-width-150px-3 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-kategoria">
 						Typ
 					</td>
-					<td class="tsr-width-100px tsr-width-150px-3 tsr-display-block-2 tsr-p-5px" bm-data="bm-tagi">
+					<td class="tsr-width-100px tsr-width-150px-3 tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-tagi">
 						Tag
 					</td>
-					<td class="tsr-width-150px tsr-display-block-2 tsr-p-5px" bm-data="bm-kategoria_post">
+					<td class="tsr-width-150px tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-kategoria_post">
 						Kategoria Post
 					</td>
-					<td class="tsr-width-100px tsr-width-50px-3 tsr-display-block-2 tsr-p-5px" bm-data="bm-datetime">
+					<td class="tsr-width-100px tsr-width-50px-3  tsr-width-100-2 tsr-display-block-2 tsr-p-5px" bm-data="bm-datetime">
 						Data Opublikowania
 					</td>
 				</tr>
