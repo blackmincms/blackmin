@@ -31,7 +31,7 @@
 		$haslo = $_POST['haslo'];
 		$haslo2 = $_POST['haslo2'];
 		$rola = $_POST['rola'];
-		$flaga = html_entity_decode($rola, ENT_QUOTES, "UTF-8");
+		$flaga = $rola;
 		// formatowanie daty
 		
 		$datetime = (date("Y-m-d H:i")); 
