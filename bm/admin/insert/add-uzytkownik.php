@@ -31,7 +31,7 @@
 		$haslo = $_POST['haslo'];
 		$haslo2 = $_POST['haslo2'];
 		$rola = $_POST['rola'];
-		
+		$flaga = html_entity_decode($rola, ENT_QUOTES, "UTF-8");
 		// formatowanie daty
 		
 		$datetime = (date("Y-m-d H:i")); 
@@ -45,7 +45,6 @@
 		$plec = $db_bm->valid($plec);
 		$haslo = $db_bm->valid($haslo);
 		$haslo2 = $db_bm->valid($haslo2);
-		$rola = $db_bm->valid($rola);
 		
 		$wszystko_ok = true;
 		
@@ -108,28 +107,27 @@
 		// generowanie tokenu użytkownika
 		$token = password_hash($nick, PASSWORD_DEFAULT);
 		
-		if ($rola == "użytkownik") {
+		if ($flaga == "użytkownik") {
 			$flaga = 5;
-		}
-		
-		if ($rola == "redaktor") {
+			$rola = "";
+		}elseif ($flaga == "redaktor") {
 			$flaga = 10;
-		}
-		
-		if ($rola == "moderator") {
+			$rola = "redaktor";
+		}elseif ($flaga == "moderator") {
 			$flaga = 15;
-		}
-
-		if ($rola == "współpracownik") {
+			$rola = "moderator";
+		}elseif ($flaga == "współpracownik") {
 			$flaga = 20;
-		}
-		
-		if ($rola == "administrator") {
+			$rola = "współpracownik";
+		}elseif ($flaga == "administrator") {
 			$flaga = 25;
-		}
-		
-		if ($rola == "właśćiciel") {
+			$rola = "administrator";
+		}elseif ($flaga == "właśćiciel") {
 			$flaga = 30;
+			$rola = "właśćiciel";
+		}else{
+			$flaga = 5;
+			$rola = "użytkownik";
 		}	
 		
 		if ($out = $db_bm->query("SELECT `id` FROM `|prefix|bm_uzytkownicy` WHERE email='$mail'")) {
@@ -150,13 +148,7 @@
 		if ($wszystko_ok != false) {
 			if ($out = $db_bm->insert("INSERT INTO `|prefix|bm_uzytkownicy` VALUES (NULL, '$nick', '$imie', '$nazwisko', '$mail', '$plec', '$datetime', '$url_serwera_bm"."pliki/logo/logo_bm_white_2_100_100.png', '$haslo_hash', '$token', 'aktywacja_konta', '$rola', '$flaga', 'ofline', '$datetime', '[test_system_users],[test_mesages]')")) {
 				echo '<section class="tsr-alert tsr-alert-success"> Nowy Użytkownik Został Dodany Poprawnie </section>';
-				echo '<script type="text/javascript">
-						$("input,textarea").each(function(){
-						$(this).val("");
-						});
-					</script>
-					<meta http-equiv="refresh" content="0">
-				';
+				echo '<meta http-equiv="refresh" content="0">';
 			}
 		} else {
 			echo '<section class="tsr-alert tsr-alert-error"> Wystąpił nieznany błąd! </section>';
