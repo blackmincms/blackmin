@@ -3,21 +3,18 @@
 @		>>>> AQUAY <<<<
 @
 @	Timonix Aquay Edytor
-@	Edytor Tekstowy
-@	Versja: beta 0.1
+@	Edytor Blokowy (Tekstowy)
+@	Versja: 1.0
 @	Autor: Timonix
 @
 @		>>>> AQUAY <<<<
 @
 */
-
-	// tworzenie
-	var aquay = "aquay";
 	
 	// tworzenie logów do konsoli przeglądarki
-	console.info("Iniciowanie: " + aquay);
-	console.info("Startowanie: " + aquay);
-	console.info("Ładowanie: " + aquay);
+	console.info("Iniciowanie: aquay");
+	console.info("Startowanie: aquay");
+	console.info("Ładowanie: aquay");
 	
 	var aquay_text = $(".aquay-text");
 	
@@ -604,5 +601,365 @@
 	// powiadomienie o zakończeniu ładowania
 	
 	$(document).ready(function() { 
-		console.info("Ładowanie Zakończone: " + aquay);
+		console.info("Ładowanie Zakończone: aquay");
 	});
+
+
+
+
+
+
+
+
+
+
+	// this a new function editora
+	function aquay (__t = ".aquay-editor-container", aquay_path = "files/global/timonix-aquay-edytor/") {
+		// load start
+		console.info("Aquay: Ładowanie");
+		console.info("Aquay: Iniciowanie");
+		console.info("Aquay: Startowanie");
+
+		// default settings aquay editor
+		var settings = {
+			"error_timer" : 1000,
+			"load_editor_item" : ["all"],
+			"aquay_default_font" : [
+				{
+					"altona_sans": ["AltonaSans-Italic.ttf", "AltonaSans-Regular.ttf"],
+					"console": ["Console.ttf","Console_Input.ttf", "Console_Relay.ttf", "Console_Output.ttf"],
+					"dark_seventh": ["Dark_Seventh_Personal_Use.otf"],
+					"harmony_4": ["HARMONY_Personal_use.otf"],
+					"monea_alegante": ["Monea_Alegante.otf"],
+					"open_sans": ["OpenSans-Italic.ttf", "OpenSans.ttf"],
+					"oxygen": ["Oxygen-Bold.ttf", "Oxygen-Light.ttf","Oxygen-Regular.ttf"],
+					"saling_cinta": ["Saling_Cinta.ttf"],
+					"ubuntu": ["Ubuntu-Regular.ttf","Ubuntu-MediumItalic.ttf","Ubuntu-Medium.ttf","Ubuntu-LightItalic.ttf","Ubuntu-Light.ttf","Ubuntu-Italic.ttf","Ubuntu-BoldItalic.ttf","Ubuntu-Bold.ttf"]
+			 	}
+			]
+		};
+		let buffor = [];
+
+		// check tsr moduls
+		function CheckModuls() {
+			if (typeof window.tsr != undefined) {
+				return true;
+			} else {
+				console.error("Aquay: Not 'tsr' modules avaliable");
+				Window.error("Aquay: Not 'tsr' modules avaliable");
+			}
+		}
+
+		// get selection
+		function GetSelection () {
+			// pobieranie zaznaczonego tekstu
+			let selection = (window.getSelection().type != "None" ? window.getSelection() : undefined),
+				active = (selection != undefined ? document.activeElement : undefined),
+				range = (selection != undefined ? selection.getRangeAt(0) : undefined),
+				boundary = (selection != undefined ? range.getBoundingClientRect() : undefined),
+				text = (selection != undefined ? selection.toString() : undefined);
+				
+			// sprawdzanie czy istnieje zaznaczenie
+			if (selection != undefined && text != "" && selection.type == "Range"){
+				return {
+					start: function () {
+						return {
+							tag: $(range.startContainer)[0].parentNode.tagName.toLowerCase(),
+							target: $(range.startContainer)[0].parentNode,
+							lenght: range.startOffset
+						};
+					} ,
+					stop: function () {
+						return {
+							tag: $(range.endContainer)[0].parentNode.tagName.toLowerCase(),
+							target: $(range.endContainer)[0].parentNode,
+							lenght: range.endOffset
+						}
+					},
+					orginalStart: function () {
+						return {
+							tag: $(selection.anchorNode)[0].parentNode.tagName.toLowerCase(),
+							target: $(selection.anchorNode)[0].parentNode,
+							lenght: selection.anchorOffset
+						};
+					} ,
+					orginalStop: function () {
+						return {
+							tag: $(selection.focusNode)[0].parentNode.tagName.toLowerCase(),
+							target: $(selection.focusNode)[0].parentNode,
+							lenght: selection.focusOffset
+						}
+					},
+					selection: selection,
+					parent: active,
+					text: text,
+					range: range,
+					boundary: boundary,
+					orginal: function () {
+						let text = "",
+							activeElTagName = active ? active.tagName.toLowerCase() : null;
+						if ((activeElTagName == "textarea") || (activeElTagName == "input" &&  /^(?:text|search|password|tel|url)$/i.test(active.type)) && (typeof active.selectionStart == "number")) {
+							text = active.value.slice(active.selectionStart, active.selectionEnd);
+						} else if (active) {
+							text = text;
+						}
+						return text;
+					},
+					clone: function () {
+						return range.cloneContents();
+					},
+					same: function () {
+						return $(selection.anchorNode)[0].parentNode === $(selection.focusNode)[0].parentNode ? true : false;
+					}
+				}
+			}else{
+				return undefined;
+			}
+		}
+	
+		// zmianna zaznaczenia select
+		function aquaySelectedOption(s, t) {
+			// pobiweranie selcta do zmienienia
+			let q = $(s);
+			// sprawdzanie czy select istnieje i czy istnieje opcja do zaznaczenia
+			if(q != undefined){
+				// sprawdzenie czy istnieje 
+				if(q.find('option[value='+ t +']')){
+					q.find('option[value='+ t +']').attr('selected','selected');
+					return true;
+				}else{
+					return false
+				}
+			}
+		}
+
+		// load function
+		async function load (url = "settings.json", he = "json") {
+
+			if (he === "json") {
+				he = {"Content-Type": "application/json"};
+				try {
+					await fetch(aquay_path + url, {
+						method: "GET",
+						headers: new Headers(he),	
+					})
+					.then(res => res.json())
+					.then(res => {
+						parse_data(res, he);
+						return true;
+					})
+				} catch (error) {
+					console.error('Aquay: error load assets "' + aquay_path + url + '" | ' + error);
+					return false;
+				}
+			}else{
+				he = {"Content-Type": "text/plain"};
+				try {
+					await fetch(aquay_path + url, {
+						method: "GET",
+						headers: new Headers(he),	
+					})
+					.then(res => res.text())
+					.then(res => {
+						parse_data(res, he);
+						return res;
+					})
+				} catch (error) {
+					console.error('Aquay: error load assets "' + aquay_path + url + '" | ' + error);
+					return false;
+				}
+			}
+		}
+
+		// function tests browser caches
+		function cache_test(type) {
+			var storage;
+			try {
+				storage = window[type];
+				var x = '__aquay_storage_test__';
+				storage.setItem(x, x);
+				storage.removeItem(x);
+				return true;
+			}
+			catch(e) {
+				return e instanceof DOMException && (
+					// everything except Firefox
+					e.code === 22 ||
+					// Firefox
+					e.code === 1014 ||
+					// test name field too, because code might not be present
+					// everything except Firefox
+					e.name === 'QuotaExceededError' ||
+					// Firefox
+					e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+					// acknowledge QuotaExceededError only if there's something already stored
+					(storage && storage.length !== 0);
+			}
+		}
+
+		// function parse settings (json parse string)
+		function parse_data(odp, d) {
+			let storage = window.sessionStorage;
+
+			if (Array.isArray(odp) || typeof (odp) === "object") {
+				if (d === "json") {
+					if (cache_test("sessionStorage")) {
+						storage.setItem("aquay_settings", JSON.stringify(odp));
+						return true;
+					} else {
+						return odp;
+					}
+				}
+			}else if (d = "text") {
+				if (cache_test("sessionStorage")) {
+					storage.setItem("aquay_block_schemat", JSON.stringify(odp));
+					return true;
+				} else {
+					return odp;
+				}
+			} else {
+				return false;
+			}
+		}
+
+		// function get settings (json parse string)
+		function setting(t = "all") {
+			console.log(load("settings.json", "json"));
+			if (cache_test("sessionStorage")) {
+				let storage = window.sessionStorage;
+				if (t === "all") {
+					if (storage.getItem("aquay_settings")) {
+						return JSON.parse(storage.getItem("aquay_settings"));
+					} else {
+						load("settings.json", "json");
+					}
+				} else {
+					if (storage.getItem("aquay_settings")) {
+						let x = Array.prototype.search(JSON.parse(storage.getItem("aquay_settings")), t);
+						console.log(x);
+						if (x != false) {
+							return x;
+						} else {
+							throw new error("error", "Aquay: wystąpił nie znany błąd!");
+						}
+					} else {
+						load("settings.json", "json");
+					}
+				}
+			} else {
+				if (t === "all") {
+					return setting;
+				}else{
+					let x = Array.prototype.search(setting, t);
+					if (x != false) {
+						return x;
+					} else {
+						throw new error("error", "Aquay: wystąpił nie znany błąd!");
+					}
+				}
+			}
+		}
+
+		Array.prototype.search = (t, e) => {
+			if (t[e]) {
+				return t[e];
+			} else {
+				return false;
+			}
+		};
+
+		// function get block scheme
+		function block_scheme (t = "") {
+			console.log(load("aquay.html", "text"));
+			if (cache_test("sessionStorage")) {
+				let storage = window.sessionStorage;
+				if (storage.getItem("aquay_block_schemat")) {
+					let x = ($(JSON.parse(storage.getItem("aquay_block_schemat"))).find(".aquay-edytuj-container"));
+					if (x != undefined) {
+						console.log($(JSON.parse(storage.getItem("aquay_block_schemat"))).find(".aquay-edytuj-container"));
+						return x;
+					} else {
+						throw new error("error", "Aquay: wystąpił nie znany błąd!");
+					}
+				} else {
+					load("aquay.html", "text");
+				}
+			} else {
+				// reporting error
+				console.error("Aquay: Wystąpił błąd krytyczny modułu ('scheme')");
+			}			
+		}
+
+		setting();
+		block_scheme();
+		// function error raport
+		function error(t = "error", m = "Aquay: wystąpił nieznany błąd", c = "container", a = true) {
+			if((/^(container|aquay|index|bottom|top)$/).test(c.toString())) {
+				if ((/^(error|info|warning|war|normal|success)$/).test(t.toString())) {
+					if (t === "war") {
+						t = "warning";
+					}
+					// alert path | navigate in aquay dom
+					let path = $(document).find(__t);
+					if (c = "aquay") {
+						path = path.find(".Aquay-Container-block");
+					}else if (c = "index") {
+						path = $(document).find(".Aquay-editor-container-error");
+					}else if (c = "bottom") {
+						path = path.find(".Aquay-Container-block .aquay-alert-bottom");
+					}else if (c = "top") {
+						path = path.find(".Aquay-Container-block .aquay-alert-bottom");
+					}
+				}else{
+					console.error("Aquay: błędny typ alertu");
+				}
+			}else{
+				console.error("Aquay: błędny kontener alertu");
+			}
+		}
+
+		// inports fonts
+		function include_font (t = null) {
+			var link = document.createElement('link');
+			link.setAttribute('rel', 'stylesheet');
+			link.setAttribute('type', 'text/css');
+			link.setAttribute('href', aquay_path);
+			document.head.appendChild(link);
+		}
+
+		// function load interface
+		function uis () {
+			let aquay_container = $(__t);
+			// add aquay container
+			aquay_container.append('<div class="aquay">');
+			// find aquay
+			aquay_container = aquay_container.find(".aquay");
+			// add head and body
+			aquay_container.append('<section class="aquay-nawigacja aquay-navigate">');
+			aquay_container.append('<div class="aquay-block-editor" contenteditable="true" name="aquayblock">');
+			// get head and body
+			let head = aquay_container.find(".aquay-navigate"),
+				body = aquay_container.find(".aquay-block-editor");
+			
+			// load navigate
+			load_navigate(head);
+			
+		}
+		// function load navigate
+		function load_navigate(t) {
+			let head = $(t);
+			let items = setting("load_editor_item");
+			console.log(items);
+
+			if (items[0] === "all") {
+				
+			} else {
+				
+			}
+		}
+
+		uis();
+
+		// load end
+		console.info("Aquay: Ładowanie Zakończone");
+	}

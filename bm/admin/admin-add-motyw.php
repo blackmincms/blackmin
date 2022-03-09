@@ -39,59 +39,17 @@
 			</section>
 			<section class="tsr tsr-p-10px background-white tsr-mt-20">
 				<section class="tsr fs-90 l-0">
-					
-
-				<section class="tsr tsr-mt-20">
-
-					<section class="tsr tsr-mb-50 fs-120">
-						Błąd podczas łączenia z serwerem!
-					</section>	
-
-
-				</section>
-				</section>
-	
-	<script type="text/javascript">			
-		
-		// wysyłanie danych do skryptu metodą post pobranych z formularza
-	
-		$('#submit_post').click('submit', function(evt1){	
-		evt1.preventDefault();
-		var edit_file_theme = $('#edit_file_theme').text();
-		var save_file = '<?php echo "$src"?>';
-		var theme_active_bm = '<?php echo BM_SETTINGS["bm_theme_active"];?>';
-		console.log(edit_file_theme);
-		$.ajax({
-			type:"POST",
-			url:"insert/edit-file-motywadasd.php",
-			data:{
-				edit_file_theme:edit_file_theme,
-				save_file:save_file,
-				theme_active_bm:theme_active_bm,
-			}
-		})
-		.done(function(info){
-			$('#contajner_post_add').append(info);
-			$(".tsr-alert").delay(5000).fadeIn(5000).animate({opacity: "0"}, 1000).delay(1000).hide(500, function () { $(this).remove(); });
-		})
-		.fail(function(){
-			alert("Wystąpił błąd. Spróbuj ponownie później");
-		});
-		});	
-	</script>				
-					
+					<section class="tsr tsr-mt-20">
+						<section class="tsr tsr-mb-50 fs-120">
+							Błąd podczas łączenia z serwerem!
+						</section>	
+					</section>							
 				</section>
 			</section>
 		</section>
 	</main>
 
 	<?php require_once "admin-stopka.php"; ?>
-
-	<script>
-	$(document).ready(function() { 
-		console.clear()
-	});
-	</script>	
 
 </body>
 </html>

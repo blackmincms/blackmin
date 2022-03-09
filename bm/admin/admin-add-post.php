@@ -485,10 +485,10 @@
 								</div>
 							</div>
 
-							<script type="text/javascript">	
+							<div class="aquay-editor-container">
+								s
+							</div>
 
-
-							</script>
 						<!-- Timonix Aquay edytor OFF -->
 						
 					</section>	
@@ -520,6 +520,7 @@
 	</script>
 	
 	<script type="text/javascript">
+		aquay(".aquay-editor-container", '<?php echo BM_SETTINGS["url_server"]; ?>files/global/timonix-aquay-edytor/');
 		
 		$('#submit_post').click('submit', function(evt1){	
 		evt1.preventDefault();
