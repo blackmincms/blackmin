@@ -8,6 +8,16 @@ use BlackMin\Plugin\Widget;
 use BlackMin\Router\Router;
 use BlackMin\Settings;
 
+function data_format($datetime, $foramt_czasu) {
+
+    $date = date_create($datetime);
+
+    $datetime_format = date_format($date, $foramt_czasu);
+
+    return $datetime_format;
+
+}
+
 $database = new Database();
 $settings = new Settings($database);
 $this->settings = $settings->loadSettings();

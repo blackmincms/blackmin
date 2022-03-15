@@ -7,7 +7,7 @@
 	if($drt->query_load_post() == "0"){
 		echo '
 			<section class="tsr tsr-p-10px tsr-mt-20 tsr-mb-20 fs-120 l-0" style="background-color: #eeeeee;">
-				Nie znaleziono postów dla wyniku wyszukiwania: '.$ur->bm_url()["path"].'.
+				Nie znaleziono postów dla wyniku wyszukiwania: '.$this->router->bm_url()["path"].'.
 			</section>
 		';
 	}
@@ -15,7 +15,7 @@
 	if($drt->query_load_post() >= "1"){
 		echo '
 			<section class="tsr tsr-p-10px tsr-mt-20 tsr-mb-20 fs-90 l-0" style="background-color: #eeeeee;">
-				Wynik wyszukiwania dla: '.$ur->bm_url()["path"].'. Znalezionych Postów: '.$drt->query_load_post().'
+				Wynik wyszukiwania dla: '.$this->router->bm_url()["path"].'. Znalezionych Postów: '.$drt->query_load_post().'
 			</section>
 		';
 	}
@@ -55,7 +55,7 @@
 						?>
 					</section>
 					<section class="tsr fs-80 r-0 tsr-mb-10">
-						<a href="<?php echo  $get_ustawienia_bm["bm_url_site"] . $drt->url_post()[$i]; ?>">
+						<a href="<?php echo  $this->settings["url_site"] . $drt->url_post()[$i]; ?>">
 							Pokaż więcej!
 						</a>
 					</section>

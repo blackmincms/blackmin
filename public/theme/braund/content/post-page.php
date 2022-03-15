@@ -1,13 +1,5 @@
 <?php
-function data_format($datetime, $foramt_czasu) {
 
-    $date = date_create($datetime);
-
-    $datetime_format = date_format($date, $foramt_czasu);
-
-    return $datetime_format;
-
-}
 	// load posts
     $drt = $posts;
 	$posts->renderPost();
