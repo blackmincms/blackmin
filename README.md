@@ -1,4 +1,4 @@
-#BlackMin v3.0
+# BlackMin v3.0
 
 Aby uruchomić CMS w nowej wersji nalezy zaktualizować plik w katalogu `config` swoimi danymi. W bazie danych `url_server` i `url_site` musza wskazywać na katalog głowny z v3 np. `http://localhost/blackmin/v3/`
 
