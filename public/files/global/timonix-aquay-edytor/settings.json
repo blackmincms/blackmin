@@ -1,0 +1,8 @@
+{
+    "aquay": "Aquay_Block_Editor",
+    "versjon": 1,
+    "error_timer": 1000,
+    "load_editor_item": [
+        "all"
+    ]
+}

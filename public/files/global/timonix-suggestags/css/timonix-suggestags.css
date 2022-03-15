@@ -1,0 +1,195 @@
+.timonix-suggestags-area
+.timonix-suggestags-input-area-default {
+	cursor: pointer;
+    border: transparent !important;
+    min-height: 20px;
+    padding: 8px 5px;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-input-area {
+	text-align: left;
+	height: auto;
+	padding-top: 10px;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-input-area:hover {
+	cursor: text;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-input-area
+.timonix-suggestags-input {
+	max-width: 100%;
+	border: 0;
+	padding-left: 15px;
+    padding-right: 15px;
+    margin: 0px;
+    background-color: transparent !important;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    border-radius: 25px 25px 25px 25px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-width: 0px;
+    border-style: solid;
+    border-color: #2d32ec;
+    outline: none;	
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-input-area
+.timonix-suggestags-input:focus {
+	outline: 0;
+}
+
+.timonix-focus {
+	border-color: transparent !important;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+
+.timonix-focus-light {
+	border-color: #cacaca;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(189, 189, 189, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(189, 189, 189, 0.6);
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-label {
+	cursor: pointer;
+	min-height: 20px;
+}
+
+.timonix-toggle-suggestags {
+	float: right;
+	cursor: pointer;
+}
+
+.timonix-suggestags-area .timonix-suggestags-list {
+	display: none;
+	position: absolute;
+	background: white;
+	border: 1px solid #dedede;
+	z-index: 1;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list {
+	list-style: none;
+	padding: 3px 0px;
+	max-height: 150px;
+    overflow-y: auto;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.timonix-list-item {
+	text-align: left;
+    cursor: pointer;
+    padding: 0px 10px;	
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.timonix-list-item:active {
+	background: #717171;
+    color: white;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.timonix-list-group {
+	text-align: left;
+    padding: 0px 10px;
+    font-weight: bold;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.timonix-item-pad {
+    padding-left: 30px;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.timonix-item-noresult {
+    display: none;
+    color: #ff6060;
+    font-weight: bold;
+    text-align: center;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+.timonix-select-input {
+	display: none;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.active {
+	background: #d9d8d8;
+}
+
+.timonix-suggestags-area
+.timonix-suggestags-list
+ul.timonix-list
+li.timonix-item-pad.active {
+	font-weight: normal;
+}
+
+.timonix-suggestags-input-area
+.timonix-select-tag {
+    padding: 2px 7px;
+    margin: 0px 4px 1px 0px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.timonix-suggestags-input-area
+.timonix-select-tag.col-bg {
+	background: #d8d8d8;
+    color: black;
+	font-size: 14px;
+}
+
+/*.timonix-suggestags-input-area
+.timonix-select-tag:hover {
+	background: #737373;
+    color: white;
+}*/
+
+.timonix-suggestags-input-area
+.disabled.timonix-select-tag {
+    background: #eaeaea;
+    color: #b9b9b9;
+    pointer-events: none;
+}
+
+.timonix-suggestags-input-area
+.flash.timonix-select-tag {
+    background-color: #f57f7f;
+    -webkit-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+
+.timonix-suggestags-input-area
+.timonix-remove-tag {
+	cursor: pointer;
+}

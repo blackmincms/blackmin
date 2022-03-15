@@ -1,0 +1,24 @@
+{
+    "name": "blackmincms/blackmin",
+    "description": "CMS",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Timonix"
+        },
+        {
+            "name": "ComStudio"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "ext-pdo": "*",
+        "ext-mysqli": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "BlackMin\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
