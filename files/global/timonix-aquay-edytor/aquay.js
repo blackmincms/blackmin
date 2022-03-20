@@ -12,609 +12,9 @@
 */
 	
 	// tworzenie logów do konsoli przeglądarki
-	console.info("Iniciowanie: aquay");
-	console.info("Startowanie: aquay");
-	console.info("Ładowanie: aquay");
-	
-	var aquay_text = $(".aquay-text");
-	
-
-	var showingSourceCode = false;
-	var isInEditMode = true;
-	var aquay_edytuj_frame = $(".aquay-text");
-	
-	var aquay_add_klucz = 0;
-	
-	var aquay_selected_text = undefined;
-	
-	var getSelectionStart = function() {
-      var node = document.getSelection().anchorNode,
-          startNode = (node && node.nodeType === 3 ? node.parentNode : node);
-      return startNode;
-    }
-
-	function GetSelection () {
-		// pobieranie zaznaczonego tekstu
-		let selection = (window.getSelection().type != "None" ? window.getSelection() : undefined),
-			active = (selection != undefined ? document.activeElement : undefined),
-			range = (selection != undefined ? selection.getRangeAt(0) : undefined),
-			boundary = (selection != undefined ? range.getBoundingClientRect() : undefined),
-			text = (selection != undefined ? selection.toString() : undefined);
-			
-		// sprawdzanie czy istnieje zaznaczenie
-		if (selection != undefined && text != "" && selection.type == "Range"){
-			return {
-				start: function () {
-					return {
-						tag: $(range.startContainer)[0].parentNode.tagName.toLowerCase(),
-						target: $(range.startContainer)[0].parentNode,
-						lenght: range.startOffset
-					};
-				} ,
-				stop: function () {
-					return {
-						tag: $(range.endContainer)[0].parentNode.tagName.toLowerCase(),
-						target: $(range.endContainer)[0].parentNode,
-						lenght: range.endOffset
-					}
-				},
-				orginalStart: function () {
-					return {
-						tag: $(selection.anchorNode)[0].parentNode.tagName.toLowerCase(),
-						target: $(selection.anchorNode)[0].parentNode,
-						lenght: selection.anchorOffset
-					};
-				} ,
-				orginalStop: function () {
-					return {
-						tag: $(selection.focusNode)[0].parentNode.tagName.toLowerCase(),
-						target: $(selection.focusNode)[0].parentNode,
-						lenght: selection.focusOffset
-					}
-				},
-				selection: selection,
-				parent: active,
-				text: text,
-				range: range,
-				boundary: boundary,
-				orginal: function () {
-					let text = "",
-						activeElTagName = active ? active.tagName.toLowerCase() : null;
-					if ((activeElTagName == "textarea") || (activeElTagName == "input" &&  /^(?:text|search|password|tel|url)$/i.test(active.type)) && (typeof active.selectionStart == "number")) {
-						text = active.value.slice(active.selectionStart, active.selectionEnd);
-					} else if (active) {
-						text = text;
-					}
-					return text;
-				},
-				clone: function () {
-					return range.cloneContents();
-				},
-				same: function () {
-					return $(selection.anchorNode)[0].parentNode === $(selection.focusNode)[0].parentNode ? true : false;
-				}
-			}
-		}else{
-			return undefined;
-		}
-	}
-
-	// zmianna zaznaczenia select
-	function aquaySelectedOption(s, t) {
-		// pobiweranie selcta do zmienienia
-		let q = $(s);
-		// sprawdzanie czy select istnieje i czy istnieje opcja do zaznaczenia
-		if(q != undefined){
-			// sprawdzenie czy istnieje 
-			if(q.find('option[value='+ t +']')){
-				q.find('option[value='+ t +']').attr('selected','selected');
-				return true;
-			}else{
-				return false
-			}
-		}
-	}
-		
-	document.addEventListener("mouseup", (e) => {
-		if(GetSelection() != undefined){
-			// sprawdzanie czy rodzic jest zaznaczalny		
-			if($(GetSelection().start().target.closest(".aquay-edytuj-text")).hasClass("aquay-edytuj-text") == true){
-				aquay_selected_text = GetSelection();
-			}
-		}else{
-			if (GetSelection() != undefined) {
-				if ($(GetSelection().start().target.closest(".aquay-edytuj-text")) != undefined) {
-					if($(GetSelection().start().target.closest(".aquay-edytuj-text")).hasClass("aquay-edytuj-text") == false){
-						$(".tsr-modal-active .tsr-modal-close").click();
-					}
-				}else{
-					window.setTimeout(function (){
-						$(".tsr-modal-active .tsr-modal-close").click();
-					}, 0, true);
-				}
-			}else {
-				if(!((e.target.nodeName.toLowerCase() == "textarea") || (e.target.nodeName.toLowerCase()  == "input") || (e.target.nodeName.toLowerCase()  == "select"))){
-					if ($(e.target.closest(".aquay-edytuj-text")) === undefined) {
-						$(".tsr-modal-active .tsr-modal-close").click();
-					}
-				}
-			}
-		}
-    })
-	
-	// funkcje edytora tekstu aquay
-	function aquay_edytor (command) {
-		document.execCommand(command, false , null);
-	}
-	
-	function aquay_edytor_format (command, arg) {
-		document.execCommand(command, false, arg);
-	}
-
-	function aquay_edytor_link (command) {		
-		var theSelection = window.getSelection();
-		var theRange = theSelection.getRangeAt(0);
-		
-		var url_add= $('input[name="url_add"]').val();
-		var tytul_add= $('input[name="tytul_add"]').val();
-		var target_add= $('select[name="target_add"]').val();
-		
-	}
-
-	function aquay_edytor_toggle_kod () {
-		if(showingSourceCode){
-			var aquay_tresc = $(".aquay-text").text();
-			$(".aquay-text").html(aquay_tresc);
-			showingSourceCode = false;
-		}else{
-			var aquay_kod = $(".aquay-text").html();
-			$(".aquay-text").text(aquay_kod);
-			showingSourceCode = true;
-		}
-	}
-
-	function aquay_edytor_toggle_edytuj () {
-		if(isInEditMode){
-			$(".aquay-text").designMode = 'Off';
-			isInEditMode = false;
-			$(".aquay-edytuj-text").attr("contenteditable", "false");
-		}else{
-			$(".aquay-text").designMode = 'On';
-			$(".aquay-edytuj-text").attr("contenteditable", "true");
-			isInEditMode = true;
-		}
-	}	
-
-	function aquay_edytor_get_code () {
-		var aquay_get_kod = $(".aquay-text").html();
-		console.info("Pobieranie kodu: " + aquay);
-		console.info("Kod został pobrany prawidłowo: " + aquay);
-		return aquay_get_kod;
-	}	
-
-	// pobranie danych do dodania linku
-	
-	$(document).on('click', '#link_add', function(oEvent){	
-		var url_add = ($('input[name="url_add"]')[1].value == "" ? "home" : $('input[name="url_add"]')[1].value);
-		var tytul_add = ($('input[name="tytul_add"]')[1].value == "" ? undefined : $('input[name="tytul_add"]')[1].value);
-		var target_add = ($('select[name="target_add"]')[1].value == "" ? "_self" : $('select[name="target_add"]')[1].value);	
-		
-		// fokusowanie elementu
-		aquay_selected_text.parent.focus();
-		// tworzenie nowego objektu range
-		let range = new Range();
-		// ustawianie zakresów do zaznaczenia
-		range.setStart(aquay_selected_text.start().target.firstChild, aquay_selected_text.start().lenght);
-		range.setEnd(aquay_selected_text.stop().target.firstChild, aquay_selected_text.stop().lenght);
-		// usuwanie poprzedniego zaznaczenia
-		window.getSelection().removeAllRanges();
-		// zaznaczenie odpowiedniego zakresu
-		window.getSelection().addRange(range);
-		
-		// edytowanie linku
-		document.execCommand('createLink', false, "aquay_link_to_editable");
-		//aquay_edytor_format('createLink', url_add);
-		
-		// pobieranie linku do edycji
-		let link_edit = $('a[href="aquay_link_to_editable"]');
-		// ustawianie atrybutów
-		(url_add != undefined ? link_edit.attr("href", url_add) : '');
-		(tytul_add != undefined ? link_edit.attr("title", tytul_add) : '');
-		(target_add != undefined ? link_edit.attr("target", target_add) : '');
-		// pobieranie linku do kontroli
-		let link_edit_control = $('a[href="aquay_link_to_editable"]');
-		// sprawdzanie czy zmieniono link poprawnie
-		if (link_edit_control !== undefined && link_edit_control.attr("href") === "aquay_link_to_editable") {
-			// usuwanie linku
-			aquay_edytor_format('unlink');
-		}else{
-			// pobieranie zaznaczenia tekstu
-			if(GetSelection() != undefined){
-				// sprawdzanie czy rodzic jest zaznaczalny
-				if($(GetSelection().parent).hasClass("aquay-edytuj-text")){
-					// aktulizowanie zanaczenia
-					aquay_selected_text = GetSelection();
-				}
-			}
-		}
-		
-		console.info("aquay: dodawanie linku");
-	});	
-
-	$(document).on('click', ".aquay .link", function(oEvent){	
-		if (aquay_selected_text != undefined) {
-			if(aquay_selected_text.same() === true) {
-				if(aquay_selected_text.start().tag == "a" && aquay_selected_text.stop().tag == "a"){
-					$('input[name="url_add"]').attr("value", $(aquay_selected_text.start().target).attr("href"));
-					$('input[name="tytul_add"]').attr("value", $(aquay_selected_text.start().target).attr("title"));
-					//zaznaczanie odpowiedniej opcij
-					aquaySelectedOption($('select[name="target_add"]'), $(aquay_selected_text.start().target).attr("target"));
-				}
-			}
-			if(GetSelection() != undefined){
-				let sel = (document.activeElement != undefined ? true : false);
-				if (sel === true) {
-					// sprawdzanie czy rodzic jest zaznaczalny	
-					if($(GetSelection().start().target.closest(".aquay-edytuj-text")).hasClass("aquay-edytuj-text") == false){
-						$(".tsr-modal-active .tsr-modal-close").click();
-					}
-				}else{
-					$(".tsr-modal-active .tsr-modal-close").click();
-				}
-			}else{
-				$(".tsr-modal-active .tsr-modal-close").click();
-			}
-		}else{
-			$(".tsr-modal-active .tsr-modal-close").click();
-		}
-	});	
-	
-	// pokazywanie menu wyboru wstawiania nowych elementów po pliknięciu
-	
-	$(document).on("click", ".aquay-edytor-menu", function(oEvent){
-		$(".aquay-edytor-element-menu").toggleClass("aquay-edytor-menu-visable");
-		 return false;
-	});	
-	
-	$(document).click(function (event) {
-		if ($(event.target).closest(".aquay-edytor-element-menu").length === 0) {
-			$(".aquay-edytor-element-menu").removeClass("aquay-edytor-menu-visable");
-		}
-	});
-	
-	// po wpisaniu 1 znaku przycisk do dodawania z dysku zostanie schowany
-	// jeżeli będzie miał wartosc null to pokażemy przycisk z powrotem
-	$(document).on("keyup", ".aquay-link", function(oEvent){
-		var aquay_keypress = $(this).closest(".aquay-link").val().length;
-		
-		if (aquay_keypress >= 1) {
-			$(this).closest(".aquay-edytuj-container").find(".aquay-add-media").addClass("aquay-hidden");
-			var url_get_img = $(this).closest(".aquay-edytuj-container").find(".aquay-link").val();
-			
-			// tworzenie elementu img jeżeli zostanie podana wartosc
-			var add_img_obrazek = document.createElement("img");
-			add_img_obrazek.setAttribute('src', url_get_img);
-			add_img_obrazek.setAttribute('alt', url_get_img);
-			add_img_obrazek.setAttribute('title', url_get_img);
-			add_img_obrazek.setAttribute('class', "aquay-obrazek");
-			
-			$(this).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").find(".aquay-obrazek").remove();
-			$(this).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").append(add_img_obrazek);
-		}else{
-			$(this).closest(".aquay-edytuj-container").find(".aquay-add-media").removeClass("aquay-hidden");
-			$(this).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").find(".aquay-obrazek").remove();
-		}
-		
-	});	
-	
-	// usuwanie elementów po podwójnym kliknięciu na nazwę bloku
-	$(document).on("dblclick", ".aquay-type-title", function(oEvent){
-		console.log("sdsd");
-		$(this).closest(".aquay-type-title").closest(".aquay-edytuj-container").remove();
-	});	
-
-	// sortowanie kontenerów bloków
-	// przeciąganie w górę i w dół
-	$( function() {
-		$( ".aquay-text" ).sortable({
-		  connectWith: ".aquay-text",
-		  handle: ".aquay-type-title",
-		  cancel: ".aquay-toggle",
-		  placeholder: "aquay-placeholder"
-		});
-	 
-		$( ".aquay-edytuj-container" )
-		//.prepend( "<span class='ui-icon ui-icon-minusthick aquay-toggle'></span>")
-		  //.addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-		  .find( ".aquay-type-title" )
-			//.addClass( "ui-widget-header ui-corner-all" )
-			//.prepend( "<span class='ui-icon ui-icon-minusthick aquay-toggle'></span>");
-			;
-	 
-		$( ".aquay-toggle" ).on( "click", function() {
-		  var icon = $( this );
-		  //icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-		  icon.closest( ".aquay-edytuj-container" ).find( ".aquay-edytuj-text" ).toggle();
-		});
-	});
-
-	// modal ------- modal ---- aquay ---- modal -------- modal //
-
-	// tworzenie modal boxa
-	$(document).on("click", ".aquay-open-modal", function(oEvent){
-		var aquay_open_modal = $(this).closest(".aquay-open-modal").attr('id');
-		var aquay_this_button = $(this).closest(".aquay-open-modal").attr('id');
-		var aquay_this_multiply = $(this).closest(".aquay-open-modal").attr('data-multiply');
-		var aquay_this_typebox = $(this).closest(".aquay-edytuj-container").attr('data-blok-type');
-		var aquay_this_element = ".aquay-modal-" + aquay_open_modal;
-
-		// dodawanie do html klasy > blokada przesuwania (scrola)
-		$("html").addClass("aquay-modal-html");
-		
-		// blokowanie dodawania własnego obrazka po przez url
-		//////$(this).closest(".aquay-edytuj-container").find(".aquay-obrazek-url").addClass("aquay-hidden");
-		var this_obrzek_url = $(this).closest(".aquay-edytuj-container").find(".aquay-obrazek-url");
-
-		// sprawdzanie czy dany modal box jstnieie. jeżeli tak to go pokażemy jeżeli nie to tworzymy go na nowo i wyświetlamy
-		if($(aquay_this_element).length==1) {
-			$(aquay_this_element).removeClass("aquay-hidden");
-		} else {
-			// tworzenie elementu modal by wyświetlić zawartość
-			var add_modal_div = document.createElement("div");
-			add_modal_div.setAttribute('title', "aquay / black min / modal");
-			add_modal_div.setAttribute('class', "aquay-modals" + " aquay-modal-" + aquay_open_modal);
-			add_modal_div.setAttribute('id', "aquay-modal-" + aquay_open_modal);
-			
-			// dodawanie stworzonego elementu do dokumentu html 
-			$(this).closest("body").append(add_modal_div);
-			
-			// tworzenie elementu modal container by wyświetlić dopasowaną zawartość
-			var add_modal_div_container = document.createElement("div");
-			add_modal_div_container.setAttribute('title', "aquay / black min / modal");
-			add_modal_div_container.setAttribute('class', "aquay-modal-container");
-			
-			// dodawanie stworzonego elementu do dokumentu html 
-			$(aquay_this_element).append(add_modal_div_container);
-			
-			// tworzenie elementu modal container by wyświetlić dopasowaną zawartość
-			var add_modal_div_container_load = document.createElement("div");
-			add_modal_div_container_load.setAttribute('title', "aquay / black min / modal load");
-			add_modal_div_container_load.setAttribute('class', "aquay-modal-load");
-			
-			// dodawanie stworzonego elementu do dokumentu html 
-			$(aquay_this_element).find(".aquay-modal-container").append(add_modal_div_container_load);
-
-			// tworzenie elementu modal container by wyświetlić dopasowaną zawartość
-			var add_modal_closed = document.createElement("div");
-			add_modal_closed.setAttribute('title', "aquay / black min / modal closed");
-			add_modal_closed.setAttribute('class', "aquay-modal-closed");
-			
-			// dodawanie stworzonego elementu do dokumentu html 
-			$(aquay_this_element).find(".aquay-modal-container").append(add_modal_closed);
-			
-			load_dysk_media("25", aquay_this_multiply, aquay_this_element, aquay_this_typebox, aquay_this_button, aquay_open_modal);			
-		}
-		
-		return false;
-	});	
-
-	// przypisywanie modalowi funkcji bez kliknięcia
-	$(document).on("click", ".jquery-modal", function(oEvent){
-		return false;
-	});	
-	
-	// zamykanie modal boxa po kliknięciu na czarne pole
-	$(document).click(function (event) {
-		if ($(event.target).closest(".aquay-modal-container").length === 0) {
-			$(".aquay-modals").addClass("aquay-hidden");
-			
-			// usuwanie z html klasy > blokada przesuwania (scrola)
-			$("html").removeClass("aquay-modal-html");
-			// odblokowanie dodawania własnego obrazka po przez url
-			$(this).closest(".aquay-edytuj-container").find(".aquay-obrazek-url").removeClass("aquay-hidden");
-		}
-	});
-	
-	// zamykanie modal boxa po kliknięciu na zakmkcji modal box
-	$(document).on("click", ".aquay-modal-closed", function(oEvent){
-		$(".aquay-modals").addClass("aquay-hidden");
-			
-		// usuwanie z html klasy > blokada przesuwania (scrola)
-		$("html").removeClass("aquay-modal-html");
-		// odblokowanie dodawania własnego obrazka po przez url
-		$(this).closest(".aquay-edytuj-container").find(".aquay-obrazek-url").removeClass("aquay-hidden");
-		$(this).closest(aquay_open_modal).closest(".aquay-edytuj-container").find(".aquay-obrazek-url").removeClass("aquay-hidden");
-		$(this_obrzek_url).removeClass("aquay-hidden");
-	});	
-
-	// zamykanie modal boxa po kliknięciu na zakmkcji modal box
-	function aquay_cloase_modal(){
-		$(".aquay-modals").addClass("aquay-hidden");
-		
-		// usuwanie z html klasy > blokada przesuwania (scrola)
-		$("html").removeClass("aquay-modal-html");
-		// odblokowanie dodawania własnego obrazka po przez url
-		$(this).closest(".aquay-edytuj-container").find(".aquay-obrazek-url").removeClass("aquay-hidden");
-	};	
-	
-	// ładowanie pliku który doda nam zdjęcie z dysku (db)
-
-	function load_dysk_media(ile_load, multiply, get_plik, typebox, button, klucz) {
-		console.log(button);
-		$.ajax({
-			type:"POST",
-			//url:"laduj/all-dysk-get-media.php",
-			url:"admin-dysk-get-media.php",
-			data:{
-				ile_load:ile_load,
-				multiply:multiply,
-				get_plik:get_plik,
-				typebox:typebox,
-				button:button,
-				klucz:klucz,
-			}
-		})
-		.done(function(info){
-			//$('#contajner_post_add').text("");
-			$(get_plik).find(".aquay-modal-container").find(".aquay-modal-load").append(info);
-			$(".tsr-alert").delay(5000).fadeIn(5000).animate({opacity: "0"}, 1000).delay(1000).hide(500, function () { $(this).remove(); });
-		})
-		.fail(function(){
-			alert("Wystąpił błąd. Spróbuj ponownie później");
-		});
-		
-	}	
-	
-	// modal ------- modal ---- aquay ---- modal -------- modal //
-
-	// funkcjia do pobierania pliku i wstawianie go do boxa img 
-	function add_media_to_element(akcja_records, typebox, button, src________) {
-		var this_button_add = "#" + button;
-		var src = "";
-		console.log(typebox);console.log(this_button_add);
-		
-		// howanie dodawania włanego niestandardowego zdjecja
-		$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-obrazek-url").addClass("aquay-hidden");
-		
-		// sprawdzenie czy element dodający to zdjęcie
-		if (typebox == "type_blok/black_min_miniaturka_post"){
-
-			// pobieranie src wybranego img
-			src = $('.id-records-'+ akcja_records).find(".img").attr("src");
-			alt = $('.id-records-'+ akcja_records).find(".img").attr("title");
-			
-			// tworzenie elementu img jeżeli zostanie podana wartosc
-			var add_img_obrazek = document.createElement("img");
-			add_img_obrazek.setAttribute('src', src);
-			add_img_obrazek.setAttribute('alt', alt);
-			add_img_obrazek.setAttribute('title', alt);
-			add_img_obrazek.setAttribute('class', "black-min-miniaturka-post");
-			
-			$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").find(".black-min-miniaturka-post").remove();
-			$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").append(add_img_obrazek);
-			
-		}
-
-		// sprawdzenie czy element dodający to zdjęcie
-		if (typebox == "type_blok/obrazek"){
-
-			// pobieranie src wybranego img
-			src = $('.id-records-'+ akcja_records).find(".img").attr("src");
-			alt = $('.id-records-'+ akcja_records).find(".img").attr("title");
-			data_obrazek = $('.id-records-'+ akcja_records).find(".img").attr("data-grafika");
-			
-			// tworzenie elementu img jeżeli zostanie podana wartosc
-			var add_img_obrazek = document.createElement("img");
-			add_img_obrazek.setAttribute('src', src);
-			add_img_obrazek.setAttribute('alt', alt);
-			add_img_obrazek.setAttribute('title', alt);
-			add_img_obrazek.setAttribute('class', "aquay-obrazek");
-			add_img_obrazek.setAttribute('data-grafika', data_obrazek);
-			
-			$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").find(".aquay-obrazek").remove();
-			$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-obrazek").append(add_img_obrazek);
-			
-		}
-		
-		if (typebox == "type_blok/galeria"){
-			
-			// usuwanie poprzedniego img aby zastąpić nowym
-			$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-galeria").find(".aquay-galeria").remove();
-			
-			for (var i=0; i< akcja_records.length; i++){
-
-				// pobieranie src wybranego img
-				src = $('.id-records-'+ akcja_records[i]).find(".img").attr("src");
-				alt = $('.id-records-'+ akcja_records).find(".img").attr("title");
-				data_obrazek = $('.id-records-'+ akcja_records).find(".img").attr("data-grafika");
-				
-				// tworzenie elementu img jeżeli zostanie podana wartosc
-				var add_img_obrazek = document.createElement("img");
-				add_img_obrazek.setAttribute('src', src);
-				add_img_obrazek.setAttribute('alt', alt);
-				add_img_obrazek.setAttribute('title', alt);
-				add_img_obrazek.setAttribute('class', "aquay-galeria");
-				add_img_obrazek.setAttribute('data-grafika', data_obrazek);
-				
-				$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-galeria").append(add_img_obrazek);
-
-			}
-			
-		}
-
-		if (typebox == "type_blok/plik"){
-			
-			// usuwanie poprzedniego img aby zastąpić nowym
-			$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-galeria").find(".aquay-galeria").remove();
-			
-			for (var i=0; i< akcja_records.length; i++){
-
-				// pobieranie src wybranego img
-				src = $('.id-records-'+ akcja_records[i]).find(".img").attr("data-sciezka")
-				
-				$(this_button_add).closest(".aquay-edytuj-container").find(".aquay-load-plik").attr("data-pobierz", src);
-
-			}
-			
-		}
-	
-		aquay_cloase_modal();
-	};
-	
-	$(document).ready(function() { 
-		$(".aquay-blok-akapit").on( "click", function() {
-			$(".aquay-kopia-blok-text > div").clone().appendTo(".aquay-text");
-		});
-	});
-		
-	$(document).on('click', ".aquay-blok-cytat", function(oEvent){	
-		$(".aquay-kopia-blok-cytat > div").clone().remove('div[class=".aquay-kopia-blok-text"]').appendTo(".aquay-text");
-	});	
-
-	$(document).on('click', ".aquay-blok-naglowek", function(oEvent){	
-		$(".aquay-kopia-blok-naglowek > div").clone().appendTo(".aquay-text");
-	});	
-	
-	$(document).on('click', ".aquay-blok-kod", function(oEvent){	
-		$(".aquay-kopia-blok-kod > div").clone().appendTo(".aquay-text");
-	});	
-
-	$(document).on('click', ".aquay-blok-wlasny-html", function(oEvent){	
-		$(".aquay-kopia-blok-wlasny-html > div").clone().appendTo(".aquay-text");
-	});	
-	
-	$(document).on('click', ".aquay-blok-obrazek", function(oEvent){	
-		$(".aquay-kopia-blok-obrazek > div").clone().appendTo(".aquay-text").closest(".aquay-edytuj-container").find(".aquay-add-media").attr("id", "aquay_" + aquay_add_klucz).attr("aquay-obiect-put", ".aquay_" + aquay_add_klucz).closest(".aquay-edytor-obrazek").find(".aquay-load-obrazek").addClass("aquay_" + aquay_add_klucz);
-		aquay_add_klucz++;
-	});	
-	
-	$(document).on('click', ".aquay-blok-galeria", function(oEvent){	
-		$(".aquay-kopia-blok-galeria > div").clone().appendTo(".aquay-text").closest(".aquay-edytuj-container").find(".aquay-add-media").attr("id", "aquay_" + aquay_add_klucz).attr("aquay-obiect-put", ".aquay_" + aquay_add_klucz).closest(".aquay-edytor-galeria").find(".aquay-load-galeria").addClass("aquay_" + aquay_add_klucz);
-		aquay_add_klucz++;
-	});	
-	
-	$(document).on('click', ".aquay-blok-plik", function(oEvent){	
-		$(".aquay-kopia-blok-plik > div").clone().appendTo(".aquay-text").closest(".aquay-edytuj-container").find(".aquay-add-media").attr("id", "aquay_" + aquay_add_klucz).attr("aquay-obiect-put", ".aquay_" + aquay_add_klucz).closest(".aquay-edytor-plik").find(".aquay-load-plik").addClass("aquay_" + aquay_add_klucz);
-		aquay_add_klucz++;
-	});	
-	
-	// powiadomienie o zakończeniu ładowania
-	
-	$(document).ready(function() { 
-		console.info("Ładowanie Zakończone: aquay");
-	});
-
-
-
-
-
-
-
-
-
 
 	// this a new function editora
-	function aquay (__t = ".aquay-editor-container", aquay_path = "files/global/timonix-aquay-edytor/") {
+	function aquay (__t = ".aquay-editor-container", aquay_path = "files/global/timonix-aquay-edytor/", only = false) {
 		// load start
 		console.info("Aquay: Ładowanie");
 		console.info("Aquay: Iniciowanie");
@@ -624,21 +24,223 @@
 		var settings = {
 			"error_timer" : 1000,
 			"load_editor_item" : ["all"],
-			"aquay_default_font" : [
-				{
-					"altona_sans": ["AltonaSans-Italic.ttf", "AltonaSans-Regular.ttf"],
-					"console": ["Console.ttf","Console_Input.ttf", "Console_Relay.ttf", "Console_Output.ttf"],
-					"dark_seventh": ["Dark_Seventh_Personal_Use.otf"],
-					"harmony_4": ["HARMONY_Personal_use.otf"],
-					"monea_alegante": ["Monea_Alegante.otf"],
-					"open_sans": ["OpenSans-Italic.ttf", "OpenSans.ttf"],
-					"oxygen": ["Oxygen-Bold.ttf", "Oxygen-Light.ttf","Oxygen-Regular.ttf"],
-					"saling_cinta": ["Saling_Cinta.ttf"],
-					"ubuntu": ["Ubuntu-Regular.ttf","Ubuntu-MediumItalic.ttf","Ubuntu-Medium.ttf","Ubuntu-LightItalic.ttf","Ubuntu-Light.ttf","Ubuntu-Italic.ttf","Ubuntu-BoldItalic.ttf","Ubuntu-Bold.ttf"]
-			 	}
-			]
+			"aquay_default_font" : {
+				"altona_sans": ["AltonaSans-Italic.ttf", "AltonaSans-Regular.ttf"],
+				"console": ["Console.ttf","Console_Input.ttf", "Console_Relay.ttf", "Console_Output.ttf"],
+				"dark_seventh": ["Dark_Seventh_Personal_Use.otf"],
+				"harmony_4": ["HARMONY_Personal_use.otf"],
+				"monea_alegante": ["Monea_Alegante.otf"],
+				"open_sans": ["OpenSans-Italic.ttf", "OpenSans.ttf"],
+				"oxygen": ["Oxygen-Bold.ttf", "Oxygen-Light.ttf","Oxygen-Regular.ttf"],
+				"saling_cinta": ["Saling_Cinta.ttf"],
+				"ubuntu": ["Ubuntu-Regular.ttf","Ubuntu-MediumItalic.ttf","Ubuntu-Medium.ttf","Ubuntu-LightItalic.ttf","Ubuntu-Light.ttf","Ubuntu-Italic.ttf","Ubuntu-BoldItalic.ttf","Ubuntu-Bold.ttf"]
+			}
 		};
-		let buffor = [];
+		let buffor = 0;
+		let error_count;
+		// default navigation items
+		const aquay_item = {
+			0: ["toogle_editable","|","cut","copy","selectAll","|","undo","redo","|","removeFormat"],
+			1: ["bold","italic","underline","strikeThrough","subscript","superscript","|","justifyLeft","justifyCenter","justifyRight","justifyFull","|","indent","outdent","|","insertUnorderedList","insertOrderedList","|","insertParagraph","|","link","unlink"],
+			2: ["formatBlock","fontSize","fontName","foreColor","hiliteColor","|","add"]	
+		};
+		const aquay_item_ = {
+			"toogle_editable": "button/hiddenfield-big.png",
+			"cut": "clipboard/cut-big.png",
+			"copy": "clipboard/copy-big.png",
+			"selectAll": "text/selectall-big.png",
+			"undo": "undo/undo-big.png",
+			"redo": "undo/redo-big.png",
+			"removeFormat": "clipboard/removeformat-big.png",
+			"bold": "stylize/bold-big.png",
+			"italic": "stylize/italic-big.png",
+			"underline": "stylize/underline-big.png",
+			"strikeThrough": "stylize/strike-big.png",
+			"subscript": "stylize/subscript-big.png",
+			"superscript": "stylize/superscript-big.png",
+			"justifyLeft": "justify/justifyleft-big.png",
+			"justifyCenter": "justify/justifycenter-big.png",
+			"justifyRight": "justify/justifyright-big.png",
+			"justifyFull": "justify/justifyblock-big.png",
+			"indent": "akapit/bidiltr-big.png",
+			"outdent": "akapit/bidirtl-big.png",
+			"insertUnorderedList": "list/bulletedlist-big.png",
+			"insertOrderedList": "list/numberedlist-big.png",
+			"insertParagraph": "linia/horizontalrule-big.png",
+			"link": "flags/link-big.png",
+			"unlink": "flags/unlink-big.png",
+			"foreColor": "color/textcolor-big.png",
+			"hiliteColor": "color/bgcolor-big.png",
+			"add": "add_element/showblocks-add.png"	
+		};
+		// translate to pl
+		const translate_pl = {
+			"toogle_editable": "Blokada Edycji",
+			"cut": "Wytnij",
+			"copy": "Kopiuj",
+			"selectAll": "Zaznacz całość",
+			"undo": "Cofnij",
+			"redo": "Ponów",
+			"removeFormat": "Usuń formatowanie",
+			"bold": "Pogróbienie",
+			"italic": "Pochylenie",
+			"underline": "Podkreślenie",
+			"strikeThrough": "Przekreślenie",
+			"subscript": "Index dolny",
+			"superscript": "Index górny",
+			"justifyLeft": "Wyśrodkuj do lewej",
+			"justifyCenter": "Wyśrodkuj",
+			"justifyRight": "Wyśrodkuj do prawej",
+			"justifyFull": "Wyjustuj",
+			"indent": "Akapit od lewej",
+			"outdent": "Akapit od prawej",
+			"insertUnorderedList": "Lista kropkowana",
+			"insertOrderedList": "Lista numerowana",
+			"insertParagraph": "Przerwa",
+			"link": "Link",
+			"unlink": "Usuń link",
+			"foreColor": "Kolor tekstu",
+			"hiliteColor": "Kolor tła",
+			"fontName": "Czcionka",
+			"fontSize": "Wielkość tekstu",
+			"formatBlock": " Nagłówek",
+			"add": "Dodaj element"	
+		};
+		// default block
+		const __block = {
+			0 : {"name": "text", "display": "Tekst", "title": "Dodaj normalny tekst", "img": ""},
+			1 : {"name": "quote", "display": "Cytat", "title": "Dodaj swój cytat", "img": ""},
+			2 : {"name": "heading", "display": "Nagłówek", "title": "Dodaj nagłówek artykułu", "img": ""},
+			3 : {"name": "picture", "display": "Zdięcje", "title": "Dodaj zdjęcie", "img": ""},
+			4 : {"name": "gallery", "display": "Galeria", "title": "Dodaj galerię", "img": ""},
+			5 : {"name": "file", "display": "Plik", "title": "Dodaj plik z serwera", "img": ""},
+			6 : {"name": "code", "display": "kod", "title": "Dodaj kod do uruchomienia w przęglądarce", "img": ""},
+			7 : {"name": "own_code", "display": "Własny kod", "title": "Dodaj kod do podglądu (podświetlenie składnij)", "img": ""}
+		};
+		// saved selection
+		let aquaySelection = undefined;
+		let aquaySelectText = undefined;
+		let aquaySelectNode = undefined;
+		let aquaySelectNodeFocus = undefined;
+		let aquayAddFile = undefined;
+		// link container adds
+		let aquay_links = `
+				<section class="tsr aquay-modal-container-colision">
+					<section class="col-inp-25 tsr-p-10px fs-90 ">
+						<span class="tsr-vertical-align-sub">
+							url:
+						</span>
+					</section>
+				<section class="col-inp-75 tsr-p-10px fs-90 aquay-modal-container-colision">
+					<input type="url" name="url_add" class="input" placeholder="https://blackmin.pl" autocomplete="off" focus="false" />
+				</section>
+				</section><section class="tsr aquay-modal-container-colision">
+					<section class="col-inp-25 tsr-p-10px fs-90 ">
+						<span class="tsr-vertical-align-sub">
+							target:
+						</span>
+					</section>
+					<section class="col-inp-75 tsr-p-10px fs-90 aquay-modal-container-colision">
+						<select name="target_add">
+							<option value="_self">W tej samej karcie</option>
+							<option value="_blank">W nowej karcie</option>
+							<option value="_parent">W ramce</option>
+							<option value="_top">W nowym oknie</option>
+						</select>
+					</section>
+				</section><div class="tsr tsr-mt-50 tsr-clear-both aquay-modal-container-colision">
+					<section class="tsr tsr-inp col-2 tsr-pr-10px ">
+						<button type="button" value="Dodaj link" class="buttom aquay_add_link" >Dodaj link</button>
+					</section>
+					<section class="tsr tsr-button tsr-error tsr-modal-closed-button col-2">
+						<span>
+							Anuluj!
+						</span>
+					</section>
+				</div>
+			`
+		;
+		// add file from db
+		let aquay_file = `
+			<div class="tsr-modal">
+				<section class="tsr load-aquay">
+					<section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
+				</section>
+			</div>
+		`;
+		/** @jsx dom */
+		const dom = (name, props, ...children) => {
+			const elem = document.createElement(name);
+
+			Object.keys(props || {}).forEach(k => {
+				if (k === 'style') {
+					Object.keys(props[k]).forEach(sk => {
+						elem.style[sk] = props[k][sk];
+					});
+				} else {
+					elem[k] = props[k];
+				}
+			});
+
+			const addChild = (child) => {
+				if (Array.isArray(child)) {
+					child.forEach(c => addChild(c));
+				} else if (typeof child === 'object') {
+					elem.appendChild(child);
+				} else {
+					elem.appendChild(document.createTextNode(child));
+				}
+			}
+
+			(children || {}).forEach(c => addChild(c));
+
+			return elem;
+		};
+
+		// load aquay editors
+		window.addEventListener("load", () => {
+			try {
+				if (CheckModuls()) {
+					// check download moduls
+					if (setting() !== false || block_scheme() !== false) {
+						add_font();
+						uis();
+						blocks();
+						load_block();
+					} else {
+						setTimeout(() => {
+							loading();
+						}, 500);
+					}
+					
+				}
+			} catch (error) {
+				console.error("Aquay: Not 'tsr' modules avaliable | " + error);
+			}
+		});
+
+		// The buffer function
+		function buffers(t) {
+			
+		}
+
+		function loading() {
+			setTimeout(() => {
+				if (buffor == 2) {
+					add_font();
+					uis();
+					blocks();
+					load_block();
+				}else{
+					if (error_count != 50) {
+						error_count++;
+						loading();
+					} else {
+						console.error("Aquay: ERROR load editors");
+					}
+				}
+			}, 500);
+		}
 
 		// check tsr moduls
 		function CheckModuls() {
@@ -716,6 +318,26 @@
 				return undefined;
 			}
 		}
+
+		function getCaretCharOffset(element) {
+			var caretOffset = 0;
+		  
+			if (window.getSelection) {
+			  var range = window.getSelection().getRangeAt(0);
+			  var preCaretRange = range.cloneRange();
+			  preCaretRange.selectNodeContents(element);
+			  preCaretRange.setEnd(range.endContainer, range.endOffset);
+			  caretOffset = preCaretRange.toString().length;
+			}else if (document.selection && document.selection.type != "Control") {
+			  var textRange = document.selection.createRange();
+			  var preCaretTextRange = document.body.createTextRange();
+			  preCaretTextRange.moveToElementText(element);
+			  preCaretTextRange.setEndPoint("EndToEnd", textRange);
+			  caretOffset = preCaretTextRange.text.length;
+			}
+		  
+			return caretOffset;
+		  }
 	
 		// zmianna zaznaczenia select
 		function aquaySelectedOption(s, t) {
@@ -734,9 +356,9 @@
 		}
 
 		// load function
-		async function load (url = "settings.json", he = "json") {
+		async function load (url = "settings.json", type = "json") {
 
-			if (he === "json") {
+			if (type === "json") {
 				he = {"Content-Type": "application/json"};
 				try {
 					await fetch(aquay_path + url, {
@@ -745,8 +367,8 @@
 					})
 					.then(res => res.json())
 					.then(res => {
-						parse_data(res, he);
-						return true;
+						buffor++;
+						return parse_data(res, type);
 					})
 				} catch (error) {
 					console.error('Aquay: error load assets "' + aquay_path + url + '" | ' + error);
@@ -761,8 +383,8 @@
 					})
 					.then(res => res.text())
 					.then(res => {
-						parse_data(res, he);
-						return res;
+						buffor++;
+						return parse_data(res, type);
 					})
 				} catch (error) {
 					console.error('Aquay: error load assets "' + aquay_path + url + '" | ' + error);
@@ -800,7 +422,6 @@
 		// function parse settings (json parse string)
 		function parse_data(odp, d) {
 			let storage = window.sessionStorage;
-
 			if (Array.isArray(odp) || typeof (odp) === "object") {
 				if (d === "json") {
 					if (cache_test("sessionStorage")) {
@@ -824,7 +445,6 @@
 
 		// function get settings (json parse string)
 		function setting(t = "all") {
-			console.log(load("settings.json", "json"));
 			if (cache_test("sessionStorage")) {
 				let storage = window.sessionStorage;
 				if (t === "all") {
@@ -836,11 +456,10 @@
 				} else {
 					if (storage.getItem("aquay_settings")) {
 						let x = Array.prototype.search(JSON.parse(storage.getItem("aquay_settings")), t);
-						console.log(x);
 						if (x != false) {
 							return x;
 						} else {
-							throw new error("error", "Aquay: wystąpił nie znany błąd!");
+							return settings[t];
 						}
 					} else {
 						load("settings.json", "json");
@@ -848,13 +467,26 @@
 				}
 			} else {
 				if (t === "all") {
-					return setting;
-				}else{
-					let x = Array.prototype.search(setting, t);
-					if (x != false) {
-						return x;
+					if (only === true) {
+						return load("settings.json", "json");
 					} else {
-						throw new error("error", "Aquay: wystąpił nie znany błąd!");
+						return settings;
+					}
+				}else{
+					if (only === true) {
+						let x = Array.prototype.search(load("settings.json", "json"), t);
+						if (x != false) {
+							return x;
+						} else {
+							return settings[t];
+						}
+					} else {
+						let x = Array.prototype.search(setting, t);
+						if (x != false) {
+							return x;
+						} else {
+							return settings[t];
+						}
 					}
 				}
 			}
@@ -869,14 +501,12 @@
 		};
 
 		// function get block scheme
-		function block_scheme (t = "") {
-			console.log(load("aquay.html", "text"));
+		function block_scheme (t = "text") {
 			if (cache_test("sessionStorage")) {
 				let storage = window.sessionStorage;
 				if (storage.getItem("aquay_block_schemat")) {
-					let x = ($(JSON.parse(storage.getItem("aquay_block_schemat"))).find(".aquay-edytuj-container"));
+					let x = $(JSON.parse(storage.getItem("aquay_block_schemat"))).find("section.aquay-edytuj-blok-kopiuj.aquay-kopia-blok-" + t).find(".aquay-edytuj-container");					
 					if (x != undefined) {
-						console.log($(JSON.parse(storage.getItem("aquay_block_schemat"))).find(".aquay-edytuj-container"));
 						return x;
 					} else {
 						throw new error("error", "Aquay: wystąpił nie znany błąd!");
@@ -890,8 +520,27 @@
 			}			
 		}
 
-		setting();
-		block_scheme();
+		// function add font
+		function add_font() {
+			let t = setting("aquay_default_font");
+			let ile = Object.keys(t).length;
+			for (let i = 0; i < ile; i++) {
+				const e = t[Object.keys(t)[i]];
+				let ile2 = e.length;
+				for (let x = 0; x < ile2; x++) {
+					const el = e[x];
+					include_font(el, Object.keys(t)[i]);
+					
+					if (x === 0) {
+						setTimeout(() => {
+							const e1 = Object.keys(t)[i].replace("_", " ");
+							$(document).find(__t).find("select.fontName, .fontName").append(`<option value="${e1.toLocaleUpperCase()}">${e1}</option>`);
+						}, setting("load_editor_item") * 2);
+					}
+				}
+			}
+		}
+
 		// function error raport
 		function error(t = "error", m = "Aquay: wystąpił nieznany błąd", c = "container", a = true) {
 			if((/^(container|aquay|index|bottom|top)$/).test(c.toString())) {
@@ -919,12 +568,52 @@
 		}
 
 		// inports fonts
-		function include_font (t = null) {
-			var link = document.createElement('link');
-			link.setAttribute('rel', 'stylesheet');
-			link.setAttribute('type', 'text/css');
-			link.setAttribute('href', aquay_path);
+		function include_font (t, e) {
+			let link = document.createElement('link');
+			link.setAttribute('rel', 'font');
+			link.setAttribute('type', 'font');
+			link.setAttribute('fontparent', e);
+			link.setAttribute('href', aquay_path + 'font/' + e + "/" + t);
 			document.head.appendChild(link);
+
+			let exp = `<style fontparent="${e}">
+				@font-face {
+					font-family: '${e}';
+					src: url('${aquay_path}font/${e}/${t}');
+				}
+			</style>`;
+			$(document).find("head").append(exp);
+		}
+
+		// function load blocks editors
+		function blocks(t = "text") {
+			let body = $(__t).find(".aquay-block-editor");
+			body.append(block_scheme(t))
+		}
+
+		// function load default block editors
+		function load_block() {
+			// __block
+			let head = $(__t).find(".aquay-navigate .add");
+			head.append('<section class="aquay-edytor-element-menu"></section>');
+			head = head.find(".aquay-edytor-element-menu");
+
+			// add
+			let ile = Object.keys(__block).length;
+			for (let i = 0; i < ile; i++) {
+				const e = __block[i];
+				
+				head.append(`<div class="aquay-edytor-menu-icons aquay-blok-${e.name}" data-blok="${e.name}" title="${e.title}">
+								${e.display}
+							</div>`);
+			}
+
+			window.setTimeout(() => {
+				head.on("click", ".aquay-edytor-menu-icons", (t) => {
+					console.log($(t.currentTarget),$(t.currentTarget).attr("data-blok"));
+					blocks ($(t.currentTarget).attr("data-blok"));
+				})
+			}, 0);
 		}
 
 		// function load interface
@@ -936,29 +625,438 @@
 			aquay_container = aquay_container.find(".aquay");
 			// add head and body
 			aquay_container.append('<section class="aquay-nawigacja aquay-navigate">');
-			aquay_container.append('<div class="aquay-block-editor" contenteditable="true" name="aquayblock">');
+			aquay_container.append('<div class="aquay-block-editor" aquayeditable="true" name="aquayblock">');
 			// get head and body
 			let head = aquay_container.find(".aquay-navigate"),
 				body = aquay_container.find(".aquay-block-editor");
 			
 			// load navigate
 			load_navigate(head);
-			
+
+			window.queueMicrotask( () => {
+				// tsr_sortiner("aquay-data", ".aquay-block-editor", ".aquay-edytuj-container", ".aquay-sorting", 0);
+				$( ".aquay-block-editor" ).sortable({
+					connectWith: ".aquay-block-editor",
+					handle: ".aquay-type-title",
+					cancel: ".aquay-toggle",
+					placeholder: "aquay-placeholder"
+				  });
+				listener();
+			} );
+		}
+		// wywuływanie modal po click link
+		function parseHTML(html) {
+			var t = document.createElement('template');
+			t.innerHTML = html;
+			return t.content;
+		}
+		// function add addEventListener
+		function listener() {
+			window.queueMicrotask( () => {
+				let items = setting("load_editor_item");
+				if (items[0] === "all") {
+					items = aquay_item;
+				}
+
+				let head = $(__t).find(".aquay-navigate");
+
+				let ile = Object.keys(items).length;
+				for (let i = 0; i < ile; i++) {
+
+					const e = items[i];
+					let ile2 = e.length;
+					for (let x = 0; x < ile2; x++) {
+						if (e[x] !== "|") {
+							if ((/^(formatBlock|fontSize|fontName|foreColor|hiliteColor)$/).test(e[x])) {
+								$(head).on("change", `.${e[x]}`, (t) => {
+									aquay_event(t, "change", e[x]);
+								});
+							} else {
+								$(head).on("click", `.${e[x]}`, (t) => {
+									aquay_event(t, "click", e[x]);
+								});
+							}
+						}
+					}
+				}
+
+				$(document).on("click mouseup keydown mousedown keyup", __t + " .aquay-edytuj-text", (t) => {
+					console.log(t);
+					console.log(GetSelection());
+					let storage = window.sessionStorage;
+
+					if (cache_test("sessionStorage")) {
+						if (storage.getItem("aquay_selection")) {
+							storage.setItem("aquay_selection", JSON.stringify(GetSelection()));
+						} else {
+							storage.setItem("aquay_selection", JSON.stringify(GetSelection()));
+						}
+					}
+					(GetSelection() === undefined ? aquaySelection = ($(__t).find(t.target).hasClass("aquay-edytuj-text") === true ? $(__t).find(t.target) : ($(t.target).closest(".aquay-edytuj-text").hasClass("aquay-edytuj-text") === true ? $(t.target).closest(".aquay-edytuj-text") : undefined )) : aquaySelection = GetSelection() );
+					console.log(aquaySelection);
+					console.log(t.target);
+
+					aquaySelectText = getCaretCharOffset(t.currentTarget);
+					aquaySelectNode = window.getSelection();
+					aquaySelectNodeFocus = {
+						"focus": aquaySelectNode.extentNode,
+						"goTo": aquaySelectNode.extentOffset
+					};
+					console.log(aquaySelectNode, window.getSelection(), document.getSelection());
+				});
+
+				tsr_modal(false , __t + " .link", parseHTML(aquay_links));
+				
+				$(document).on("click", __t + " .link", (t) => {
+					$(__t + " .link").attr("tsr-modal-close", "false");
+					setTimeout(() => {
+						if (aquaySelection != undefined) {
+							let url = ($(aquaySelection.selection.focusNode.parentNode).attr("href") === undefined ? undefined : $(aquaySelection.selection.focusNode.parentNode).attr("href"));
+							let tar = ($(aquaySelection.selection.focusNode.parentNode).attr("target") === undefined ? undefined : $(aquaySelection.selection.focusNode.parentNode).attr("target"));
+							console.log($(aquaySelection.selection.focusNode.parentNode), url, tar);
+							console.log($('.tsr-modal-active input[name="url_add"]'), $('.tsr-modal-active select[name="target_add"]'));
+							if (url != undefined) {
+								 $('.tsr-modal-active input[name="url_add"]').value = url;
+							}
+							if (tar != undefined) {
+								 aquaySelectedOption($('.tsr-modal-active select[name="target_add"]'), tar);
+							}
+						}
+					}, 0);
+				});
+
+				$(document).on("click", ".tsr-modal-active .aquay_add_link", (t) => {
+					if (aquaySelection != undefined || aquaySelectNodeFocus != undefined) {
+						// get form value
+						let parent = $(document).find(".tsr-modal-active"),
+							url = parent.find('input[name="url_add"]').val(),
+							target = parent.find('select[name="target_add"]').val();
+							console.log(url, target);
+						(target === undefined ? "_blank" : target);
+						if (url.length === 0) {
+							
+						} else {
+							if (aquaySelection.length) {							
+								if ($(aquaySelection[0]).hasClass("aquay-edytuj-text")) {
+									if (aquaySelectNodeFocus != undefined) {
+										let elm = aquaySelection[0],
+										range = document.createRange(),
+										sel;
+										elm.focus();
+										range.setStart(aquaySelectNodeFocus.focus, aquaySelectNodeFocus.goTo);
+										range.setEnd(aquaySelectNodeFocus.focus, aquaySelectNodeFocus.goTo);
+										sel = window.getSelection();
+										sel.removeAllRanges();
+										sel.addRange(range);
+									}
+									if (aquay_editables('createLink', url)) {
+										setTimeout(() => {
+											(GetSelection() === undefined ? aquaySelection = ($(__t).find(t.target).hasClass("aquay-edytuj-text") === true ? $(__t).find(t.target) : undefined) : aquaySelection = GetSelection() );
+
+											$(aquaySelection.selection.focusNode.parentNode).attr("target", target);
+										}, 0);
+									}
+									$('.tsr-modal-active input[name="url_add"]')[0].value = '';
+									$('.tsr-modal-active .tsr-modal-close').click();						
+								} else {
+									
+								}
+								console.log("sa");
+							} else {
+								console.log("sa2");
+								console.log(aquaySelection,aquaySelection.boundary, aquaySelection.clone(), aquaySelection.orginal(), aquaySelection.orginalStart(), aquaySelection.orginalStop(), aquaySelection.parent, aquaySelection.range, aquaySelection.selection, aquaySelection.start(), aquaySelection.stop());
+								console.log($(aquaySelection));
+
+								if ($(aquaySelection.parent).hasClass("aquay-edytuj-text")) {
+									// $(aquaySelection[0]).append(`<a href="${url}" target="${target}" title="${url}" >${url}</a>`);
+									// $(aquaySelection.parent).focus();
+									console.log($(aquaySelection.parent));
+									// aquay_editables('createLink', url);
+									// document.execCommand('createLink', false, "aquay_link_to_editable");
+
+
+
+
+
+									// fokusowanie elementu
+									aquaySelection.parent.focus();
+									// tworzenie nowego objektu range
+									let range = new Range();
+									// ustawianie zakresów do zaznaczenia
+									range.setStart(aquaySelection.start().target.firstChild, aquaySelection.start().lenght);
+									range.setEnd(aquaySelection.stop().target.firstChild, aquaySelection.stop().lenght);
+									// usuwanie poprzedniego zaznaczenia
+									window.getSelection().removeAllRanges();
+									// zaznaczenie odpowiedniego zakresu
+									window.getSelection().addRange(range);
+
+
+
+
+									console.log(aquay_editables('createLink', url));
+									if (aquay_editables('createLink', url)) {
+										setTimeout(() => {
+											// (GetSelection() === undefined ? aquaySelection = ($(__t).find(t.target).hasClass("aquay-edytuj-text") === true ? $(__t).find(t.target) : undefined) : aquaySelection = GetSelection() );
+											console.log(aquaySelection);
+
+											$(aquaySelection.selection.focusNode.parentNode).attr("target", target);
+											console.log($(aquaySelection.selection.focusNode.parentNode));
+										}, 0);
+									}
+									$('.tsr-modal-active input[name="url_add"]')[0].value = '';
+									$('.tsr-modal-active .tsr-modal-close').click();
+								} else {
+									
+								}
+							}
+						}
+					}else{
+						console.log("saa");
+					}
+				});
+
+				$(__t).on("dblclick", ".aquay-type-title", (t) => {
+					$(t).closest(".aquay-edytuj-container").remove();
+				});
+
+				$(__t).on("click", function (event) {
+					if(!$(event.target).closest('.add').length && !$(event.target).is('.add')) {
+						let ads = $(__t).find(".aquay-navigate .aquay-edytor-element-menu");
+						ads.removeClass("aquay-edytor-menu-visable");
+					}  
+				});
+			} );
+
+			// file system db
+			tsr_modal (false, __t + ".aquay-add-media", parseHTML(aquay_file), () => {
+				queueMicrotask(() => {
+					tsr_ajax ("laduj/get-file-system-db.php", {}, "", false, (t) => {
+						$(".tsr-modal-active .load-aquay").html(t);
+						console.log(t);
+/* 						// zaznaczenie odpowiedniej opcji
+						selectedOption($(".bm-get-file-system-db").find('select[name="roszerzenie"]'), '<?php if(isset($_POST["file_type"])){ echo $_POST["file_type"]; }else{ echo "all"; } ?>');
+						changeDisabled('<?php if(isset($_POST["file_type"])){ echo $_POST["file_type"]; }else{ echo "all"; } ?>', $(".bm-get-file-system-db").find('select[name="roszerzenie"]'));
+						changeMultiply($(".bm-file-system-db"), ".bm-checkbox", <?php if(isset($_POST["multiply"])){ echo $_POST["multiply"]; }else{ echo "true"; } ?>);
+						sentForm($(".bm-get-file-system-db"), ".load_post_bm");
+						// zmienne przechowywują konfiguracje ładowanych danych
+						let r = ($('select[name="roszerzenie"]').val() != undefined ? $('select[name="roszerzenie"]').val() : "all"),
+							i = ($('input[name="ile_load"]').val() != undefined ? $('input[name="ile_load"]').val() : "25"),
+							f = ($('input[name="folder"]').val() != "" ? $('input[name="folder"]').val() : "null"),
+							s = ($('input[name="szukaj"]').val() != "" ? $('input[name="szukaj"]').val() : "null"),
+							a = ($('select[name="akcja_pliku"]').val() != undefined ? $('select[name="akcja_pliku"]').val() : "add_media");
+						// ładowanie plików wgranych na serwer	
+						load_upload_file_db(i, r, <?php if(isset($_POST["multiply"])){ echo $_POST["multiply"]; }else{ echo "true"; } ?>); */
+					}), () => {
+						
+					};
+				});
+			});
+			$(__t).on("click", ".aquay-add-media", (t) => {
+				aquayAddFile = t;
+
+				let ob = $(t.target).attr("aquay-type"),
+					mul = $(t.target).attr("aquay-multiply");
+					console.log(t, ob, mul);
+				console.log("load data");
+				queueMicrotask(() => {
+					tsr_ajax ("laduj/get-file-system-db.php", {}, "", false, (t) => {
+						$(".tsr-modal-active .load-aquay").html(t);
+						console.log(t);
+
+						if (ob !== undefined && mul !== undefined) {
+							// zaznaczenie odpowiedniej opcji
+							selectedOption($(".tsr-modal-active .bm-get-file-system-db").find('select[name="roszerzenie"]'), ob);
+							changeDisabled(ob, $(".tsr-modal-active .bm-get-file-system-db").find('select[name="roszerzenie"]'));
+							changeMultiply($(".tsr-modal-active .bm-file-system-db"), ".bm-checkbox", mul);
+							sentForm($(".tsr-modal-active .bm-get-file-system-db"), ".load_post_bm");
+							// zmienne przechowywują konfiguracje ładowanych danych
+							let r = ($('select[name="roszerzenie"]').val() != undefined ? $('select[name="roszerzenie"]').val() : "all"),
+								i = ($('input[name="ile_load"]').val() != undefined ? $('input[name="ile_load"]').val() : "25"),
+								f = ($('input[name="folder"]').val() != "" ? $('input[name="folder"]').val() : "null"),
+								s = ($('input[name="szukaj"]').val() != "" ? $('input[name="szukaj"]').val() : "null"),
+								a = ($('select[name="akcja_pliku"]').val() != undefined ? $('select[name="akcja_pliku"]').val() : "add_media");
+							// ładowanie plików wgranych na serwer	
+							load_upload_file_db(i, r, mul);	
+						} else {
+							
+						}
+					}), () => {
+						
+					};
+				});
+			});
+			// get obiect db
+			$(document).on("click", ".tsr-modal-active #action_file_system_db", (t) => {
+				let get_obiect = $('.tsr-modal-active input.bm-checkbox[checked="checked"]');
+				let ob = $(aquayAddFile.target).attr("aquay-type"),
+					mul = $(aquayAddFile.target).attr("aquay-multiply");
+				console.log(get_obiect, ob, mul);
+				console.log($('input.bm-checkbox'));
+				if (aquayAddFile != undefined) {
+					if(ob == "image" && mul == "false") {
+						let set_obiect = $(aquayAddFile.target).eq(0).closest(".aquay-edytor-picture").find(".aquay-load-obrazek");
+
+						for (let i = 0; i < get_obiect.length; i++) {
+							const e = $(get_obiect[i]).closest(".col-flex-3").find(".col-fl-30-static"),
+								a = $(e).find(".tsr-display-block-3").val(),
+								b = $(e).find("img").attr("src");
+		
+							// if (set_obiect.length != 0) {
+								$(set_obiect[0]).html(`<img src="${b}" alt="${a}" title="${a}" class="aquay-image">`);console.log("add");
+							// }
+						}
+						console.log("add", set_obiect, set_obiect[0], $(aquayAddFile.target).eq(0).hasClass("aquay-load-obrazek"), $(aquayAddFile.target)[0], $(aquayAddFile.target).eq(0).closest(".aquay-edytor-picture").find(".aquay-load-obrazek"));
+					}else if (ob == "image" && mul == "true") {
+
+					}else{
+
+					}
+				} else {
+					
+				}
+			});
+
+			// replace input data to aquay picture
+			$(__t).on("keyup", 'input[name="aquay-url-paste"]', (t) => {
+				let url = $(t.target).val();
+				let set_img = $(t.target).closest(".aquay-edytor-picture").find(".aquay-load-obrazek");
+				let add_media = $(t.target).closest(".aquay-edytor-picture").find(".aquay-add-media");
+				if (url.length != 0) {
+					set_img.html(`<img src="${url}" alt="${url}" title="${url}" class="aquay-image">`);
+					if (!add_media.hasClass("aquay-hidden")) {
+						add_media.addClass("aquay-hidden");
+					}
+				} else {
+					set_img.remove();
+					if (add_media.hasClass("aquay-hidden")) {
+						add_media.removeClass("aquay-hidden");
+					}
+				}
+				console.log(t, url,set_img,add_media);
+			});
+		}
+		// function aquay_event listener
+		function aquay_event(t, o, e) {
+			if (o === "click") {
+				if (e === "toogle_editable") {
+					let edit = $(__t).find(".aquay-block-editor");
+					if (edit.attr("aquayeditable") == "true") {
+						edit.attr("aquayeditable", false);
+						edit.find(".aquay-edytuj-text").attr("contenteditable", false);
+					} else {
+						edit.attr("aquayeditable", true);
+						edit.find(".aquay-edytuj-text").attr("contenteditable", true);
+					}
+				} else if (e === "add") {
+					let ads = $(t.currentTarget).find(".aquay-edytor-element-menu");
+					if (($(t.target).hasClass('aquay-edytor-element-menu') === false)  ) {
+						if (ads.hasClass("aquay-edytor-menu-visable")){
+							if ($(t.target.parentNode).hasClass("aquay-edytor-element-menu") == false) {
+								ads.removeClass("aquay-edytor-menu-visable");
+							}
+						}else{
+							ads.addClass("aquay-edytor-menu-visable");
+						}
+					}
+				} else {
+					aquay_editables(e);
+				}
+			}else if (o === "change") {
+				return aquay_editables(e, t.currentTarget.value);
+			}else{
+				throw new TypeError("Aquay: type method not avaliable");
+			}
+
+			// saved stats to cache
+			let storage = window.sessionStorage;
+			// save last events
+			let s = {
+				"type": (t.type == undefined ? undefined : t.type),
+				"time": new Date,
+				"data": (t.data == undefined ? undefined : t.data),
+				"html": (t.currentTarget.outerHTML == undefined ? undefined : t.currentTarget.outerHTML),
+				"innerhtml": (t.currentTarget.innerHTML == undefined ? undefined : t.currentTarget.innerHTML),
+				"path": (t.originalEvent.path == undefined ? undefined : JSON.stringify(t.originalEvent.path.slice(0, -1))),
+				"pointerType": (t.originalEvent.pointerType == undefined ? undefined : t.originalEvent.pointerType),
+				"alt": (t.target.alt == undefined ? undefined : t.target.alt),
+				"name": (e == undefined ? undefined : e)
+			}
+			storage.setItem("aquay_last_event", JSON.stringify(s));
+			// save list events
+			if (storage.getItem("aquay_list_events")) {
+				let x = JSON.parse(storage.getItem("aquay_list_events"));
+				x[Object.keys(x).length] = s;
+				storage.setItem("aquay_list_events", JSON.stringify(x) );
+			} else {
+				storage.setItem("aquay_list_events", JSON.stringify({0:s}) );
+			}
+
+			return false;
+		}
+		// function editable blocks
+		function aquay_editables(t,a = null) {
+			return document.execCommand(t, false, a);
 		}
 		// function load navigate
 		function load_navigate(t) {
 			let head = $(t);
 			let items = setting("load_editor_item");
-			console.log(items);
-
 			if (items[0] === "all") {
-				
-			} else {
-				
+				items = aquay_item;
+			}
+			let ile = Object.keys(items).length;
+			for (let i = 0; i < ile; i++) {
+				head.append('<section class="aquay-sekcjia aquay-nav-'+ i +'">');
+				let a1 = head.find(".aquay-nav-"+ i +"");
+
+				const e = items[i];
+				let ile2 = e.length;
+				for (let x = 0; x < ile2; x++) {
+					if (e[x] === "|") {
+						a1.append('<div class="aquay-ikona aquay-bar"></div>');
+					}else if (e[x] === "formatBlock") {
+						a1.append(`<select class="aquay-select aquay-input-margin ${e[x]}" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}">
+							<option value="SPAN">Tekst</option>
+							<option value="P">Akapit</option>
+							<option value="H1">Nagłówek 1</option>
+							<option value="H2">Nagłówek 2</option>
+							<option value="H3">Nagłówek 3</option>
+							<option value="H4">Nagłówek 4</option>
+							<option value="H5">Nagłówek 5</option>
+							<option value="H6">Nagłówek 6</option>
+							<option value="DIV">Div</option>
+							<option value="SECTION">Sekcja</option>
+						</select>`);
+					}else if (e[x] === "fontName"){
+						a1.append(`<select class="aquay-select aquay-input-margin ${e[x]}" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}">
+							<option value="Arial">Arial</option>
+							<option value="Comic Sans MS">Comic Sans MS</option>
+							<option value="Courier">Courier</option>
+							<option value="Georgia">Georgia</option>
+							<option value="Tahoma">Tahoma</option>
+							<option value="Times New Roman">Times New Roman</option>
+							<option value="Verdana">Verdana</option>
+						</select>`);
+					}else if (e[x] === "fontSize"){
+						a1.append(`<select class="aquay-select aquay-input-margin ${e[x]}" type="number" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+						</select>`);
+					}else if (e[x] === "foreColor"){
+						a1.append(`<div class="aquay-color cursor-pointer" title=""><img src="${aquay_path}ikony/${aquay_item_[e[x]]}" loading="lazy" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}"><input type="color" class="aquay-input-color aquay-input-margin ${e[x]}" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}"></div>`);
+					}else if (e[x] === "hiliteColor"){
+						a1.append(`<div class="aquay-color cursor-pointer" title="${translate_pl[e[x]]}"><img src="${aquay_path}ikony/${aquay_item_[e[x]]}" loading="lazy" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}"><input type="color" class="aquay-input-color aquay-input-margin ${e[x]}" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}"></div>`);
+					}else{
+						a1.append(`<section class="aquay-ikona cursor-pointer ${e[x]}"><img src="${aquay_path}ikony/${aquay_item_[e[x]]}" loading="lazy" alt="${translate_pl[e[x]]}" title="${translate_pl[e[x]]}" /></section>`);
+					}
+				}
 			}
 		}
-
-		uis();
 
 		// load end
 		console.info("Aquay: Ładowanie Zakończone");

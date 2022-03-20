@@ -75,21 +75,3 @@
 			<section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
 		</section>
 	</div>
-	
-	<script language="JavaScript" type="text/javascript">
-		$(document).ready(function(){	
-			// zaznaczenie odpowiedniej opcji
-			selectedOption($(".bm-get-file-system-db").find('select[name="roszerzenie"]'), '<?php if(isset($_POST["file_type"])){ echo $_POST["file_type"]; }else{ echo "all"; } ?>');
-			changeDisabled('<?php if(isset($_POST["file_type"])){ echo $_POST["file_type"]; }else{ echo "all"; } ?>', $(".bm-get-file-system-db").find('select[name="roszerzenie"]'));
-			changeMultiply($(".bm-file-system-db"), ".bm-checkbox", <?php if(isset($_POST["multiply"])){ echo $_POST["multiply"]; }else{ echo "true"; } ?>);
-			sentForm($(".bm-get-file-system-db"), ".load_post_bm");
-			// zmienne przechowywują konfiguracje ładowanych danych
-			let r = ($('select[name="roszerzenie"]').val() != undefined ? $('select[name="roszerzenie"]').val() : "all"),
-				i = ($('input[name="ile_load"]').val() != undefined ? $('input[name="ile_load"]').val() : "25"),
-				f = ($('input[name="folder"]').val() != "" ? $('input[name="folder"]').val() : "null"),
-				s = ($('input[name="szukaj"]').val() != "" ? $('input[name="szukaj"]').val() : "null"),
-				a = ($('select[name="akcja_pliku"]').val() != undefined ? $('select[name="akcja_pliku"]').val() : "add_media");
-			// ładowanie plików wgranych na serwer	
-			load_upload_file_db(i, r, <?php if(isset($_POST["multiply"])){ echo $_POST["multiply"]; }else{ echo "true"; } ?>);
-		});
-	</script>

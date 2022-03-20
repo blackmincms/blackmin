@@ -11,6 +11,7 @@
 @
  -->
 
+ <div class="aquay-block-copies">
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-separator">
         <div class="aquay-edytor-separator">
             <div class="aquay-edytor-separator-tytul">
@@ -19,47 +20,46 @@
         </div>
     </section>									
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-text">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/text">
-            <div class="aquay-type-title">edytuj text</div>
-            <div class="aquay-edytor-text aquay-edytuj-text" data-type="type/text" tabindex="0" contenteditable="true" >abc</div>
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/text">
+            <div class="aquay-type-title tsr-sort-handle">edytuj text</div>
+            <div class="aquay-edytor-text aquay-edytuj-text" aquay-type="type/text" tabindex="0" contenteditable="true" ><p>abc</p></div>
         </div>
     </section>
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-cytat">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/cytat">
-            <div class="aquay-type-title">edytuj cytat</div>
-            <div class="aquay-edytor-cytat aquay-edytuj-text" data-type="type/cytat" tabindex="0" contenteditable="true" >abc</div>
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-quote">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/quote">
+            <div class="aquay-type-title tsr-sort-handle">edytuj cytat</div>
+            <div class="aquay-edytor-quote aquay-edytuj-text" aquay-type="type/quote" tabindex="0" contenteditable="true" >abc</div>
         </div>
     </section>
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-naglowek">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/naglowek">
-            <div class="aquay-type-title">edytuj Nagłówek</div>
-            <div class="aquay-edytor-naglowek aquay-edytuj-text" data-type="type/naglowek" tabindex="0" contenteditable="true" >abc</div>
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-heading">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/heading">
+            <div class="aquay-type-title tsr-sort-handle">edytuj Nagłówek</div>
+            <div class="aquay-edytor-heading aquay-edytuj-text" aquay-type="type/heading" tabindex="0" contenteditable="true" ><h1>abc</h1></div>
         </div>
     </section>	
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-kod">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/kod">
-            <div class="aquay-type-title">edytuj kod</div>
-            <code class="aquay-edytor-kod aquay-edytuj-text" data-type="type/kod" tabindex="0" contenteditable="true" >abc</code>
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-code">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/code">
+            <div class="aquay-type-title tsr-sort-handle">edytuj kod</div>
+            <div class="aquay-edytor-code aquay-edytuj-text" aquay-type="type/code" tabindex="0" contenteditable="true" ><code>abc</code></div>
         </div>
     </section>
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-wlasny-html">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/wlasny_kod">
-            <div class="aquay-type-title">edytuj własny kod html</div>
-            <div class="aquay-edytor-wlasny_kod aquay-edytuj-text" data-type="type/wlasny_kod" tabindex="0" contenteditable="true" >abc</div>
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-own_code">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/own_code">
+            <div class="aquay-type-title tsr-sort-handle">edytuj własny kod html</div>
+            <div class="aquay-edytor-own_code aquay-edytuj-text" aquay-type="type/own_code" tabindex="0" contenteditable="true" ><pre>abc</pre></div>
         </div>
     </section>
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-obrazek">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/obrazek" aquay-obiect="get_obiect">
-            <div class="aquay-type-title">edytuj obrazek</div>
-            <div class="aquay-edytor-obrazek aquay-edytuj-obrazek" data-type="type/obrazek" tabindex="0" >
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-picture">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/picture" aquay-obiect="get_obiect">
+            <div class="aquay-type-title tsr-sort-handle">edytuj obrazek</div>
+            <div class="aquay-edytor-picture aquay-edytuj-obrazek" aquay-type="type/picture" tabindex="0" >
                 <div class="aquay-obrazek-url">
-                    <div class="aquay-input-title">Wklej własny obrazek</div>
-                    <input type="url" name="aquay-url-paste" class="input aquay-input aquay-link" placeholder="Wklej własny obrazek" autocomplete="off"/>
+                    <input type="url" name="aquay-url-parse" class="input aquay-input aquay-link" placeholder="Wklej własny obrazek" autocomplete="off"/>
                 </div>
-                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-get-miniaturka"  aquay-type="image" aquay-multiply="false" aquay-obiect-type="img" id="">
+                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-get-miniaturka"  aquay-type="image" aquay-multiply="false" aquay-obiect-type="img" >
                     Dodaj z Dysku
                     <div class="tsr-modal">
-                        <section class="tsr load-data">
+                        <section class="tsr load-aquay">
                             <section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
                         </section>
                     </div>
@@ -68,14 +68,14 @@
             </div>
         </div>
     </section>	
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-galeria">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/galeria">
-            <div class="aquay-type-title">edytuj galerie</div>
-            <div class="aquay-edytor-galeria aquay-edytuj-galerie" data-type="type/galeria" tabindex="0" >
-                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-load-galeria"  aquay-type="image" aquay-multiply="true" aquay-obiect-type="img" id="">
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-gallery">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/gallery" aquay-obiect="get_obiect">
+            <div class="aquay-type-title tsr-sort-handle">edytuj galerie</div>
+            <div class="aquay-edytor-gallery aquay-edytuj-galerie" aquay-type="type/gallery" tabindex="0" >
+                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-load-galeria"  aquay-type="image" aquay-multiply="true" aquay-obiect-type="img" >
                     Dodaj z Dysku
                     <div class="tsr-modal">
-                        <section class="tsr load-data">
+                        <section class="tsr load-aquay">
                             <section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
                         </section>
                     </div>
@@ -84,19 +84,20 @@
             </div>
         </div>
     </section>	
-    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-plik">
-        <div class="aquay-edytuj-container" data-blok-type="type_blok/plik">
-            <div class="aquay-type-title">pobierz plik</div>
-            <div class="aquay-edytor-plik aquay-edytuj-plik" data-type="type/plik" tabindex="0" >
-                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-load-plik"  aquay-type="all" aquay-multiply="false" aquay-obiect-type="text" id="">
+    <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-file">
+        <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/file" aquay-obiect="get_obiect">
+            <div class="aquay-type-title tsr-sort-handle">pobierz plik</div>
+            <div class="aquay-edytor-file aquay-edytuj-plik" aquay-type="type/file" tabindex="0" >
+                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-load-plik"  aquay-type="all" aquay-multiply="false" aquay-obiect-type="text" >
                     Dodaj z Dysku
                     <div class="tsr-modal">
-                        <section class="tsr load-data">
+                        <section class="tsr load-aquay">
                             <section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
                         </section>
                     </div>
                 </div>
-                <button type="button" class="aquay-load-plik aquay-top-separator aquay-edytuj-text aquay-input aquay-button-pobierz" formtarget="_blank" target="_blank" data-type="type/text" tabindex="0" contenteditable="true" data-pobierz="" >Pobierz!</button>
+                <button type="button" class="aquay-load-plik aquay-top-separator aquay-edytuj-text aquay-input aquay-button-pobierz" formtarget="_blank" target="_blank" aquay-type="type/text" tabindex="0" contenteditable="true" data-download="" download >Pobierz!</button>
             </div>
         </div>
     </section>	
+ </div>

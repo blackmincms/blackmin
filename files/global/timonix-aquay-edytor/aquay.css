@@ -37,7 +37,7 @@
 		color: #068181;
 	}
 
-	.aquay-input, .aquay-select {
+	.aquay .aquay-input, .aquay .aquay-select {
 		color: black;
 		display: block;
 		width: 150px;
@@ -45,10 +45,7 @@
 		padding-left: 15px;
 		padding-right: 15px;
 		background-color: transparent;
-		-webkit-border-radius: 0px 0px 0px 0px;
 		border-radius: 0px 0px 0px 0px;
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		border-width: 1px 1px 2.5px 2px;
 		border-style: solid solid solid solid;
@@ -56,7 +53,7 @@
 		outline: none;
 		float: inherit;
 	}
-	.aquay-input-color {
+	.aquay .aquay-input-color {
 		color: black;
 		display: block;
 		min-width: 25px;
@@ -65,10 +62,7 @@
 		padding-left: 2px;
 		padding-right: 2px;
 		background-color: transparent;
-		-webkit-border-radius: 0px 0px 0px 0px;
 		border-radius: 0px 0px 0px 0px;
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		border-width: 1px 1px 2.5px 2px;
 		border-style: solid solid solid solid;
@@ -76,16 +70,26 @@
 		outline: none;
 		float: inherit;
 	}
-	
-	.aquay-link {
+
+	.aquay select[type="number"] {
+		width: 40px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.aquay input, .aquay select, .aquay textarea, .aquay button {
+		text-transform: capitalize;
+	}
+
+	.aquay .aquay-link {
 		width: 100%;
 	}
 	
-	.aquay-input-margin {
+	.aquay .aquay-input-margin {
 		margin-right: 4px;
 	}
 	
-	.aquay-nawigacja {
+	.aquay .aquay-nawigacja {
 		width: 100%;
 		height: auto;
 		background-color: #ececec;
@@ -94,13 +98,19 @@
 		float: left;
 	}
 	
-	.aquay-sekcjia {
+	.aquay .aquay-sekcjia {
 		width: 100%;
 		float: left;
 		margin-top: 10px;
 	}
+
+	.aquay .aquay-sekcjia:nth-child(1) {
+		padding: 0px;
+		margin: 0px;
+		border: 0px;
+	}
 	
-	.aquay-text {
+	.aquay .aquay-text, .aquay .aquay-block-editor {
 		width: 100%;
 		height: auto;
 		min-height: 555px;
@@ -109,7 +119,7 @@
 		border: 1px solid #d1d1d1;
 		float: left;
 	}
-	.aquay-bloki-powiel {
+	.aquay .aquay-bloki-powiel {
 		width: 100%;
 		height: auto;
 		min-height: 4px;
@@ -121,28 +131,50 @@
 		visibility: hidden;
 	}
 	
-	.aquay-text > *html, *body {
+	.aquay .aquay-text > html, .aquay .aquay-text > body {
 		margin: 0px;
 		border: 0px;
 		padding: 0px;
 	}
 	
-	.aquay-ikona {
+	.aquay .aquay-ikona {
 		width: 25px;
 		height: 25px;
 		padding: 0px;
 		margin: 0px 5px;
+		-webkit-user-select: none;
+		   -moz-user-select: none;
+		    -ms-user-select: none;
+		        user-select: none;
 		float: left;
 	}
 	
-	.aquay-logo {
+	.aquay .aquay-color {
+		width: 55px;
+		height: 25px;
+		padding: 0px;
+		margin: 0px 5px;
+		border-bottom: 1px solid black;
+		box-shadow: 0px 1.5px 0px 0px black;
+		float: left;
+	}
+
+	.aquay .aquay-color input {
+		margin: 0px 2.5px;
+		padding: 0px;
+		border: 0px;
+		outline: none;
+	}
+	
+	.aquay .aquay-logo {
 		max-width: 100px;
 		max-height: 30px;
 		min-width: 60px;
 		min-height: 20px;
 		font-size: 16px;
 		padding: 3.5px 10px;
-		font-kerning: revert;
+		-webkit-font-kerning: revert;
+		        font-kerning: revert;
 		font-variant-caps: inherit;
 		font-variant-east-asian: ruby;
 		font-variant-ligatures: historical-ligatures;
@@ -153,7 +185,7 @@
 		background-color: #e4e4e4;
 	}
 	
-	.aquay-bar {
+	.aquay .aquay-bar {
 		content: "";
 		position: relative;
 		height: 21px;
@@ -163,7 +195,7 @@
 		top: 0;
 	}
 	
-	.aquay-container {
+	.aquay .aquay-container {
 		width: 100%;
 		height: auto;
 		margin: auto;
@@ -171,7 +203,7 @@
 		float: left;
 	}
 	
-	.aquay-edytuj-container {
+	.aquay .aquay-edytuj-container {
 		width: -webkit-fill-available;
 		height: auto;
 		padding: 11px;
@@ -180,13 +212,18 @@
 		float: left;
 	}
 	
-	.aquay-edytuj-container:hover, .aquay-edytuj-container:focus {
+	.aquay .aquay-edytuj-container:not([aquay-obiect="get_obiect"])  * {
+		word-wrap: break-word;
+    	white-space: pre-wrap;
+	}
+	
+	.aquay .aquay-edytuj-container:hover, .aquay-edytuj-container:focus {
 		height: auto;
 		padding: 10px;
 		border: 1px solid #888888;
 	}
 
-	.aquay-obiect-container {
+	.aquay .aquay-obiect-container {
 		width: -webkit-fill-available;
 		height: auto;
 		padding: 11px;
@@ -196,69 +233,96 @@
 		background-color: #cccccc;
 	}
 	
-	.aquay-get-obiect {
+	.aquay .aquay-get-obiect {
 		width: 100%;
 		min-height: 100px;		
 		padding: 11px;
 	}
 	
-	.aquay-get-obiect:hover, .aquay-get-obiect:focus {
+	.aquay .aquay-get-obiect:hover, .aquay-get-obiect:focus {
 		height: auto;
 		padding: 10px;
 		border: 1px solid #888888;
 	}
 	
-	.aquay-type-title {
+	.aquay .aquay-type-title {
 		position: relative;
 		top: -25px;
 		background-color: white;
+		background: white;
+		width: -webkit-fit-content;
+		width: -moz-fit-content;
 		width: fit-content;
 		padding: 5px;
+		display: block;
+		height: auto;
+		margin: 0px;
+		color: black;
+		text-decoration: none;
+		border: 0px solid transparent;
+		border-radius: 0px;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		cursor: move;
 	}
 
-	.aquay-input-title {
+	.aquay .tsr-sort-handle:hover {
+		color: black;
+	}
+
+	.aquay .aquay-input-title {
+		width: -webkit-fit-content;
+		width: -moz-fit-content;
 		width: fit-content;
 		padding: 5px;
 	}
 	
-	.aquay-edytuj-text {
+	.aquay .aquay-edytuj-text {
 		padding: 10px;
+		word-break: break-word;
+		word-spacing: inherit;
 	}
 	
-	.aquay-edytor-element-menu {
+	.aquay .aquay-edytor-element-menu {
 		position: relative;
 		left: -150px;
 		width: 300px;
 		height: auto;
 		max-height: 500px;
+		text-align: center;
+		vertical-align: middle;
 		padding: 15px;
-		float: left;
 		border: 1px solid #888888;
 		background-color: #e4e4e4;
 		display: none;
 	}
 	
-	.aquay-edytor-menu-icons {
-		width: 31.2%;
+	.aquay .aquay-edytor-menu-icons {
 		height: 75px;
 		padding: 5px;
-		margin-right: 5px;
-		margin-bottom: 10px;
-		float: left;
 		border: 1px solid #888888;
 		background-color: white;
 	}
 	
-	.aquay-edytor-menu-visable {
-		display: block;
+	.aquay .add .aquay-edytor-menu-visable {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+		grid-column-gap: 10px;
+		grid-row-gap: 10px;
 	}
 	
-	.aquay-edytuj-blok-kopiuj {
+	.aquay .aquay-edytuj-blok-kopiuj {
 		display: hiddenn;
 		visibility: hiddenn;
 	}
 	
-	.aquay-edytor-separator {
+	.aquay .aquay-edytor-separator {
 		width: -webkit-fill-available;
 		height: auto;
 		padding: 0px;
@@ -267,15 +331,15 @@
 		border: 1px solid transparent;
 	}
 	
-	.aquay-edytor-separator:hover {
+	.aquay .aquay-edytor-separator:hover {
 		border: 1px solid #888888;
 	}
 	
-	.aquay-edytor-separator:hover > .aquay-edytor-separator-tytul {
+	.aquay .aquay-edytor-separator:hover > .aquay-edytor-separator-tytul {
 		color: black;
 	}
 	
-	.aquay-edytor-separator-tytul {
+	.aquay .aquay-edytor-separator-tytul {
 		width: 100%;
 		height: auto;
 		color: transparent;
@@ -286,18 +350,18 @@
 		cursor: pointer;
 	}
 	
-	.aquay-edytor-naglowek {
+	.aquay .aquay-edytor-naglowek {
 		font-size: 24px;
 	}
 	
-	.aquay-edytor-obrazek {
+	.aquay .aquay-edytor-obrazek {
 		width: 100%;
 		min-height: 150px;
 		padding: 15px;
 		background-color: #cccccc;
 	}
 
-	.aquay-edytor-galeria {
+	.aquay .aquay-edytor-galeria {
 		width: 100%;
 		min-height: 150px;
 		padding: 15px;
@@ -305,7 +369,7 @@
 		background-color: #e8e8e8;
 	}
 	
-	.aquay-add-media{
+	.aquay .aquay-add-media{
 		color: black;
 		display: block;
 		width: 100%;
@@ -313,10 +377,7 @@
 		padding: 10px 20px;
 		text-align: center;
 		background-color: transparent;
-		-webkit-border-radius: 0px 0px 0px 0px;
 		border-radius: 0px 0px 0px 0px;
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		border-width: 1px 1px 2.5px 2px;
 		border-style: solid solid solid solid;
@@ -324,23 +385,23 @@
 		outline: none;
 	}
 	
-	.aquay-top-separator {
+	.aquay .aquay-top-separator {
 		margin-top: 10px;
 	}
 
-	.aquay-visable {
+	.aquay .aquay-visable {
 		display: block;
 	}
 	
-	.aquay-hidden {
+	.aquay .aquay-hidden {
 		display: none;
 	}
 	
-	.aquay-modal-html {
+	.aquay .aquay-modal-html {
 		overflow: hidden;
 	}
 
-	.aquay-modals {
+	.aquay .aquay-modals {
 		position: fixed;
 		top: 0px;
 		left: 0px;
@@ -355,7 +416,7 @@
 		background-color: #000000e6;
 	}
 
-	.aquay-modal-container {
+	.aquay .aquay-modal-container {
 		position: relative;
 		width: -webkit-fill-available;
 		height: -webkit-fill-available;
@@ -366,7 +427,7 @@
 		z-index: 1;
 	}
 
-	.aquay-modal-load {
+	.aquay .aquay-modal-load {
 		position: relative;
 		width: -webkit-fill-available;
 		height: -webkit-fill-available;
@@ -376,7 +437,7 @@
 		z-index: 1;
 	}
 
-	.aquay-modal-closed {
+	.aquay .aquay-modal-closed {
 		position: absolute;
 		top: -15px;
 		right: -15px;
@@ -390,22 +451,22 @@
 		z-index: 1;
 	}
 	
-	.aquay-edytor-kod {
+	.aquay .aquay-edytor-kod {
 		display: block;
 	}
 	
-	.aquay-edytor-cytat {
+	.aquay .aquay-edytor-cytat {
 		border-left-style: solid;
 		border-width: 2px;
 		padding-left: 15px;
 	}
 	
-	.aquay-obrazek {
+	.aquay .aquay-obrazek {
 		max-width: 100%;
 		max-height: 100%;
 	}
 	
-	.aquay-galeria  {
+	.aquay .aquay-galeria  {
 		width: 25%;
 		max-height: 250px;
 		float: left;
@@ -414,7 +475,7 @@
 	}
 
 	@media (max-width: 1600px) {
-		.aquay-galeria  {
+		.aquay .aquay-galeria  {
 			width: 25%;
 			height: 175px;
 			float: left;
@@ -428,7 +489,7 @@
 	}
 
 	@media (max-width: 992px) {
-		.aquay-galeria  {
+		.aquay .aquay-galeria  {
 			width: 33.333333%;
 			height: 195px;
 			float: left;
@@ -438,7 +499,7 @@
 	}
 
 	@media (max-width: 768px) {
-		.aquay-galeria  {
+		.aquay .aquay-galeria  {
 			width: 50%;
 			height: 150px;
 			float: left;
@@ -448,7 +509,7 @@
 	}
 
 	@media (max-width: 576px) {
-		.aquay-galeria  {
+		.aquay .aquay-galeria  {
 			width: 100%;
 			height: -webkit-fill-available;
 			float: left;
@@ -457,7 +518,7 @@
 		}		
 	} 	
 
-	.aquay-button-pobierz {
+	.aquay .aquay-button-pobierz {
 		color: black;
 		display: block;
 		width: 100%;
@@ -465,10 +526,7 @@
 		padding-left: 15px;
 		padding-right: 15px;
 		background-color: transparent;
-		-webkit-border-radius: 0px 0px 0px 0px;
 		border-radius: 0px 0px 0px 0px;
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
-		-webkit-box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		box-shadow: 0px 0px 20px -5px rgba(74,74,74,1);
 		border-width: 1px 1px 2.5px 2px;
 		border-style: solid solid solid solid;
@@ -477,20 +535,20 @@
 		float: inherit;
 	}
 	
-	.aquay-edytor-plik {
+	.aquay .aquay-edytor-plik {
 		width: 100%;
 		min-height: 150px;
 		padding: 15px;
 		background-color: #dedede;
 	}
 	
-	.aquay-clear {
+	.aquay .aquay-clear {
 		padding: 0px;
 		margin: 0px;
 		border: 0px;
 	}
 	
-	.aquay-compiler {
+	.aquay .aquay-compiler {
 		width: 0px;
 		height: 0px;
 		display: none;
@@ -499,13 +557,45 @@
 		color: transparent;
 	}
 	
+	/* Aquay Modal colision */
+	.aquay-modal-container-colision, .aquay-modal-container-colision * {
+		-webkit-user-select: none;
+		   -moz-user-select: none;
+		    -ms-user-select: none;
+		        user-select: none;
+				touch-action: none;
+	}
+
 	/* dragable przesuwanie kontenerów */
-	.aquay-toggle {
+	.aquay .aquay-toggle {
 		position: absolute;
 		top: 50%;
 		right: 0;
 		margin-top: -8px;
 	}
+	.aquay-placeholder.tsr-sortiner-active {
+		border: 1px dotted black!important;
+		cursor: n-resize!important;
+	}
+
+	.aquay-placeholder.tsr-sortiner-active .aquay-type-title {
+		position: relative;
+		top: -16px;
+		font-size: 14px;
+		background-color: white;
+		background: white;
+		width: -webkit-fit-content;
+		width: -moz-fit-content;
+		width: fit-content;
+		padding: 5px;
+		height: auto;
+		margin: 0px;
+		margin-left: 11px;
+		color: black;
+		border: 0px solid transparent;
+		border-radius: 0px;
+	}
+	
 	.aquay-placeholder {
 		border: 1px dotted black;
 		cursor: n-resize;

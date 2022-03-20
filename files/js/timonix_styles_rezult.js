@@ -131,14 +131,14 @@
 	}
 	/* funcka zaznacza daną opcje OFF */
 	tsr_controler("rezise", function (){
-		if ($(document).find('[tsr-content]')) {
+		/* if ($(document).find('[tsr-content]')) {
 			var screenRelativeTop =  ($(document).find('[tsr-content]').offset().top) - (window.scrollY || 
 												window.pageYOffset || document.body.scrollTop);
 		}
 		if ($(document).find('[tsr-content]')) {
 			var screenRelativeLeft = ($(document).find('[tsr-content]').offset().left) - (window.scrollX ||
                                            window.pageXOffset || document.body.scrollLeft);
-		}
+		} */
 	})
 		
 	function tsr_screen_position(arg) {
@@ -621,18 +621,7 @@
 	var tsr_constructor = function(name, prototype){
 		
 	};
-$(function() {
-  var $slider = $(".slider"),
-      $slideBGs = $(".slide__bg"),
-      diff = 0,
-      curSlide = 0,
-      numOfSlides = $(".slide").length-1,
-      animating = false,
-      animTime = 500,
-      autoSlideTimeout,
-      autoSlideDelay = 6000,
-      $pagination = $(".slider-pagi");
-	  
+$(function() { 
 	var pozCur = 0, // pozycja startowa kursora
 		pozSli = 0, // pozycja slidera (1, 2, 3, 4, itp)
 		posSlider = 0, // pozycia slidera po przeciągnięciu
@@ -816,10 +805,21 @@ $(function() {
 				if(modal_html == undefined){
 					modal_html = "undefined";
 					console.error("modal is undefined");
+				}else if (is_json(modal_html)) {
+					modal_html = JSON.parse(modal_html);
+				}else if (typeof modal_html == 'object') {
+					modal_html = $("<div>").append(modal_html)[0].innerHTML;
 				}
-				// wstawianie modal box'a
-				$("body").append('<div class="tsr-modal-container tsr-modal-active"> <div class="tsr-modal-container-content"> <div class="tsra"> '+ modal_html +' </div> <div class="tsr-modal-close tsr-modal-closed-button"></div> </div> </div>').closest();
-				
+
+				if (typeof modal_html == 'object') {
+					// wstawianie modal box'a
+					$("body").append(`<div class="tsr-modal-container tsr-modal-active"> <div class="tsr-modal-container-content"> <div class="tsra"> ${modal_html} </div> <div class="tsr-modal-close tsr-modal-closed-button"></div> </div> </div>`);
+					$(".tsr-modal-active .tsra").append(modal_html);
+				}else{
+					// wstawianie modal box'a
+					$("body").append(`<div class="tsr-modal-container tsr-modal-active"> <div class="tsr-modal-container-content"> <div class="tsra"> ${modal_html} </div> <div class="tsr-modal-close tsr-modal-closed-button"></div> </div> </div>`).closest();
+				}
+
 				$(".tsr-modal-active").attr("tsr-modal-i", ileModal); // dodawanie zliczania modal boxa
 				ileModal++ // dodawanie o jeden liczy modal boxów
 				
@@ -1414,16 +1414,10 @@ $(function() {
 		// pominięcie interfeisu drag and drop ze względu na małąkompatebilnośći ze smartfonami (testowane rozwiązanie)
 		
 		// zmienna przechowywująca 
-		let decliver;
 		let statY = 0,
 			statX = 0,
 			pozcY = 0,
 			pozcX = 0;
-		var drop,
-			drop_prev,
-			drop_next,
-			drop_last,
-			list,
 			move = false,
 			is_klon = true;
 		// zmienne przchowywujące dane o innej liście do posortowania
@@ -1520,7 +1514,6 @@ $(function() {
 		});	
 		
 		$(document).on("mousemove touchmove",  function(event) {
-			event.preventDefault();
 			
 			// sprawdzanie czy jest ruch
 			if(move == true){

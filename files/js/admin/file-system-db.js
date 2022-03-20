@@ -52,64 +52,12 @@
 			m = ($(document).find(".bm-file-system-db").find('input.bm-pcheckbox').attr("disabled") === "disabled") ? true : false , // multiply
 			f = $('input[name="folder_zmien"]').val(); // pobieranie nazwy folderu do zmiany
 		// sprawdzanie czy poprawne są dane
-		if (t == "add_media") {
-			if (g == "null"){
-				$(".tsr-modal-active").find(".aquay-laduj-file").html('<section class="tsr-alert tsr-alert-waring">Błędne dane!</section>');
-			}else{
-				// sprawdzanie czy zwrucić text czy img obiektu
-				if(z == "img"){
-					if(m === true){
-						// sprawdzanie czy wybrono plik
-						if((a).length != 0){
-							// pobieranie śćieżek do pliku
-							let pm = $(".bm-file-record-active").find("img.img").attr("bm-grafika"),
-								pp = $(".bm-file-record-active").find("img.img").attr("bm-sciezka"),
-								pt = $(".bm-file-record-active").find("img.img").attr("title");
-								pa = $(".bm-file-record-active").find("img.img").attr("alt");
-							$(document).find(g).html('<img src="'+ pp +'" title="'+ pt +'" alt="'+ pa +'" bm-thumbnail="'+ pm +'" />');
-						}
-					}else{
-						let pp_parent = $(".bm-file-record-active");
-							console.log(pp_parent , a.length)
-						// sprawdzanie czy wybrono plik
-						if((a).length != 0){
-							let pp_parent = $(".bm-file-record-active");
-							console.log(pp_parent);
-							// czyszczenie folderu docelowego
-							$(document).find(g).html("");
-							for(let i = 0; i < $(".bm-file-record-active").length; i++){
-								// pobieranie śćieżek do pliku
-								let pm = $(pp_parent.eq(i)).find("img.img").attr("bm-grafika"),
-									pp = $(pp_parent.eq(i)).find("img.img").attr("bm-sciezka"),
-									pt = $(pp_parent.eq(i)).find("img.img").attr("title");
-									pa = $(pp_parent.eq(i)).find("img.img").attr("alt");
-								$(document).find(g).append('<img src="'+ pm +'" title="'+ pt +'" alt="'+ pa +'" bm-src="'+ pp +'" class="aquay-galeria" />');
-							}
-						}				
-					}
-				}else{
-					// sprawdzanie czy wybrono plik
-					if($(".bm-file-record-active").length != 0){
-						let pp_parent = $(".bm-file-record-active");
-						for(let i = 0; i < $(".bm-file-record-active").length; i++){
-							// pobieranie śćieżek do pliku
-							let pm = $(pp_parent.eq(i)).find("img.img").attr("bm-grafika"),
-								pp = $(pp_parent.eq(i)).find("img.img").attr("bm-sciezka"),
-								pt = $(pp_parent.eq(i)).find("img.img").attr("title");
-								pa = $(pp_parent.eq(i)).find("img.img").attr("alt");
-							$(document).find(g).attr("data-pobierz", pp);
-						}
-					}					
-				}
-			}
-		}else if (t == "delete") {
-			console.log($(document).find(".bm-file-record-active").find("img").attr("bm-sciezka"));
+		if (t == "delete") {
 			
 			let g_p = $(document).find(".bm-file-record-active").find("img"),
 				g_p_delete = [];
 			
 			for(let i = 0; i < g_p.length; i++){
-				console.log(g_p.eq(i).attr("bm-sciezka"), g_p.eq(i).attr("bm-grafika"));
 				let path = g_p.eq(i).attr("bm-sciezka"),
 					thumbnail = g_p.eq(i).attr("bm-grafika");
 				
@@ -117,8 +65,6 @@
 					g_p_delete.push({path, thumbnail});
 				}
 			}
-			
-			console.log(g_p_delete);
 			
 			if(a.length != 0 && g_p_delete.length != 0){
 				tsr_ajax("insert/plik-usun.php", {
@@ -147,8 +93,6 @@
 		}else{
 			$(".tsr-modal-active").find(".aquay-laduj-file").html('<section class="tsr-alert tsr-alert-waring">Błędne dane!</section>');
 		}
-		
-		console.log(a, a["content"].toString(), g, f);
 	});
 
 	// funkcja ładująca dane o plikach
