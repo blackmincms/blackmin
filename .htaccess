@@ -1,9 +1,3 @@
-### PROTECT FILES ###
-<FilesMatch "\.(htaccess|htpasswd|ini|fla|psd|log|sh)$">
-Order Allow,Deny
-Deny from all
-</FilesMatch>
-
 Options FollowSymLinks
 RewriteEngine on
 <IfModule mod_rewrite.c>

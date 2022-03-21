@@ -1,19 +1,18 @@
 <?php
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do startu bm cms
-	
-	Black Min cms,
-	
-	#plik: 1.0
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This file load core Blac Min
 */
 	// ładowanie bm prw
-	ini_set('display_errors', 1);
-	error_reporting (E_ALL | E_STRICT);
 	define( 'BM_AKTYWACJA_PRW', true );
-	//protokuł randomowośći wstecznej
 	// ładowanie Black_min cms
-	require_once "bm-incules.php";
+	require_once "black-min.php";
 	
-?>
