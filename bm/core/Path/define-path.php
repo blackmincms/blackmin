@@ -1,14 +1,15 @@
-<?php	
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do ładowanie pr4
-	
-	load #pr4
-	
-	Black Min cms,
-	
-	#plik: 1.5
+<?php		
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This file is defined path bm
 */
 
 	// sciezki pol

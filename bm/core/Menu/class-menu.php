@@ -1,14 +1,16 @@
 <?php	
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do ładowanie menu Black Mina
-	
-	Black Min cms,
-	
-	#plik: 1.1.2
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This file is rendering menu
 */
-
 
 	class menu_bm {
 		

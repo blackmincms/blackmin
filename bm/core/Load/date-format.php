@@ -1,12 +1,15 @@
 <?php	
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do zamiany formatu daty i godziny na jakiś inny
-	
-	Black Min cms,
-	
-	#plik: 1.0
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This function a format data
 */
 	
 	function data_format($datetime, $foramt_czasu) {
@@ -18,5 +21,3 @@
 		return $datetime_format;
 		
 	};
-
-?>

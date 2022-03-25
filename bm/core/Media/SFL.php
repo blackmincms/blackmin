@@ -1,20 +1,32 @@
-<?php
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do ładowania plików
-	
-	@precyzyjne_ładowanie_danych
-
-	sort file load ,
-	
-	#plik: 1.0
+<?php	
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This file has load file of directory
 */
 	
-	Class sfl{
+	namespace BlackMin\Media;
+
+	Class SFL {
 		// zmiene odpwiedzialne za przechowywanie danych do ładowania
+		/**
+		* 	@var array|obiect;
+		*/	
 		protected $pliki_php = [];
+		/**
+		* 	@var array|obiect;
+		*/		
 		protected $pliki_css = [];
+		/**
+		* 	@var array|obiect;
+		*/			
 		protected $pliki_js = [];
 		// ostatni błąd parsowania
 		protected $error = null;
@@ -22,13 +34,13 @@
 		
 		// src = ścieżka, lvl = stopień ważnośći pliku
 		public function add_php($src, $lvl = 0, $path = null){
-			return sfl::add ($src, $lvl, $path, "php");
+			return SFL::add ($src, $lvl, $path, "php");
 		}
 		public function add_css($src, $lvl = 0, $path = null){
-			return sfl::add ($src, $lvl, $path, "css");
+			return SFL::add ($src, $lvl, $path, "css");
 		}
 		public function add_js($src, $lvl = 0, $path = null){
-			return sfl::add ($src, $lvl, $path, "js");
+			return SFL::add ($src, $lvl, $path, "js");
 		}
 
 		public function add ($src, $lvl = 0, $path = null, $f = null) {
@@ -93,13 +105,13 @@
 
 		// usuwanie plików do ładowania 
 		public function remove_php($src){
-			return sfl::remove ($src, "php");
+			return SFL::remove ($src, "php");
 		}
 		public function remove_css($src){
-			return sfl::remove ($src, "css");
+			return SFL::remove ($src, "css");
 		}
 		public function remove_js($src){
-			return sfl::remove ($src, "js");
+			return SFL::remove ($src, "js");
 		}
 
 		public function remove ($src, $f = null) {
@@ -131,13 +143,13 @@
 
 		// funkcjia ładowania plików php
 		public function load_php($a = SORT_ASC, $t = "lvl"){
-			return sfl::load ("php", $a, $t);
+			return SFL::load ("php", $a, $t);
 		}
 		public function load_css($a = SORT_ASC, $t = "lvl"){
-			return sfl::load ("css", $a, $t);
+			return SFL::load ("css", $a, $t);
 		}
 		public function load_js($a = SORT_ASC, $t = "lvl"){
-			return sfl::load ("js", $a, $t);
+			return SFL::load ("js", $a, $t);
 		}
 
 		public function load ($array, $order = SORT_ASC, $on = "lvl") {
@@ -146,7 +158,7 @@
 				return false;
 			}else{
 				if (strtolower($array) === "php") {
-					$sort = sfl::array_sort($this->pliki_php, $on, $order);
+					$sort = SFL::array_sort($this->pliki_php, $on, $order);
 					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
@@ -158,7 +170,7 @@
 						return false;
 					}
 				}elseif (strtolower($array) === "js") {
-					$sort = sfl::array_sort($this->pliki_js, $on, $order);
+					$sort = SFL::array_sort($this->pliki_js, $on, $order);
 					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){
@@ -170,7 +182,7 @@
 						return false;
 					}
 				}elseif (strtolower($array) === "css") {
-					$sort = sfl::array_sort($this->pliki_css, $on, $order);
+					$sort = SFL::array_sort($this->pliki_css, $on, $order);
 					if (is_array($sort)) {
 						$ile = count($sort);
 						for($i=0; $i < $ile; $i++){

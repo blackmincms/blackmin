@@ -7,16 +7,52 @@
 *
 *	@package BlackMin
 *	
-*	#plik: 2.0
+*	#file: 2.0
 *
-*	This file load core Blac Min
+*	This file load core Blac Min | admin panel
 */
 
 	// pobieranie ścieżki katalogu głównego
 	if(!defined('BMPATH')) {
 		define('BMPATH', dirname( __FILE__ ).'/' );
 	};
+	if(!defined('BLACKMIN_ADMIN')) {
+		define('BLACKMIN_ADMIN', true );
+	};
+
+	// load db settings
+	require_once (BMPATH . "../../connect.php");
+	// autoloader
+	require_once (BMPATH . "../core/Load/autoloader.php");
+	// autoloader
+	require_once (BMPATH . "../core/Path/define-path.php");
+
+	use BlackMin\Database\Database;
+	use BlackMin\Settings\Settings;
+	use BlackMin\Settings\Status;
+	use BlackMin\Router\Url;
+	use BlackMin\Session\SM;
+
+	// db connect
+	$bm_db = new Database();
+	$db_bm->db_error_developers(false);
+	$db_bm->db_error(false);
+	// settings bm
+	$bm_settings = new Settings($bm_db);
+	$bm_settings_load = $bm_settings->load();
+	if (!defined("BM_SETTINGS")) {
+		define('BM_SETTINGS', $bm_settings_load);
+		
+	}
+	// status bm
+	$bm_status = new Status($bm_db);
+	$bm_status_load = $bm_status->load();
+	if (!defined("BM_STATUS")) {
+		define('BM_STATUS', $bm_status_load);
+		
+	}
 	
-	echo "ok";
-	
-?>
+	// created user session
+	$SM = new SM ();
+	$SM->start();
+	$SM->register();

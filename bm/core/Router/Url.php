@@ -1,22 +1,28 @@
 <?php	
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy zarządzanie url bm (pobiera, ustawia, sprawdza informacje)
-	
-	load class url blackmin
-	
-	Black Min cms,
-	
-	#plik: 2.0
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#file: 2.0
+*
+*	This file is routing a bm url | admin panel
 */
 
 	# includowanie wybranego motywu przez administratora
 
-	class url_bm extends bm_settings {
+	namespace BlackMin\Router;
+
+	class URL {
 		
+		/**
+		 * @var mixed 
+		*/
 		public $url;
-		
+
 		public function get_url_bm() {
 			$http_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
 			$http_p = "://";
@@ -58,6 +64,11 @@
 			}else{
 				return false;
 			}
+		}
+		// funkcja przekierowywująca do panelu logowania
+		public function goToLogin() {
+			header('Location: ../');
+			exit();
 		}
 		// funkcja farsąjąca url, zykły ciąg > sparsowane url | z ciągu na tablice url
 		public function parse_url($t){
@@ -136,13 +147,13 @@
 
 		// alias funkcji relativeToAbsolute
 		public function reltoabs($inurl, $absolute) {
-			url_bm::relativeToAbsolute($inurl, $absolute);
+			URL::relativeToAbsolute($inurl, $absolute);
 		}
 		
 		// funkcja sprawdzająca url blackmin
 		public function check_url(){
 			// pobieranie url
-			$url =  url_bm::get_url_bm();
+			$url =  URL::get_url_bm();
 			
 			// sprawdzanie czy załadować przerwę techniczną
 			if(BM_SETTINGS["bm_maintenance_mode"] == "true"){
@@ -189,9 +200,9 @@
 		// pobieranie url bm do załadowania
 		public function bm_url(){
 			// pobieranie url
-			$url =  url_bm::get_url_bm();
+			$url =  URL::get_url_bm();
 			// pobieranie ładowania kontentu
-			$c = url_bm::check_url();
+			$c = URL::check_url();
 			// rozdzieleanie danych po shlash :O
 			$r = parse_url($url);
 			// tablica z śćięzką
@@ -211,7 +222,7 @@
 				"url_full" => "$url"
 			];
 			
-			if (strstr(url_bm::get_orginal_url_bm(), BM_SETTINGS["url_site"]) === false) {
+			if (strstr(URL::get_orginal_url_bm(), BM_SETTINGS["url_site"]) === false) {
 				// przekierowanie do strony głownej
 				header("Location:". BM_SETTINGS["url_site"]);
 				exit();

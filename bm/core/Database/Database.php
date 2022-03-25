@@ -1,29 +1,65 @@
 <?php	
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do zarządzanie bazą, wykonywanie, pobieranie i operacje na bazie danych blackmin
-	
-	Black Min cms,
-	
-	#plik: 1.5
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This file is database functionalitys
 */
 
+	declare(strict_types=1);
+
+	namespace BlackMin\Database;
+
+	use Exception;
+	use Mysqli;
 
 	// główna nazwa klasy
-	class db_bm {
+	class Database {
 		// zmienne przechowywujące konfiguraje db-g
 		
+		/**
+		 * 	@var boolen
+		 */
 		protected $db_error_developers = false; // zmienna pokazujące dokładne błędy mysql
+		/**
+		 * 	@var boolen
+		 */		
 		protected $db_error = true; // zmienna pokazująca podstawowe błędy 
+		/**
+		 * 	@var boolen
+		 */		
 		protected $db_save_query = false; // zmienna zapamiętująca sql
+		/**
+		 * 	@var boolen
+		 */		
 		protected $set_valid = false;
 		
 		// zmienne przechowywujące konfiguraje db MySql
+		/**
+		 * 	@var string
+		 */
 		protected $host = "localhost";
+		/**
+		 * 	@var string
+		 */
 		protected $db_user = "root";
+		/**
+		 * 	@var string
+		 */
 		protected $db_password = "";
+		/**
+		 * 	@var string
+		 */		
 		protected $db_name = "blackmin";
+		/**
+		 * 	@var string
+		 */		
 		protected $db_prefix = null;
 		
 		protected $dbbm_mysql = null;
@@ -39,29 +75,6 @@
 					$this->db_password =  DB_PASSWORD;
 					$this->db_name =  DB_NAME;	
 					$this->db_prefix =  PREFIX_TABLE;	
-				}elseif( $GLOBALS['host'] != ""){
-					$this->host = $GLOBALS['host'];
-					$this->db_user =  $GLOBALS['db_user'];
-					$this->db_password =  $GLOBALS['db_password'];
-					$this->db_name =  $GLOBALS['db_name'];	
-					$this->db_prefix =  $GLOBALS['prefix_table'];	
-				}else{
-					// ładowanie pliku konfiguracyinego
-					// jeśli istnieje
-					if(file_exists("connect.php")){
-						require_once "connect.php";
-						$this->host = $host;
-						$this->db_user = $db_user;
-						$this->db_password = $db_password;
-						$this->db_name = $db_name;	
-						$this->db_prefix = $db_prefix;		
-					}else{
-						$this->host = null;
-						$this->db_user = null;
-						$this->db_password = null;
-						$this->db_name = null;
-						$this->db_prefix = null;						
-					}
 				}
 			}else{
 				// ustawienie parametrów db podanych przez dev
@@ -88,7 +101,7 @@
 			$this->db_prefix = $db_prefix;
 		} 
 		// funckcja pokazująca zmienne do połączenia z bazą danych
-		public function info(){
+		public function info() {
 			// tablica przechowywuję dane do pokazania
 			$t = [
 				"host" => $this->host,
@@ -110,7 +123,7 @@
 		}
 		
 		// funkcja odpowiada za wyświetlanie błędów
-		public function db_error($t){
+		public function db_error(bool $t):bool {
 			// sprawdzanie czy dane są typu bool
 			if(is_bool($t)){			
 				$this->db_error = $t;
@@ -119,7 +132,7 @@
 			}
 		}
 		// funkcja odpowiedzialna za pokazywanie błędów deweloperskich
-		public function db_error_developers($t){
+		public function db_error_developers(bool $t):bool {
 			// sprawdzanie czy dane są typu bool
 			if(is_bool($t)){
 				$this->db_error_developers = $t;
@@ -129,7 +142,7 @@
 		}
 		
 		// funkcjia zamieniająca prefix dev na prefix blackmin db
-		private function prefix_db($t){
+		private function prefix_db(string $t):string {
 			// tablica przechowywująca dane o prefixach dev
 			$d = [
 				"_prefix_",
@@ -144,7 +157,7 @@
 		}
 		
 		// funckcjia zmieniająca automatyczne parsowanie danych
-		public function set_valid($t){
+		public function set_valid(bool $t):bool {
 			// sprawdzanie czy dane są typu bool
 			if(is_bool($t)){
 				// aktulizowanie danych
@@ -155,7 +168,7 @@
 		}
 		
 		// funkcja zamieniająca enjie tagów na bespieczne odpowiedniki
-		public function valid($t){
+		public function valid(string $t):string {
 			// parsowanie danych
 			$t = htmlentities($t, ENT_QUOTES, "UTF-8");
 			$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
@@ -164,12 +177,12 @@
 		}
 
 		// funkcja usuwająca array według merge
-		public function array_flatten($array) {
+		public function array_flatten(array $array):array {
 
 		   $return = [];
 		   foreach ($array as $key => $value) {
 			   if (is_array($value)){
-				   $return = array_merge($return, db_bm::array_flatten($value));
+				   $return = array_merge($return, Database::array_flatten($value));
 			   }else{
 				   $return[$key] = $value;
 				}
@@ -331,7 +344,7 @@
 			{
 				if ($this->dbbm_mysql->connect_errno!=0)
 				{
-					throw new Exception(mysqli_connect_errno());
+					throw new Exception(mysqli_connect_error());
 				}
 				else
 				{		
@@ -341,10 +354,10 @@
 					// sprawdzanie czy dane trzeba sparsować 
 					if($this->set_valid == true){
 						// parsowanie danych
-						$t = htmlentities(db_bm::prefix_db($query), ENT_QUOTES, "UTF-8");
+						$t = htmlentities(Database::prefix_db($query), ENT_QUOTES, "UTF-8");
 						$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
 					}else{
-						$t = db_bm::prefix_db($query);
+						$t = Database::prefix_db($query);
 					}				
 					
 					if ($rezultat = $this->dbbm_mysql->query(sprintf($t))) {
@@ -431,7 +444,7 @@
 			{
 				if ($this->dbbm_mysql->connect_errno!=0)
 				{
-					throw new Exception(mysqli_connect_errno());
+					throw new Exception(mysqli_connect_error());
 				}
 				else
 				{		
@@ -441,10 +454,10 @@
 					// sprawdzanie czy dane trzeba sparsować 
 					if($this->set_valid == true){
 						// parsowanie danych
-						$t = htmlentities(db_bm::prefix_db($query), ENT_QUOTES, "UTF-8");
+						$t = htmlentities(Database::prefix_db($query), ENT_QUOTES, "UTF-8");
 						$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
 					}else{
-						$t = db_bm::prefix_db($query);
+						$t = Database::prefix_db($query);
 					}						
 					
 					if ($rezultat = $this->dbbm_mysql->query($t)) {
@@ -502,7 +515,7 @@
 				}
 				
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				// sprawdzanie czy pokazywanie błędów jest włączone
 				if($this->db_error == true){
@@ -532,7 +545,7 @@
 			{
 				if ($this->dbbm_mysql->connect_errno!=0)
 				{
-					throw new Exception(mysqli_connect_errno());
+					throw new Exception(mysqli_connect_error());
 				}
 				else
 				{		
@@ -542,10 +555,10 @@
 					// sprawdzanie czy dane trzeba sparsować 
 					if($this->set_valid == true){
 						// parsowanie danych
-						$t = htmlentities(db_bm::prefix_db($query), ENT_QUOTES, "UTF-8");
+						$t = htmlentities(Database::prefix_db($query), ENT_QUOTES, "UTF-8");
 						$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
 					}else{
-						$t = db_bm::prefix_db($query);
+						$t = Database::prefix_db($query);
 					}
 					
 					if ($this->dbbm_mysql->query(sprintf($t))) {
@@ -601,7 +614,7 @@
 			{
 				if ($this->dbbm_mysql->connect_errno!=0)
 				{
-					throw new Exception(mysqli_connect_errno());
+					throw new Exception(mysqli_connect_error());
 				}
 				else
 				{		
@@ -611,10 +624,10 @@
 					// sprawdzanie czy dane trzeba sparsować 
 					if($this->set_valid == true){
 						// parsowanie danych
-						$t = htmlentities(db_bm::prefix_db($query), ENT_QUOTES, "UTF-8");
+						$t = htmlentities(Database::prefix_db($query), ENT_QUOTES, "UTF-8");
 						$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
 					}else{
-						$t = db_bm::prefix_db($query);
+						$t = Database::prefix_db($query);
 					}
 					
 					if ($this->dbbm_mysql->query(sprintf($t))) {
@@ -670,7 +683,7 @@
 			{
 				if ($this->dbbm_mysql->connect_errno!=0)
 				{
-					throw new Exception(mysqli_connect_errno());
+					throw new Exception(mysqli_connect_error());
 				}
 				else
 				{		
@@ -680,10 +693,10 @@
 					// sprawdzanie czy dane trzeba sparsować 
 					if($this->set_valid == true){
 						// parsowanie danych
-						$t = htmlentities(db_bm::prefix_db($query), ENT_QUOTES, "UTF-8");
+						$t = htmlentities(Database::prefix_db($query), ENT_QUOTES, "UTF-8");
 						$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
 					}else{
-						$t = db_bm::prefix_db($query);
+						$t = Database::prefix_db($query);
 					}
 					
 					if ($this->dbbm_mysql->query(sprintf($t))) {
@@ -739,5 +752,3 @@
 			}			
 		}
 	}
-	
-?>

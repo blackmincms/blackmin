@@ -1,31 +1,68 @@
 <?php	
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do opsługi i zarządzania sekcji head w arkuszu html
-	
-	Black Min cms,
-	
-	#plik: 1.2
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#plik: 2.0
+*
+*	This file has load head
 */
 
+	namespace BlackMin\Head;
 
-	class head_bm extends bm_settings {
+	class Head {
 		// tworzenie zmienych odpowiedzialnych za dodawanie nowych zawartośći do head
+		/**
+		* 	@var string;
+		*/
 		protected $add_to_head = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $add_to_title = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $add_description = "";
+		/**
+		* 	@var string|null;
+		*/		
 		protected $add_keywords = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $set_lang = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $set_icon = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $set_icon_ico = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $set_robots = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $add_css = "";
+		/**
+		* 	@var string;
+		*/		
 		protected $add_script = "";
+		/**
+		* 	@var string;
+		*/
 		protected $autor_Timonix_BM = "BlackMinCMS";
 		
 		// funkcja konstrukcyina
-		function __construct(){
+		function __construct() {
 			// ładowanie podstawowych ustawień blackmin'a 
 			$this->add_to_title = BM_SETTINGS["bm_name_site"] . " | Black Min CMS";
 			$this->add_description = BM_SETTINGS["bm_description_site"]. " "; 
@@ -183,7 +220,7 @@ ECHO<<<END
 	<meta http-equiv="Page-Enter" content="revealTrans(Duration=10, Transition=23)">
     <meta http-equiv="Content-Language" content="$this->set_lang">
     <meta name="Author" content="Black Min CMS">
-    <meta http-equiv="Expires" content="Fri, 28 Dec 2019 17:45:14 GMT">
+    <meta http-equiv="Expires" content="Fri, 20 Dec 2020 20:20:20 GMT">
     <meta name="Authoring_tool" content="$this->autor_Timonix_BM">
 	<meta name="generator" content="$this->autor_Timonix_BM">
     <meta name="Robots" content="$this->set_robots">
