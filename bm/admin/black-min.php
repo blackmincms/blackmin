@@ -35,8 +35,8 @@
 
 	// db connect
 	$bm_db = new Database();
-	$db_bm->db_error_developers(false);
-	$db_bm->db_error(false);
+	$bm_db->db_error_developers(false);
+	$bm_db->db_error(false);
 	// settings bm
 	$bm_settings = new Settings($bm_db);
 	$bm_settings_load = $bm_settings->load();
@@ -51,6 +51,10 @@
 		define('BM_STATUS', $bm_status_load);
 		
 	}
+	// pobieranie wartośći z paska url i udostępnianie jej innym algorytmom 
+	$url_bm = new URL();
+	// sprawdzanie protokołu ssl_bm
+	$url_bm->check_ssl(true); 	
 	
 	// created user session
 	$SM = new SM ();

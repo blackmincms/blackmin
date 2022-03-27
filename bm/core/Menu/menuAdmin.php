@@ -52,7 +52,7 @@
                 ]
             ] , [
                 "name" => "Dysk",
-                "url" => "dysk",
+                "url" => "disk",
                 "icon" => "dysk.png",
                 "children" => [
                     [

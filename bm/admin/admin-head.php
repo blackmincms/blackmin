@@ -25,8 +25,6 @@
 		$BM_HEAD = new HeadAdmin ();
 		$BM_HEAD->load();
 	?>
-	
-	<!-- <?php //require_once "laduj-pliki-admin.php"; ?> -->
 
 </head>
 <body>

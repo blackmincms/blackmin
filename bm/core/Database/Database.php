@@ -123,19 +123,21 @@
 		}
 		
 		// funkcja odpowiada za wyświetlanie błędów
-		public function db_error(bool $t):bool {
+		public function db_error(bool $t = false):bool {
 			// sprawdzanie czy dane są typu bool
 			if(is_bool($t)){			
 				$this->db_error = $t;
+				return true;
 			}else{
 				return false;
 			}
 		}
 		// funkcja odpowiedzialna za pokazywanie błędów deweloperskich
-		public function db_error_developers(bool $t):bool {
+		public function db_error_developers(bool $t = false):bool {
 			// sprawdzanie czy dane są typu bool
 			if(is_bool($t)){
 				$this->db_error_developers = $t;
+				return true;
 			}else{
 				return false;
 			}
