@@ -1,7 +1,7 @@
 
     function mediaRender(t, p) {
         let parent = $(document).find(p);
-
+        
         if (typeof t == "object" || is_json(t)) {
             if (t["num_rows"] != undefined) {
                 if (t["num_rows"] != 0) {
@@ -40,7 +40,7 @@
                     `);
 
                     for (i=0; i < t["num_rows"]; i++) {
-                        let data = (t[i]["bm_datetime_upload"] == t[i]["bm_datetime_upload"] ? t[i]["bm_datetime_upload"] : ("Edytowano: " . t[i]["bm_datetime_upload"])); 
+                        let data = ((t[i]["bm_datetime_upload"] === t[i]["bm_datetime_changed"]) ? t[i]["bm_datetime_upload"] : ("Edytowano: " + t[i]["bm_datetime_changed"])); 
                         let opis = ((t[i]["bm_description"]) == "" ? "brak" : t[i]["bm_description"]);
                         let miniaturka = (t[i]["bm_thumbnail"] == "null" ? "" : (`<img src="${t[i]["bm_thumbnail"]}" alt="M" title="${t[i]["bm_name"]}" width="75" height="75"  class="img tsr-miniaturka tsr-vertical-align-middle tsr-width-75px tsr-mr-10" loading="lazy">`));
                         out += ( `
