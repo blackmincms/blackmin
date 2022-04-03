@@ -31,7 +31,10 @@
 	use BlackMin\Settings\Settings;
 	use BlackMin\Settings\Status;
 	use BlackMin\Router\Url;
+	use BlackMin\Router\Router;
 	use BlackMin\Session\SM;
+	use BlackMin\View\View;
+	use BlackMin\Load\SFL;
 
 	// db connect
 	$bm_db = new Database();
@@ -60,3 +63,11 @@
 	$SM = new SM ();
 	$SM->start();
 	$SM->register();
+
+	// the sort file loader
+	$SFL = new SFL();
+
+	// the viver function
+	$BMVIEW = new View();
+	// the router function
+	$BMROUTER = new Router($bm_db);

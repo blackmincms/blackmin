@@ -16,6 +16,9 @@
 	// ładowanie jądra black mina
 	require_once "black-min.php";
 
+	// add render media script
+	$SFL->add_js(BM_SETTINGS["url_server"] . "files/js/admin/media-render.js");
+
 	require_once ("admin-head.php");
 	
 ?>	
@@ -25,7 +28,7 @@
 	</section>
 	<section class="tsr tsr-p-10px background-white tsr-mt-20">
 		<section class="tsr" id="blackminload_execute_container">			
-			<section class="tsr-alert tsr-alert-info">Ładowanie danych!</section>				
+			<?php $BMROUTER->createInstance("load", "Media", "filter"); $BMROUTER->delegate(); ?>
 		</section>	
 	</section>
 

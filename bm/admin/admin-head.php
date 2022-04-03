@@ -24,6 +24,9 @@
 	<?php 
 		$BM_HEAD = new HeadAdmin ();
 		$BM_HEAD->load();
+		$SFL->load_css();
+		$SFL->load_js();
+		$SFL->load_php();
 	?>
 
 </head>

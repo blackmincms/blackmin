@@ -12,7 +12,7 @@
 *	This file has load file of directory
 */
 	
-	namespace BlackMin\Media;
+	namespace BlackMin\Load;
 
 	Class SFL {
 		// zmiene odpwiedzialne za przechowywanie danych do ładowania

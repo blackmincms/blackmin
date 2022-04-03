@@ -36,7 +36,8 @@
             if (Message::is_error()) {
                 if ($out = $this->form->formatMessage($this->Locale, $m, $t)) {
                    if ($this->jsonStatus) {
-                       return json_encode(Message::__formater ($c, $out));
+                    $t = Message::__formater ($c, $out);   
+                    return json_encode($t);
                    } else {
                        return $out;
                    }
@@ -65,9 +66,10 @@
             echo Message::create($c, $m, $t);
         }
 
-        // this function is only dormat string to obiect array out structur
-        public function format(String $s, String $m){
-            return Message::__formater($s, $m);
+        // this function is only format string to obiect array out structur
+        public function format(String $s, String $m) {
+            $t = Message::__formater($s, $m);
+            return $t;
         }
 
         private function is_error ():bool {
@@ -87,8 +89,8 @@
             $this->jsonStatus = $t;
         }
 
-        private function __formater (String $c, string $m):array|string {
-            if (preg_match("/^(error|info|warning|war|normal|success)$/", $c)) {
+        public function __formater (String $c, string $m):array|string|MessageFilter {
+            if (preg_match("/^(error|info|warning|war|normal|success|success_del)$/", $c)) {
                 ($c === "war" ? $c = "warning" : "");
                 return [
                     "status" => $c,

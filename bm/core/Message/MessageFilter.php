@@ -17,7 +17,7 @@
     abstract class MessageFilter {
         
         abstract protected function create(String $c, String $m, Array $t):string;
-        abstract protected function __formater (String $c, string $m):String;
+        abstract protected function __formater (String $c, string $m):array|string|MessageFilter;
         abstract protected function setJson(bool $t);
 
     }

@@ -197,6 +197,7 @@ ECHO<<<END
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Content-Script-Type" content="text/javascript">
+	<base href="$url_site_bm">
 	<!-- Koniec roszerzenia aplikacj strony KODOWANIE -->
 	<!-- Rozpoczynane Znaczników meta i seo, favicon -->
 	<meta name="viewport" content="width=1900">

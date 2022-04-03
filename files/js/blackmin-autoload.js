@@ -68,9 +68,18 @@
 
                 function send(a, t, c, b) {
                     tsr_alert("info", "Ładowanie danych", b, "html", false);
-                    tsr_ajax ("laduj/" + a.trim() + ".php", getValue(t), c, false, function (out) {
+                    let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "parm": getValue(t)})};
+                    tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, c, false, function (out) {
                         tsr_alert("success", "Dane załadowane prawidłowo!", b, "before", true, 250);
-                        b.innerHTML = out ;
+                        if (typeof out == "object" || is_json(out)) {
+                            if (a.trim().toLowerCase() == "media") {
+                                mediaRender(JSON.parse(out), b);
+                            } else {
+                                console.log("{ads}");
+                            }
+                        } else {
+                            b.innerHTML = out ;
+                        }
                         bm_autocomment();
                     }, function () {
                         tsr_alert("error", "Wystąpił błąd pod czas ładowania danych", b, "html", false);

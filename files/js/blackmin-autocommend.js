@@ -16,6 +16,18 @@
         if (t != undefined) {
             if (t.length != 0) {   
 
+                // changet rename visability
+                tx.addEventListener("change", (e) => {
+                    // sprawdzaqnie czy istnieje zmiana akcji submit
+                    if (tx != undefined) {
+                        if (tx.value === "rename") {
+                            $("#blackmin_change_action #bm_input_rename").css("display", "block");
+                        }else{
+                            $("#blackmin_change_action #bm_input_rename").css("display", "none");
+                        }
+                    }
+                });
+                // request post
                 t.addEventListener("click", (e) => {
                     tsr_blocked_submit(2500,"#blackminload_container .bm-row-delete");
                     // pobieranie dancyhh z zaznaczonych checkbox
@@ -23,10 +35,10 @@
                     let a = t.getAttribute("action");
                     // sprawdzaqnie czy istnieje zmiana akcji submit
                     if (tx != undefined) {
-                        if (tx.value = "rename") {
+                        if (tx.value == "rename") {
                             a = t.getAttribute("rename");
                             // pobieranie inputa rename
-                            let k = document.querySelector("#blackmin_change_action #folder_zmien");
+                            let k = document.querySelector("#blackmin_change_action #folder_change");
                             if (k != undefined) {
                                 x.rename = k.value;
                             } else {
@@ -35,7 +47,8 @@
                         }
                     }
                     if (a != undefined) {
-                        tsr_ajax("insert/"+ a.trim() +".php", x, "", false, function (e){
+                        let xe = {"bm_content": JSON.stringify({"action": tx.value, "url": a.trim(), "parm": x})};
+                        tsr_ajax("bm/core/Delegate/DelegateBM.php", xe, "", false, function (e){
                             const f = JSON.parse(e);
                             if (f["status"] == "error") {
                                 tsr_alert ("error", f["message"], t, "after", true, 2500);
@@ -48,6 +61,8 @@
                             } else if (f["status"] == "normal") {
                                 tsr_alert ("normal", f["message"], t, "after", true, 1500);
                             } else if (f["status"] == "success") {
+                                tsr_alert ("success", f["message"], t, "after", true, 1500);
+                            } else if (f["status"] == "success_del") {
                                 tsr_alert ("success", f["message"], t, "after", true, 1500);
                                 // usuwanie danych
                                 tsr_checkbox_del("bm-data", "#blackminload_container", ".bm-checkbox", ".bm-row-dl");
@@ -83,7 +98,8 @@
                                         let c2 = {"name": f, "content": {"0" : c}};
                                         let a = t.getAttribute("action");
                                         if (a != undefined) {
-                                            tsr_ajax("insert/"+ a.trim() +".php", c2, "", false, function (e){
+                                            let xe = {"bm_content": JSON.stringify({"action": "del", "url": a.trim(), "parm": c2})};
+                                            tsr_ajax("bm/core/Delegate/DelegateBM.php", xe, "", false, function (e){
                                                 const b = JSON.parse(e);
                                                 if (b["status"] == "error") {
                                                     tsr_alert ("error", b["message"], x, "append", true, 2500);

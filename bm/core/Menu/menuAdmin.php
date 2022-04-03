@@ -138,7 +138,7 @@
         /**
 		 * 	@var string
 		 */
-        protected $directPath = ("../../pliki/ikony/");
+        protected $directPath = ("pliki/ikony/");
         
         private function valid (array $t):bool {
             $a = (array_key_exists("name", $t) ?? false);
