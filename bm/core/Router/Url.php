@@ -14,6 +14,8 @@
 
 	# includowanie wybranego motywu przez administratora
 
+	declare(strict_types=1);
+
 	namespace BlackMin\Router;
 
 	class URL {

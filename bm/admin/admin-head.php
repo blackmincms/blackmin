@@ -42,10 +42,10 @@
 					<ol class="menu">
 						<li><a href="<?php echo BM_SETTINGS["url_site"];?>"><?php echo BM_SETTINGS["bm_name_site"]; ?></a></li>
 						</li>
-						<?php  if($_SESSION['flaga'] >= 20 AND $_SESSION['flaga'] <=30 OR $_SESSION['flaga'] >= 10 AND $_SESSION['flaga'] <=14 ){ ?>
+						<?php  if($_SESSION['flag'] >= 20 AND $_SESSION['flag'] <=30 OR $_SESSION['flag'] >= 10 AND $_SESSION['flag'] <=14 ){ ?>
 						<li><a href="admin-add-post.php">dodaj</a>
 						<?php }?>
-						<?php  if($_SESSION['flaga'] >= 15 AND $_SESSION['flaga'] <=30 ){ ?>
+						<?php  if($_SESSION['flag'] >= 15 AND $_SESSION['flag'] <=30 ){ ?>
 						<?php };?>
 					</ol>
 				</section>
@@ -116,13 +116,13 @@
 			
 			<ol class="menu-mobile tsr-fl">
 				<li><a href="index.php"><?php echo BM_SETTINGS["bm_name_site"]; ?></a></li>
-				<?php  if($_SESSION['flaga'] >= 20 AND $_SESSION['flaga'] <=30 OR $_SESSION['flaga'] >= 10 AND $_SESSION['flaga'] <=14 ){ ?>
+				<?php  if($_SESSION['flag'] >= 20 AND $_SESSION['flag'] <=30 OR $_SESSION['flag'] >= 10 AND $_SESSION['flag'] <=14 ){ ?>
 				<li><a href="add-post.php">dodaj</a></li>
 				<?php };?>
 			</ol>
 		</nav>
 	</header>
 
-	<!-- Black Min CMS Container Content View -->
+	<!-- Black Min CMS :: Container Content View -->
 	<main class="container-right">
 		<section class="container tsr-p-10px">

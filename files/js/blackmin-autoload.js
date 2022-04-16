@@ -1,11 +1,14 @@
-/*
-	CMS ,,Black Min''  Został stworzony przez timonix.pl
-	
-	ten plik służy do Automatycznego ładowania danych z serwera
-	
-	Black Min cms,
-	
-	#plik: 1.0
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#file: 2.0
+*
+*	ten plik służy do Automatycznego ładowania danych z serwera | admin panel
 */
 
     window.addEventListener("load", () => {
@@ -72,10 +75,17 @@
                     tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, c, false, function (out) {
                         tsr_alert("success", "Dane załadowane prawidłowo!", b, "before", true, 250);
                         if (typeof out == "object" || is_json(out)) {
-                            if (a.trim().toLowerCase() == "media") {
-                                mediaRender(JSON.parse(out), b);
+                            if (JSON.parse(out)["num_rows"] === 0) {
+                                tsr_alert("info", "Brak Danych Do Załadowania", b, "html", false);
                             } else {
-                                console.log("{ads}");
+                                a = a.trim().toLowerCase();
+                                if (a == "media") {
+                                    mediaRender(JSON.parse(out), b, a);
+                                }else if (a == "post") {
+                                    defaultRender(JSON.parse(out), b, a, ["authores","status", "type", "tag", "category", "datetime"], ["Dodający", "status", "typ", "tag", "kategoria", "data"], ["id_post", "title", "url"])
+                                } else {
+                                    tsr_alert("error", "Wystąpił nieznany błąd!", b, "html", false);
+                                }
                             }
                         } else {
                             b.innerHTML = out ;
@@ -102,16 +112,20 @@
 
         if (t == undefined) {
             const ta = document.forms.namedItem("blackminsend");
+            let a = ta.getAttribute("action");
+            let u = ta.getAttribute("url");
 
             if (ta != undefined) {
                 const g = document.getElementById("submit_data");
                 if (g != undefined) {
                     g.addEventListener("click", (e) => {
                         e.preventDefault();
+                        tsr_blocked_submit(2500, ".submit_data");
                         const xa = ta.getAttribute("action");
                         if (xa != undefined) {
                             if (xa.trim() != 0) {
-                                tsr_ajax("insert/"+ xa.trim() +".php", getValue(ta), "", false, function (e){
+                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "parm": getValue(ta)})};
+                                tsr_ajax("bm/core/Delegate/DelegateBM.php", x, "", false, function (e){
                                     const b = JSON.parse(e);
                                     if (b["status"] == "error") {
                                         tsr_alert ("error", b["message"], ta, "after", true, 2500);
@@ -123,11 +137,14 @@
                                         tsr_alert ("warning", b["message"], ta, "after", true, 2500);
                                     } else if (b["status"] == "normal") {
                                         tsr_alert ("normal", b["message"], ta, "after", true, 1500);
+                                    } else if (b["status"] == "location") {
+                                        window.location = b["message"];
+                                        tsr_alert ("info", "BlackMin: Nastąpi Przekierowanie!", ta, "after", true, 1500);
                                     } else if (b["status"] == "success") {
                                         tsr_alert ("success", b["message"], ta, "after", true, 1500);
                                         clear_form(ta);
                                     } else {
-                                        tsr_alert ("error", "Błąd serwera - nie prawidłowe dane!", t, "after", true, 1500);
+                                        tsr_alert ("error", "Błąd serwera - nie prawidłowe dane!", ta, "after", true, 1500);
                                         console.error();
                                     }
                                 });

@@ -38,7 +38,7 @@
                 "children" => [
                     [
                         "name" => "Wszystkie Posty",
-                        "url" => "all-post",
+                        "url" => "post",
                         "icon" => null
                     ] , [
                         "name" => "Dodaj Kategoria Tag",
@@ -46,7 +46,7 @@
                         "icon" => null
                     ] , [
                         "name" => "Kategoria Tag",
-                        "url" => "all-category-tag",
+                        "url" => "category-tag",
                         "icon" => null
                     ]
                 ]
@@ -63,7 +63,7 @@
                 ]
             ] , [
                 "name" => "Motyw",
-                "url" => "all-theme",
+                "url" => "theme",
                 "icon" => "motywy.png",
                 "children" => [
                     [
@@ -86,12 +86,12 @@
                 ]
             ] , [
                 "name" => "Pluginy",
-                "url" => "all-plugin",
+                "url" => "plugin",
                 "icon" => "plugin.png",
                 "children" => null
             ] , [
                 "name" => "Użytkownicy",
-                "url" => "all-users",
+                "url" => "users",
                 "icon" => "uzytkownicy.png",
                 "children" => [
                     [
@@ -162,7 +162,7 @@
             for ($i=0; $i < $ile; $i++) {
                 if (menuAdmin::valid($t[$i])) {
                     $temp .= '   
-                        <a href="'.$t[$i]["url"].'.php">
+                        <a href="bm/admin/'.$t[$i]["url"].'.php">
                             <section class="menu-left-submenu">
                             '. $t[$i]["name"] .'
                             </section>
@@ -192,18 +192,18 @@
                     if ($this->menuE[$i]["url"] === "__MENU__") {
                         $temp .= '
                             <section class="tsr menu-left tsr-button-menu-left-minimalize">
-                                    <a href="#">
+                                    <aref href="bm/admin/#">
                                         <section class="menu-item">
                                             <img src="'.$this->directPath.$this->menuE[$i]["icon"].'" alt="'. $this->menuE[$i]["name"] .'" class="tsr-nav-menu-img-left">
                                             <section class="tsr-nav-menu-size2">'. $this->menuE[$i]["name"] .'</section>
                                         </section>
-                                    </a>
+                                    </aref>
                             </section>
                         ';
                     } else {
                         $temp .= '
                             <section class="tsr menu-left">
-                                    <a href="'.$this->menuE[$i]["url"].'.php">
+                                    <a href="bm/admin/'.$this->menuE[$i]["url"].'.php">
                                         <section class="menu-item">
                                             <img src="'.$this->directPath.$this->menuE[$i]["icon"].'" alt="'. $this->menuE[$i]["name"] .'" class="tsr-nav-menu-img-left">
                                             <section class="tsr-nav-menu-size2">'. $this->menuE[$i]["name"] .'</section>

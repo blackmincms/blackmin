@@ -89,12 +89,13 @@
             $this->jsonStatus = $t;
         }
 
-        public function __formater (String $c, string $m):array|string|MessageFilter {
+        public function __formater (String $c, string $m, string $d = null):array|string|MessageFilter {
             if (preg_match("/^(error|info|warning|war|normal|success|success_del)$/", $c)) {
                 ($c === "war" ? $c = "warning" : "");
                 return [
                     "status" => $c,
-                    "message" => $m
+                    "message" => $m,
+                    "data" => $d
                 ];
             } else {
                 return $this->form;

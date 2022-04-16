@@ -1,11 +1,14 @@
-/*
-	CMS ,,Black Min''  Został stworzony przez timonix.pl
-	
-	ten plik służy do Automatycznego zarządzania opcjami w form/tabeli
-	
-	Black Min cms,
-	
-	#plik: 1.0
+/**
+*	"Black Min" 
+*	
+*	For the full copyright and license information, please view the LICENSE
+*	file that was distributed with this source code.
+*
+*	@package BlackMin
+*	
+*	#file: 2.0
+*
+*	ten plik służy do Automatycznego zarządzania opcjami w form/tabeli | admin panel
 */
 
     function bm_autocomment (e) {

@@ -30,6 +30,8 @@
                 return Media::del();
             }else if ($this->action == "rename") {
                 return Media::rename();
+            }else if ($this->action == "upload") {
+                return Media::upload();
             }else {
                 return false;
             }           
@@ -216,6 +218,11 @@
                 return $this->Message->format("error", "Brak danych wejśćiowych.");	
                 exit();
             }
+        }
+
+        public function upload() {
+            return $this->Message->format("war", "jest gitara");	
+            exit();
         }
 
     }

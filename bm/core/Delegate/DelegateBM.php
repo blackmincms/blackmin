@@ -40,6 +40,14 @@
             exit();
         }
         
+    }else if (isset($_FILES["file"])) {
+        $router = new Router($bm_db);
+        $router->instance([
+            "action" => "upload",
+            "url" => "media",
+            "parm" => [$_FILES["file"]]
+        ]);
+        echo json_encode($router->delegate());
     }else{
         $Message->createView("error", "BMMessage: Wystąpił błąd pod czas pobierania danych!");
         exit();
