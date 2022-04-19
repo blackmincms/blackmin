@@ -75,14 +75,19 @@
                     tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, c, false, function (out) {
                         tsr_alert("success", "Dane załadowane prawidłowo!", b, "before", true, 250);
                         if (typeof out == "object" || is_json(out)) {
-                            if (JSON.parse(out)["num_rows"] === 0) {
+                                let data = JSON.parse(out);
+                            if (data["num_rows"] === 0) {
                                 tsr_alert("info", "Brak Danych Do Załadowania", b, "html", false);
+                            } else if (data["status"] !== undefined) {
+                                tsr_alert(data["status"], data["message"], b, "html", false);
                             } else {
                                 a = a.trim().toLowerCase();
                                 if (a == "media") {
-                                    mediaRender(JSON.parse(out), b, a);
+                                    mediaRender(data, b, a);
                                 }else if (a == "post") {
-                                    defaultRender(JSON.parse(out), b, a, ["authores","status", "type", "tag", "category", "datetime"], ["Dodający", "status", "typ", "tag", "kategoria", "data"], ["id_post", "title", "url"])
+                                    defaultRender(data, b, a, ["authores","status", "type", "tag", "category", "datetime"], ["Dodający", "status", "typ", "tag", "kategoria", "data"], ["id_post", "title", "url"])
+                                }else if (a == "categorytag") {
+                                    defaultRender(data, b, a, ["bm_short_name", "bm_description", "bm_type"], ["Skr.Nazwa", "Opis", "Typ"], ["id_postmeta", "bm_name"], [25,30,10])
                                 } else {
                                     tsr_alert("error", "Wystąpił nieznany błąd!", b, "html", false);
                                 }

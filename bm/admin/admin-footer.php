@@ -15,7 +15,7 @@
 
 		</section>
 	</main>
-	<!-- Black Min CMS Container Content View -->
+	<!-- Black Min CMS :: Container Content View -->
 
 		<footer class="tsr-mt-100 tsr-stopka-navigation-right" >
 			<footer class="tsr-stopka-navigation">

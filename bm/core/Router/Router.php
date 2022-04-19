@@ -22,6 +22,7 @@
     use BlackMin\Media\MediaAdmin;
     use BlackMin\User\User;
     use BlackMin\Post\Post;
+    use BlackMin\CategoryTag\CategoryTag;
 
     class Router{
 
@@ -137,6 +138,9 @@
                 }elseif ($url === "Post") {               
                     $x = new Post($this->database ,$this->action, $this->parm);
                     $t = $x->parse();
+                }elseif ($url === "Categorytag") {               
+                    $x = new CategoryTag($this->database ,$this->action, $this->parm);
+                    $t = $x->parse();
                 }
             }
             if (is_int($t)){
@@ -149,5 +153,19 @@
                 return $t;
             }
         }
+
+        
+        public function autoDelegate() {
+            $url = ucfirst($this->url);
+            //instantiate the controller object
+           $class = 'Controller\\' . $url;
+           $object = new $class($this->database ,$this->action, $this->parm);
+
+           // rex commponents
+           $ur = $this?->url;
+           $obj = new $ur ($this->database ,$this->action, $this->parm);
+
+           return $object;
+       }
     }
     

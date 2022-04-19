@@ -25,7 +25,7 @@
                     for (let i = 0; i < ile; i++) {
                         
                         pl += `
-                            <td class="tsr-width-${(m != null ? m : "100px")} tsr-width-100-3 tsr-display-block-3 tsr-p-5px tsr-algin-left-2" bm-data="${q[i]}">
+                            <td class="tsr-width-${(m != null ? (m[i] != undefined ? m[i] : "100px") : "100px")} tsr-width-100-3 tsr-display-block-3 tsr-p-5px tsr-algin-left-2" bm-data="${q[i]}">
                                 ${(qt[i] != undefined ? qt[i] : q[i])}
                             </td>
                         `;
@@ -69,6 +69,18 @@
     
                         }
 
+                        let zo = "";
+
+                        if (ids[2] != undefined) {
+                            zo = `
+                                <section class="fs-100 tsr-button tsr-visable-hover-element tsr-visibility-visable-2 bm-row-view">
+                                    <a href="${(ids[2] != undefined ? t[i][ids[2]] : "")}">
+                                        Zobacz	
+                                    </a>
+                                </section>
+                            `;
+                        }
+
                         out += ( `
                             <tr class="tsr-color-table bm-row-dl" bm-row-data="${i}">
                                 <th bm-data="bm-r-id"> 
@@ -102,11 +114,7 @@
                                                 Edytuj	
                                             </a>
                                         </section>
-                                        <section class="fs-100 tsr-button tsr-visable-hover-element tsr-visibility-visable-2 bm-row-view">
-                                            <a href="${(ids[2] != undefined ? t[i][ids[2]] : "")}">
-                                                Zobacz	
-                                            </a>
-                                        </section>
+                                        ${zo}
                                     </section>
                                 </td>
                                 ${lt}
@@ -119,18 +127,19 @@
                         </table>
             
                         <section class="tsr tsr tsr-mt-20">
-                            <input type="submit" value="Wykonaj akcję!" class="input buttom" action="media" rename="media" id="blackmin_action"/>
+                            <input type="submit" value="Wykonaj akcję!" class="input buttom" action="${a}" rename="${a}" id="blackmin_action"/>
                         </section>
                     `);
                     
                     parent.html(out);
+                    tsr_checkboxall("#blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
                 } else {
                     tsr_alert("info", "BlackMin: Brak danych do wyświetlenia.", parent, "html", false);
                 }
             } else {
-                tsr_alert("alert", "BlackMin: Błędne dane wejśćiowe (render)", parent, "html", false);
+                tsr_alert("war", "BlackMin: Błędne dane wejśćiowe (render)", parent, "html", false);
             }
         }else{
-            tsr_alert("alert", "BlackMin: Wystąpił błąd pod czas renderowania danych", parent, "html", false);
+            tsr_alert("error", "BlackMin: Wystąpił błąd pod czas renderowania danych", parent, "html", false);
         }
     }
