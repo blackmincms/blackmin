@@ -12,99 +12,90 @@
 *	This file is rendering message outputs
 */
 
-    namespace BlackMin\Message;
+namespace BlackMin\Message;
 
-    use MessageFormatter;
-    use BlackMin\Message\MessageFilter;
+use MessageFormatter;
+use BlackMin\Message\MessageFilter;
 
-    class Message extends MessageFilter{
+class Message extends MessageFilter {
 
-        /* Message Formater */
-        private $form;
-        static protected $Locale = "pl_PL";
-        static protected $jsonStatus = true;
+    public const STATUS_CODE = '(error|info|warning|war|normal|success|success_del)';
 
-        public function __construct(){
-            try {
-                $this->form = new MessageFormatter("pl_PL", "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> Formatowania odpowiedźi");
-            } catch (\Throwable $th) {
-                return "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> - Opsługi Danych!";
-            }
-        }
+    /**
+     * @var MessageFormatter
+     */
+    private $form;
 
-        public function create(String $c, String $m, Array $t):String {
-            if (Message::is_error()) {
-                if ($out = $this->form->formatMessage($this->Locale, $m, $t)) {
-                   if ($this->jsonStatus) {
-                    $t = Message::__formater ($c, $out);   
-                    return json_encode($t);
-                   } else {
-                       return $out;
-                   }
-                   
-                } else {
-                    return $this->form;
-                }
-                
-            } else {
-                return $this->form;
-            }
-            
-        }
+    static protected $locale = "pl_PL";
+    static protected $jsonStatus = true;
 
-        public function createView(String $c, String $m, Array $t = []):void {
-            echo Message::create($c, $m, $t);
-        }
-
-        public function parse(String $a, String $b, String $c, string $m):String|MessageFormatter {
-            $t = $this->form->parseMessage($this->Locale, $a, $b);
-            return Message::create($c, $m, $t);
-        }
-        
-        public function parseView(String $a, String $b, String $c, string $m):void {
-            $t = $this->form->parseMessage($this->Locale, $a, $b);
-            echo Message::create($c, $m, $t);
-        }
-
-        // this function is only format string to obiect array out structur
-        public function format(String $s, String $m) {
-            $t = Message::__formater($s, $m);
-            return $t;
-        }
-
-        private function is_error ():bool {
-            if (intl_is_failure($this->form->getErrorCode())) {
-               return true;
-            } else {
-                return false;
-            }
-            
-        }
-
-        public function setLocale(String $t) {
-            $this->Locale = $t;
-        }
-
-        public function setJson(bool $t){
-            $this->jsonStatus = $t;
-        }
-
-        public function __formater (String $c, string $m, string $d = null):array|string|MessageFilter {
-            if (preg_match("/^(error|info|warning|war|normal|success|success_del)$/", $c)) {
-                ($c === "war" ? $c = "warning" : "");
-                return [
-                    "status" => $c,
-                    "message" => $m,
-                    "data" => $d
-                ];
-            } else {
-                return $this->form;
-            }
-            
-        }
-
-        public function __destruct() {
-            unset($this->form);
+    public function __construct() {
+        try {
+            $this->form = new MessageFormatter("pl_PL", "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> Formatowania odpowiedźi");
+        } catch (\Throwable $th) {
+            echo "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> - Opsługi Danych!";
         }
     }
-    
+
+    public function create(string $status, string $message, array $data) {
+        if ($this->is_error()) {
+            if ($out = $this->form::formatMessage(self::$locale, $message, $data)) {
+               if (self::$jsonStatus) {
+                return json_encode($this->formatter($status, $out));
+               }
+
+               return $out;
+            }
+        }
+
+        return $this->form;
+    }
+
+    public function createView(string $status, string $message, array $data = []): void {
+        echo $this->create($status, $message, $data);
+    }
+
+    public function parse(string $pattern, string $b, string $status, string $message) {
+        $data = $this->form::parseMessage(self::$locale, $pattern, $b);
+        return $this->create($status, $message, $data);
+    }
+
+    public function parseView(string $pattern, string $b, string $status, string $message): void {
+        $data = $this->form::parseMessage(self::$locale, $pattern, $b);
+        echo $this->create($status, $message, $data);
+    }
+
+    // this function is only format string to obiect array out structur
+    public function format(string $status, string $message) {
+        return $this->formatter($status, $message);
+    }
+
+    private function is_error(): bool {
+        return intl_is_failure($this->form->getErrorCode());
+    }
+
+    public static function setLocale(string $locale): void {
+        self::$locale = $locale;
+    }
+
+    public static function setJson(bool $isJson): void {
+        self::$jsonStatus = $isJson;
+    }
+
+    public function formatter(string $status, string $message, string $data = null) {
+        if (preg_match('/^'.self::STATUS_CODE.'$/', $status)) {
+            ($status === "war" ? $status = "warning" : "");
+            return [
+                "status" => $status,
+                "message" => $message,
+                "data" => $data
+            ];
+        }
+
+        return $this->form;
+    }
+
+    public function __destruct() {
+        unset($this->form);
+    }
+}

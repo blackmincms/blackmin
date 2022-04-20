@@ -28,7 +28,13 @@
 	</section>
 	<section class="tsr tsr-p-10px background-white tsr-mt-20">
 		<section class="tsr" id="blackminload_execute_container">			
-			<?php $BMROUTER->createInstance("load", "Post", "filter"); $BMROUTER->delegate(); ?>
+			<?php try {
+                $BMROUTER = $BMROUTER->createInstanceWith("load", "Post", "filter");
+                $BMROUTER->delegate();
+            } catch (\BlackMin\Exception\RouterException $e) {
+                // tutaj coś zrobić z tym wyjątkiem
+            }
+            ?>
 		</section>	
 	</section>
 

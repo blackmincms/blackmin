@@ -12,13 +12,11 @@
 *	This file is formating message outputs | constructor parser
 */
 
-    namespace BlackMin\Message;
+namespace BlackMin\Message;
 
-    abstract class MessageFilter {
-        
-        abstract protected function create(String $c, String $m, Array $t):string;
-        abstract protected function __formater (String $c, string $m):array|string|MessageFilter;
-        abstract protected function setJson(bool $t);
+abstract class MessageFilter {
 
-    }
-    
+    abstract protected function create(string $status, string $message, array $data);
+    abstract protected function formatter(string $status, string $message, string $data = null);
+    abstract protected static function setJson(bool $isJson): void;
+}

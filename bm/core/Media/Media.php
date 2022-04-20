@@ -1,43 +1,44 @@
 <?php
     namespace BlackMin\Media;
 
+    use BlackMin\Base\BaseInterface;
+    use BlackMin\Database\Database;
     use BlackMin\Message\Message;
 
-    class Media {
+    class Media implements BaseInterface {
 
         private $database;
         private $action;
         private $parm;
 
-        protected $Message;
+        protected $message;
 
-        public function __construct ($d ,String $a, array $t) {
-            $this->database = $d;
-            $this->action = $a;
-            $this->parm = $t;
+        public function __construct (Database $database ,string $action, array $params) {
+            $this->database = $database;
+            $this->action = $action;
+            $this->parm = $params;
 
-            $this->Message = new Message();
-            
-            return Media::parse();
+            $this->message = new Message();
         }
 
-        public function parse(){
-            if ($this->action == "get") {
-                return Media::get();
-            }else if ($this->action == "set") {
-                return Media::set();
-            }else if ($this->action == "del") {
-                return Media::del();
-            }else if ($this->action == "rename") {
-                return Media::rename();
-            }else if ($this->action == "upload") {
-                return Media::upload();
-            }else {
-                return false;
-            }           
+        public function parse() {
+            switch ($this->action) {
+                case 'get':
+                    return $this->get();
+                case 'set':
+                    return $this->set();
+                case 'del':
+                    return $this->del();
+                case 'rename':
+                    return $this->rename();
+                case 'upload':
+                    return $this->upload();
+                default:
+                    return false;
+            }
         }
    
-        public function get(){
+        public function get() {
             if (isset ($this->parm['roszerzenie'])){
                 $roszerzenie = $this->parm['roszerzenie'];
             }else{
@@ -69,7 +70,7 @@
             $szukaj = $this->database->valid($szukaj);
             $ile_load = $this->database->valid($ile_load);
             
-            $roszerzenie = ($roszerzenie == "all" ? "`bm_file_type` LIKE '%%'" : "`bm_file_type` LIKE '%". $roszerzenie ."%'");
+            $roszerzenie = ($roszerzenie === "all" ? "`bm_file_type` LIKE '%%'" : "`bm_file_type` LIKE '%". $roszerzenie ."%'");
             $folder = (strlen($folder) === 0 ? "`bm_folder` LIKE '%%'" : "`bm_folder` LIKE '%". $folder ."%'");
             $szukaj = (strlen($szukaj) === 0 ? "(`bm_name` LIKE '%%' OR `bm_name_orginal` LIKE '%%' OR `bm_description` LIKE '%%')" : "(`bm_name` LIKE '%". $szukaj ."%' OR `bm_name_orginal` LIKE '%". $szukaj ."%' OR `bm_description` LIKE '%". $szukaj ."%')");
             $ile_load = ($ile_load < 0 ? 0 : $ile_load);
@@ -78,19 +79,18 @@
             return $zap;
         }
 
-        public function set(){
-            # code...
+        public function set() {
+            return $this->message->format("info", "TODO");
         }
         
-        public function del(){
+        public function del() {
             if (isset($this->parm["name"])) {
-                if ($this->parm["name"] == "dysk") {
+                if ($this->parm["name"] === "dysk") {
                     if (isset($this->parm["content"])) {
                         // sprawdzanie czy dane są do usunięcja
                         $t = count($this->parm["content"]);
                         if ($t === 0) {
-                            return $this->Message->format("info", "Brak danych do usunięcja.");
-                            exit();
+                            return $this->message->format("info", "Brak danych do usunięcja.");
                         }else {
                             $a = $this->database->parse($this->parm["content"]);
                             $a = $this->database->valid($a);
@@ -112,7 +112,7 @@
                                         if(file_exists($path_file)){
                                             if(@unlink($path_file)){
                                                 // sprawdzanie czy miniaturka istnieje
-                                                if($x[$i]["bm_thumbnail"] != "null"){
+                                                if($x[$i]["bm_thumbnail"] !== "null"){
                                                     if(file_exists($path_thumbnail)){
                                                         @unlink($path_thumbnail);
                                                     }else{
@@ -136,11 +136,9 @@
                                     if($is_ok === true){
                                         // usuwanie danych
                                         if ($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")) {
-                                            return $this->Message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
-                                            exit();
+                                            return $this->message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
                                         }else {
-                                            return $this->Message->format("error", "Wystąpił błąd pod czas usuwania danych.");
-                                            exit();
+                                            return $this->message->format("error", "Wystąpił błąd pod czas usuwania danych.");
                                         }
                                     }else{
                                         // sprawdzanie czy suma kontrolna wynosi zero
@@ -148,52 +146,42 @@
                                             // sprawdzanie czy usunięto już dane
                                             if($this->database->query("SELECT `id_file` FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")["num_rows"] != 0){
                                                 if($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")){
-                                                    return $this->Message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
-                                                    exit();
+                                                    return $this->message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
                                                 }else{
-                                                    return $this->Message->format("error", "Wystąpił błąd pod czas usuwania danych.");
-                                                    exit();
+                                                    return $this->message->format("error", "Wystąpił błąd pod czas usuwania danych.");
                                                 }
                                             }else{
-                                                return $this->Message->format("info", "Plik(i) zostały już usunięte!");
-                                                exit();					
+                                                return $this->message->format("info", "Plik(i) zostały już usunięte!");
                                             }
                                         }else{
-                                            return $this->Message->format("error", "Kod błędu: [ERROR_DELETE_FILE] - Błąd podczas usuwania plik(ów)!");
-                                            exit();		
+                                            return $this->message->format("error", "Kod błędu: [ERROR_DELETE_FILE] - Błąd podczas usuwania plik(ów)!");
                                         }
                                     }
                                 } else {
-                                    return $this->Message->format("info", "Brak danych do usunięcja..");	
-                                    exit();
+                                    return $this->message->format("info", "Brak danych do usunięcja..");
                                 }
                             } else {
-                                return $this->Message->format("error", "Wystąpił błąd pod czas zapytania do bazy danych.");	
-                                exit();
+                                return $this->message->format("error", "Wystąpił błąd pod czas zapytania do bazy danych.");
                             }
                         }
                     }else{
-                        return $this->Message->format("info", "Brak danych do usunięcja...");	
-                        exit();
+                        return $this->message->format("info", "Brak danych do usunięcja...");
                     }
                 }else{
-                    return $this->Message->format("error", "Błędne danye wejśćiowye.");	
-                    exit();
+                    return $this->message->format("error", "Błędne danye wejśćiowye.");
                 }
             } else {
-                return $this->Message->format("error", "Brak danych wejśćiowych.");	
-                exit();
-            }	
+                return $this->message->format("error", "Brak danych wejśćiowych.");
+            }
         }
 
-        public function rename(){
+        public function rename() {
             if (isset($this->parm["name"])) {
                 if (isset($this->parm["content"])) {
                     // sprawdzanie czy dane są do usunięcja
                     $t = count($this->parm["content"]);
                     if ($t === 0) {
-                        return $this->Message->format("info", "Brak danych do zmiany.");	
-                        exit();
+                        return $this->message->format("info", "Brak danych do zmiany.");
                     }else {
                         $a = $this->database->parse($this->parm["content"]);
                         $a = $this->database->valid($a);
@@ -203,26 +191,21 @@
                         $datetime = date('Y-m-d H:i:s"');
                         // usuwanie danych
                         if ($this->database->update("UPDATE `|prefix|bm_files` SET `bm_folder`='$nazwa_folderu', `bm_datetime_changed` = '$datetime' WHERE `id_file` IN ($a)")) {
-                            return $this->Message->format("success", "Nazwa folderu pliku została poprawnie zmieniona!");	
-                            exit();
+                            return $this->message->format("success", "Nazwa folderu pliku została poprawnie zmieniona!");
                         }else {
-                            return $this->Message->format("error", "Wystąpił Błąd podczas zmieniania nazwy folderu pliku.");	
-                            exit();
+                            return $this->message->format("error", "Wystąpił Błąd podczas zmieniania nazwy folderu pliku.");
                         }
                     }
                 }else{
-                    return $this->Message->format("info", "Brak danych do zmiany.");	
-                    exit();
+                    return $this->message->format("info", "Brak danych do zmiany.");
                 }
             } else {
-                return $this->Message->format("error", "Brak danych wejśćiowych.");	
-                exit();
+                return $this->message->format("error", "Brak danych wejśćiowych.");
             }
         }
 
         public function upload() {
-            return $this->Message->format("war", "jest gitara");	
-            exit();
+            return $this->message->format("war", "jest gitara");
         }
 
     }
