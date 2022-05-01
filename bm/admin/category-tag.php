@@ -28,7 +28,14 @@
 	</section>
 	<section class="tsr tsr-p-10px background-white tsr-mt-20">
 		<section class="tsr" id="blackminload_execute_container">			
-			<?php $BMROUTER->createInstance("load", "CategoryTag", "filter"); $BMROUTER->delegate(); ?>
+			<?php 
+				try {
+					$BMROUTER = $BMROUTER->createInstanceWith("load", "CategoryTag", "filter");
+					$BMROUTER->delegate();
+				} catch (\BlackMin\Exception\RouterException $e) {
+					echo '<div class="tsr-alert tsr-alert-error"> <b>BlackMIn: </b> <i>ERROR</i> - '. $e .' </div>';
+				}
+            ?>
 		</section>	
 	</section>
 

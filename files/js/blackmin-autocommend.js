@@ -55,7 +55,7 @@
                         act = tx.value;
                     }
                     if (a != undefined) {
-                        let xe = {"bm_content": JSON.stringify({"action": act, "url": a.trim(), "parm": x})};
+                        let xe = {"bm_content": JSON.stringify({"action": act, "url": a.trim(), "param": x})};
                         tsr_ajax("bm/core/Delegate/DelegateBM.php", xe, "", false, function (e){
                             const f = JSON.parse(e);
                             if (f["status"] == "error") {
@@ -106,7 +106,7 @@
                                         let c2 = {"name": f, "content": {"0" : c}};
                                         let a = t.getAttribute("action");
                                         if (a != undefined) {
-                                            let xe = {"bm_content": JSON.stringify({"action": "del", "url": a.trim(), "parm": c2})};
+                                            let xe = {"bm_content": JSON.stringify({"action": "del", "url": a.trim(), "param": c2})};
                                             tsr_ajax("bm/core/Delegate/DelegateBM.php", xe, "", false, function (e){
                                                 const b = JSON.parse(e);
                                                 if (b["status"] == "error") {

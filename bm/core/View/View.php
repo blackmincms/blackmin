@@ -12,77 +12,68 @@
 *	This file is rendering site
 */
 
+    declare(strict_types=1);
+
     namespace BlackMin\View;
+
+    use Exception;
 
     class View {
         
         /**
-         * @var String|Null; 
+         * @var string
         */
-        private $view = null;
+        private $view;
 
-        public function __construct ($t = null) {
-            $this->view = $t;
+        public function __construct (string $set = "") {
+            $this->set($set);
         }
 
-        public function instance($t){
-            $this->view = $t;
+        public function set(string $set){
+            $this->view = $set;
         }
 
-        public function render(bool $t = false):string|false {
-            if (!is_null($this->view)) {
-                $out = null;
-                if ($t) {
-                    if (file_exists($this->view)) {
-                    // rozpoczynanie kopilowanie html w php
-                        ob_start();
-                        // inkludowanie pliku
-                        require_once ($this->view);		
-                        // kompilowanie pliku
-                        $out = ob_get_contents();
-                        // zaczywywanie kompilowania pliku
-                        ob_end_clean();
-                        // zwalnianie danych z pamięci ram
-                        ob_clean();
-                    } else {
-                        return false;
-                    }
-                    
-                } else {
-                    if (file_exists($this->view)) {
-                        // rozpoczynanie kopilowanie html w php
-                        ob_start();
-                        // inkludowanie pliku
-                        require ($this->view);		
-                        // kompilowanie pliku
-                        $out = ob_get_contents();
-                        // zaczywywanie kompilowania pliku
-                        ob_end_clean();
-                        // zwalnianie danych z pamięci ram
-                        ob_clean();
-                    } else {
-                        return false;
-                    }
-                }
-                return $out;
-            } else {
-                return false;
-            }
+        public function render(bool $isOnce = false): string {
+            $out = '';
             
-        }
-
-        public function renderViewOnly(bool $t = false):void {
-            if (!is_null($this->view)) {
-                if ($t) {
-                    if (file_exists($this->view)) {
+            try {
+                if ($this->view !== null && file_exists($this->view)) {
+                    // rozpoczynanie kopilowanie html w php
+                    ob_start();
+                    // inkludowanie pliku
+                    if ($isOnce) {
+                        require_once ($this->view);
+                    } else {
                         require ($this->view);
                     }
-                } else {
-                    if (file_exists($this->view)) {
+                    // kompilowanie pliku
+                    $out = ob_get_contents();
+                    // zaczywywanie kompilowania pliku
+                    ob_end_clean();
+                    // zwalnianie danych z pamięci ram
+                    ob_clean();
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                $out = false;
+            }
+    
+            return $out;
+        }
+    
+        public function renderViewOnly(bool $isOnce = false): void {
+            try {
+                if ($this->view !== null && file_exists($this->view)) {
+                    if ($isOnce) {
+                        require ($this->view);
+                    } else {
                         require_once ($this->view);
                     }
                 }
-            }                        
+            } catch (\Throwable $th) {
+                //throw $th;
+                // return false;
+            }
         }
 
     }

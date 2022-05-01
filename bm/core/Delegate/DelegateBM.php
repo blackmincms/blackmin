@@ -15,40 +15,45 @@
 	// ładowanie jądra black mina
 	require_once "../../admin/black-min.php";
 
+    use BlackMin\Exception\RouterException;
     use BlackMin\Message\Message;
     use BlackMin\Router\Router;
-
-    $Message = new Message();
-
+    
+    $message = new Message();
+    
     if (isset($_POST["bm_content"])) {
         // json decode
-        (json_decode($_POST["bm_content"], true) != false ? $t = json_decode($_POST["bm_content"], true) : $t = null);
-        if (!is_null($t) && is_array($t)) {
+        (json_decode($_POST["bm_content"], true) != false ? $content = json_decode($_POST["bm_content"], true) : $content = null);
+        if (!is_null($content) && is_array($content)) {
             ini_set('display_errors', 1);
-	        error_reporting (E_ALL | E_STRICT);
-            $router = new Router($bm_db);
-            $router->instance($t);
-            echo json_encode($router->delegate());
-
-           /*  $as = [
-                "action" => "",
-                "url" => ""
-            ]; */
-            
+            error_reporting (E_ALL | E_STRICT);
+            try {
+                $router = new Router($bm_db);
+                $router = $router->createInstanceFrom($content);
+                echo json_encode($router->delegate(), JSON_THROW_ON_ERROR);
+            } catch (RouterException $e) {
+                $message->createView("error", $e->getMessage());
+            }
+    
         } else {
-            $Message->createView("error", "BMMessage: Błędny format danych!");
+            $message->createView("error", "BMMessage: Błędny format danych!");
             exit();
         }
-        
+    
     }else if (isset($_FILES["file"])) {
-        $router = new Router($bm_db);
-        $router->instance([
-            "action" => "upload",
-            "url" => "media",
-            "parm" => [$_FILES["file"]]
-        ]);
-        echo json_encode($router->delegate());
+        try {
+            $router = new Router($bm_db);
+            $router = $router->createInstanceFrom([
+                "action" => "upload",
+                "url" => "media",
+                "parm" => [$_FILES["file"]]
+            ]);
+            echo json_encode($router->delegate(), JSON_THROW_ON_ERROR);
+        } catch (RouterException $e) {
+            $message->createView("error", $e->getMessage());
+        }
     }else{
-        $Message->createView("error", "BMMessage: Wystąpił błąd pod czas pobierania danych!");
+        $message->createView("error", "BMMessage: Wystąpił błąd pod czas pobierania danych!");
         exit();
-    }
+    } 
+    

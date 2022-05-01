@@ -71,7 +71,7 @@
 
                 function send(a, t, c, b) {
                     tsr_alert("info", "Ładowanie danych", b, "html", false);
-                    let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "parm": getValue(t)})};
+                    let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "param": getValue(t)})};
                     tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, c, false, function (out) {
                         tsr_alert("success", "Dane załadowane prawidłowo!", b, "before", true, 250);
                         if (typeof out == "object" || is_json(out)) {
@@ -129,7 +129,7 @@
                         const xa = ta.getAttribute("action");
                         if (xa != undefined) {
                             if (xa.trim() != 0) {
-                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "parm": getValue(ta)})};
+                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "param": getValue(ta)})};
                                 tsr_ajax("bm/core/Delegate/DelegateBM.php", x, "", false, function (e){
                                     const b = JSON.parse(e);
                                     if (b["status"] == "error") {

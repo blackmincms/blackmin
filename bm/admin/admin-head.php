@@ -14,7 +14,6 @@
 
 	use BlackMin\Menu\menuAdmin;
 	use BlackMin\Head\HeadAdmin;
-	use BlackMin\Media\SFL;
 ?>
 
 <!DOCTYPE html>
