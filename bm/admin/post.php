@@ -33,7 +33,7 @@
 					$BMROUTER = $BMROUTER->createInstanceWith("load", "Post", "filter");
 					$BMROUTER->delegate();
 				} catch (\BlackMin\Exception\RouterException $e) {
-					echo '<div class="tsr-alert tsr-alert-error"> <b>BlackMIn: </b> <i>ERROR</i> - '. $e .' </div>';
+					$BMMESSAGE->createView("error", '<b>BlackMIn: </b> <i>ERROR</i> - '. $e->getMessage());
 				}
             ?>
 		</section>	

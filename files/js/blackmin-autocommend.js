@@ -53,6 +53,8 @@
                             }
                         }
                         act = tx.value;
+                    }else if (document.querySelector("#blackminload_execute_container #blackminadd") !== undefined) {
+                        act = "add";
                     }
                     if (a != undefined) {
                         let xe = {"bm_content": JSON.stringify({"action": act, "url": a.trim(), "param": x})};

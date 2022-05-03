@@ -35,6 +35,7 @@
 	use BlackMin\Session\SM;
 	use BlackMin\View\View;
 	use BlackMin\Load\SFL;
+	use BlackMin\Message\Message;
 
 	// db connect
 	$bm_db = new Database();
@@ -55,9 +56,9 @@
 		
 	}
 	// pobieranie wartośći z paska url i udostępnianie jej innym algorytmom 
-	$url_bm = new URL();
+	$BMURL = new URL();
 	// sprawdzanie protokołu ssl_bm
-	$url_bm->check_ssl(true); 	
+	$BMURL->check_ssl(true); 	
 	
 	// created user session
 	$SM = new SM ();
@@ -67,7 +68,10 @@
 	// the sort file loader
 	$SFL = new SFL();
 
-	// the viver function
+	// the viver obiect
 	$BMVIEW = new View();
-	// the router function
+	// the router obiect
 	$BMROUTER = new Router($bm_db);
+
+	// the message obiect
+	$BMMESSAGE = new Message();

@@ -9,32 +9,33 @@
         private $action;
         private $parm;
 
-        protected $Message;
+        protected $message;
 
         public function __construct ($d ,String $a, array $t) {
             $this->database = $d;
             $this->action = $a;
             $this->parm = $t;
 
-            $this->Message = new Message();
+            $this->message = new Message();
             
             return Media::parse();
         }
 
         public function parse(){
-            if ($this->action == "get") {
-                return Media::get();
-            }else if ($this->action == "set") {
-                return Media::set();
-            }else if ($this->action == "del") {
-                return Media::del();
-            }else if ($this->action == "rename") {
-                return Media::rename();
-            }else if ($this->action == "upload") {
-                return Media::upload();
-            }else {
-                return false;
-            }           
+            switch ($this->action) {
+                case 'get':
+                    return $this->get();
+                case 'del':
+                    return $this->del();
+                case 'add':
+                    return $this->add();
+                case 'rename':
+                    return $this->rename();
+                case 'upload':
+                    return $this->upload();
+                default:
+                    return false;
+            } 
         }
    
         public function get(){
@@ -78,7 +79,7 @@
             return $zap;
         }
 
-        public function set(){
+        public function add(){
             # code...
         }
         

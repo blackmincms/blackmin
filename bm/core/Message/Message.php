@@ -32,7 +32,11 @@
         protected static $jsonStatus = true;
 
         public function __construct(){
-            // $this->form = new MessageFormatter("pl_PL", "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> Formatowania odpowiedźi");
+            // try {
+                // $this->form = new MessageFormatter("pl_PL", "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> Formatowania odpowiedźi");
+            // } catch (\Throwable $th) {
+                // return "<i>BlackMin:</i>. <b>Błąd Krytyczny</b>: <u>Pod czas</u> - Opsługi Danych!";
+            // } 
         }
 
         public function create(string $status, string $message, array $data) {
@@ -53,14 +57,22 @@
             echo $this->create($status, $message, $data);
         }
     
-        public function parse(string $pattern, string $b, string $status, string $message) {
-            $data = $this->form::parseMessage(self::$locale, $pattern, $b);
+        public function parse(string $pattern, string $data, string $status, string $message) {
+            $data = $this->form::parseMessage(self::$locale, $pattern, $data);
             return $this->create($status, $message, $data);
         }
     
-        public function parseView(string $pattern, string $b, string $status, string $message): void {
-            $data = $this->form::parseMessage(self::$locale, $pattern, $b);
+        public function parseView(string $pattern, string $data, string $status, string $message): void {
+            $data = $this->form::parseMessage(self::$locale, $pattern, $data);
             echo $this->create($status, $message, $data);
+        }
+
+        // this function is alt function messageformatter
+        public function formatOnly(string $pattern, array $data) {
+            return $this->form->formatMessage(self::$locale, $pattern, $data);
+        }
+        public function parseOnly(string $pattern, string $message) {
+            return $this->form->parseMessage(self::$locale, $pattern, $message);
         }
     
         // this function is only format string to obiect array out structur

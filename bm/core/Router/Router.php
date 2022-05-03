@@ -22,7 +22,7 @@
 
     class Router {
 
-        public const ACTION_METHOD = '(load|get|set|del|update|rename|upload|login)';
+        public const ACTION_METHOD = '(load|get|add|del|update|rename|upload|login)';
 
         /**
          * @var Database
@@ -86,7 +86,7 @@
                 if (is_string($this->param) && $this->param !== '') {
                     $path = $this->pathDirectory . "/" . $url . "/" . $this->param;
                     $ext = '.php';
-                    if ($this->param === "filter") {
+                    if (($this->param === "filter") || ($this->param === "add")) {
                         $ext = '.html';
                     }
 

@@ -27,6 +27,8 @@
                     return $this->get();
                 case 'del':
                     return $this->del();
+                case 'add':
+                    return $this->add();
                 default:
                     return false;
             }
@@ -103,7 +105,7 @@
             }
         }
     
-        public function set(){
+        public function add(){
             return $this->message->format("info", "TODO");
         }
     }

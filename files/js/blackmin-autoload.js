@@ -69,9 +69,9 @@
                     }              
                 }
 
-                function send(a, t, c, b) {
+                function send(a, t, c, b, action = "get") {
                     tsr_alert("info", "Ładowanie danych", b, "html", false);
-                    let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "param": getValue(t)})};
+                    let x = {"bm_content": JSON.stringify({"action": action, "url": a.trim(), "param": getValue(t)})};
                     tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, c, false, function (out) {
                         tsr_alert("success", "Dane załadowane prawidłowo!", b, "before", true, 250);
                         if (typeof out == "object" || is_json(out)) {
@@ -120,6 +120,8 @@
             let a = ta.getAttribute("action");
             let u = ta.getAttribute("url");
 
+            bm_autoeditsenddata(u.trim());
+
             if (ta != undefined) {
                 const g = document.getElementById("submit_data");
                 if (g != undefined) {
@@ -150,7 +152,6 @@
                                         clear_form(ta);
                                     } else {
                                         tsr_alert ("error", "Błąd serwera - nie prawidłowe dane!", ta, "after", true, 1500);
-                                        console.error();
                                     }
                                 });
                             } else {
@@ -162,6 +163,50 @@
                     });
                 } else {
                     tsr_alert("error", "Wystąpił błąd pod czas formatowania danych html!", ta, "after", true);
+                }
+            }
+        }
+
+        async function bm_autoeditsenddata(a) {
+            let form = document.querySelector("#blackminload_execute_container");
+
+            if (form !== undefined) {
+                let scheme = (form.getAttribute("blackmin") ?? undefined);
+                let id_object = (form.getAttribute("id-object") ?? undefined);
+
+                let inp = form.querySelectorAll("input, textarea, select");
+
+                for (let i = 0; i < inp.length; i++) {
+                    inp[i].setAttribute("disabled", "disable");
+                }
+                if ((scheme !== undefined) && (id_object !== undefined) && (id_object !== undefined)) {
+
+                   if (id_object != "null") {
+                        tsr_alert("info", "Ładowanie danych do edycji", form, "before", true);
+                        let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "param": {"id": id_object}})};
+                        tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, "", false, function (out) {
+                            tsr_alert("success", "Dane załadowane prawidłowo!", form, "before", true, 200);
+                            if (typeof out == "object" || is_json(out)) {
+                                    let data = JSON.parse(out);
+                                if (data["num_rows"] === 0) {
+                                    tsr_alert("info", "Brak Danych Do Edycji", form, "html", false);
+                                } else if (data["status"] !== undefined) {
+                                    tsr_alert(data["status"], data["message"], form, "html", false);
+                                } else {
+                                    bm_autoedit(scheme, data, form);
+                                }
+                            } else {
+                                form.innerHTML = out ;
+                            }
+                        }, function () {
+                            tsr_alert("error", "Wystąpił błąd pod czas ładowania danych", form, "html", false);
+                        });
+                   } else {
+                        tsr_alert("error", "Wystąpił błąd pod czas pobierania id objektu do edycji!", form, "html", false);
+                   }
+
+                }else{
+                    tsr_alert("error", "Wystąpił błąd pod czas pobierania danych!", form, "html", false);
                 }
             }
         }
