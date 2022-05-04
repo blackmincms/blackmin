@@ -128,9 +128,11 @@
                     g.addEventListener("click", (e) => {
                         e.preventDefault();
                         tsr_blocked_submit(2500, ".submit_data");
-                        const xa = ta.getAttribute("action");
-                        if (xa != undefined) {
-                            if (xa.trim() != 0) {
+                        // refresh data
+                        a = ta.getAttribute("action");
+                        u = ta.getAttribute("url");
+                        if (a != undefined) {
+                            if (a.trim() != 0) {
                                 let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "param": getValue(ta)})};
                                 tsr_ajax("bm/core/Delegate/DelegateBM.php", x, "", false, function (e){
                                     const b = JSON.parse(e);
@@ -147,6 +149,8 @@
                                     } else if (b["status"] == "location") {
                                         window.location = b["message"];
                                         tsr_alert ("info", "BlackMin: Nastąpi Przekierowanie!", ta, "after", true, 1500);
+                                    } else if (b["status"] == "success_update") {
+                                        tsr_alert ("success", b["message"], ta, "after", true, 1500);
                                     } else if (b["status"] == "success") {
                                         tsr_alert ("success", b["message"], ta, "after", true, 1500);
                                         clear_form(ta);
@@ -175,6 +179,16 @@
                 let id_object = (form.getAttribute("id-object") ?? undefined);
 
                 let inp = form.querySelectorAll("input, textarea, select");
+
+                // dodawanie id objektu do edycji
+                let inp_id_object = document.createElement("input");
+                inp_id_object.name = "id";
+                inp_id_object.type = "hidden";
+                inp_id_object.value = id_object;
+                inp_id_object.classList.add("tsr-display-none");
+                document.querySelector("#blackminload_execute_container #blackminsend").appendChild(inp_id_object);
+                // aktulizowanie danych do edyji
+                document.querySelector("#blackminload_execute_container #blackminsend").action = "update";
 
                 for (let i = 0; i < inp.length; i++) {
                     inp[i].setAttribute("disabled", "disable");

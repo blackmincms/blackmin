@@ -55,6 +55,8 @@
                         act = tx.value;
                     }else if (document.querySelector("#blackminload_execute_container #blackminadd") !== undefined) {
                         act = "add";
+                    }else if (document.querySelector("#blackminload_execute_container #blackminedit") !== undefined) {
+                        act = "update";
                     }
                     if (a != undefined) {
                         let xe = {"bm_content": JSON.stringify({"action": act, "url": a.trim(), "param": x})};

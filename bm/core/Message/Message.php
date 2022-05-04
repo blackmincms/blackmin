@@ -21,7 +21,7 @@
 
     class Message extends MessageFilter{
 
-        public const STATUS_CODE = '(error|info|warning|war|normal|success|success_del)';
+        public const STATUS_CODE = '(error|info|warning|war|normal|success|success_del|success_update)';
 
         /**
          * @var MessageFormatter

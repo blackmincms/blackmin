@@ -27,6 +27,8 @@
                     return $this->del();
                 case 'add':
                     return $this->add();
+                case 'update':
+                    return $this->edit();
                 default:
                     return false;
             } 
@@ -192,6 +194,102 @@
                     
                 }else{
                     return $this->Message->format("info", "Brak danych do dodania.");
+                    exit();
+                }
+            } else {
+                return $this->Message->format("error", "Brak danych wejśćiowych.");
+                exit();
+            }
+        }
+        
+        public function edit (){
+            if (isset($this->parm["tytul"])) {
+                // zmianna raportująca o błędach
+                $ad_ok = true;
+                if (isset ($this->parm['tytul'])){
+                    $tytul = $this->parm['tytul'];
+                }else{
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['tytul_skrucony'])){
+                    $tytul_skrucony = $this->parm['tytul_skrucony'];
+                }else {
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['kategoria'])){
+                    $kategoria =$this->parm['kategoria'];
+                }else{
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['opis'])){
+                    $opis = $this->parm['opis'];
+                }else{
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['id'])){
+                    $id = $this->parm['id'];
+                }else{
+                    $ad_ok = false;
+                }
+        
+                if ($ad_ok) {
+                    if ((strlen($tytul)<1) || (strlen($tytul)>4096))
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if ((strlen($tytul_skrucony )<1) || (strlen($tytul_skrucony )>4096))
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if ((strlen($kategoria)<1) || (strlen($kategoria)>4096))
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if ((strlen($opis )<0) || (strlen($opis )>4096))
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if (strlen($id )<0)
+                    {
+                        $ad_ok = false;
+                    }
+        
+                    if ($ad_ok) {
+                        $tytul = $this->database->valid($tytul);
+                        $tytul_skrucony = $this->database->valid($tytul_skrucony);
+                        $kategoria = $this->database->valid($kategoria);
+                        $opis = $this->database->valid($opis);
+        
+                        $zap = $this->database->query("SELECT * FROM `|prefix|bm_postmeta` WHERE `bm_name` LIKE '$tytul' AND `bm_short_name` LIKE '$tytul_skrucony' AND `bm_description` LIKE '$opis' AND `bm_type` LIKE '$kategoria'");
+                        // var_dump($zap);
+                        if ($zap["num_rows"] === 0) {
+                            // usuwanie danych
+                            if ($this->database->update("UPDATE |prefix|`bm_postmeta` SET `bm_name`= '$tytul', `bm_short_name`= '$tytul_skrucony', `bm_description`= '$opis',`bm_type`= '$kategoria' WHERE `id_postmeta`= $id")) {
+                                return $this->Message->format("success_update", "Dane zostały edytowane!");
+                                exit();
+                            }else {
+                                return $this->Message->format("error", "Wystąpił błąd pod czas edytowania danych.");
+                                exit();
+                            }
+                        } else {
+                            return $this->Message->format("info", "Dane są takie same!");
+                            exit();
+                        }
+                    } else {
+                        return $this->Message->format("info", "Wprowadzone dane są za krótkie lub długie.");
+                        exit();
+                    }
+                    
+                }else{
+                    return $this->Message->format("info", "Brak danych do edytowania.");
                     exit();
                 }
             } else {
