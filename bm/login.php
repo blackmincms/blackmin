@@ -1,23 +1,17 @@
 <?php
 
+	// declare user login action
+	define("BM_USER_LOGIN", true);
+	$_SESSION["BM_USER_LOGIN"] = true;
+
 	require_once "admin/black-min.php";
 
-	use BlackMin\Menu\menuAdmin;
 	use BlackMin\Head\HeadAdmin;
-	use BlackMin\Media\SFL;
 
-	if ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
-	{
-		$flaga = $_SESSION['flaga'];
-		$user_t = "";
-					
-		if($flaga <= 5){
-			$user_t = "user/";
-		}else{
-			$user_t = "admin/";
-		}
-		header('Location: '.$user_t.'panel.php');
-		exit();
+	// przekierowanie do panelu admina
+
+	if ($SM->checkSession()) {
+		$BMURL->goToPanel();
 	}
 
 ?>
@@ -45,7 +39,9 @@
 		align-content: center;
 		justify-content: center;
 		align-items: center;
-		height: -webkit-fill-available!important;">
+		height: -webkit-fill-available!important;
+		height: -moz-fill-available!important;
+		height: -o-fill-available!important;">
 		<section class="container" style="
 		    position: relative;
 			display: flex;
@@ -54,7 +50,9 @@
 			align-content: center;
 			justify-content: space-around;
 			align-items: center;
-			height: -webkit-fill-available!important;">
+			height: -webkit-fill-available!important;
+			height: -moz-fill-available!important;
+			height: -o-fill-available!important;">
 				
 			<div class="tsr col-flex  tsr-p-10px background-bialy tsr-border-solid-orange" style="display: inline-block; width: 500px; min-width: 200px; max-height: 500px; height: auto; min-height: 200px; max-height: 500px; border-radius: 10px;">
 				<section class=" tsr tsr-p-10px fs-150">

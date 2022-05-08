@@ -20,7 +20,7 @@
     use BlackMin\Exception\RouterException;
     use BlackMin\View\View;
 
-    class Router {
+    final class Router {
 
         public const ACTION_METHOD = '(load|get|add|del|update|rename|upload|login)';
 

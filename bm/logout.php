@@ -1,9 +1,12 @@
 <?php
 
-	require_once("admin/black-min-sm.php");
-	
-	session_unset();
-	
-	header('Location: ../');
+	require_once "admin/black-min.php";
 
-?>
+	if ($SM->stop()) {
+		$BMURL->goToLogin();
+		exit();
+	} else {
+		$BMURL->goToStart();
+		exit();	
+	}
+	

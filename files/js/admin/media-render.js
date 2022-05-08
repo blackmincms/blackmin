@@ -85,7 +85,7 @@ function mediaRender(t, p) {
             
                                         </section>
                                         <section class="fs-100 tsr-button tsr-visable-hover-element tsr-visibility-visable-2 bm-row-edit">
-                                            <a href="edit-file-data.php?edit=${t[i]["id_file"]} ">
+                                            <a href="bm/admin/edit-file-data.php?edit=${t[i]["id_file"]} ">
                                                 Edytuj	
                                             </a>
                                         </section>

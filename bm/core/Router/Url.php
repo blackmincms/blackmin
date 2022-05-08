@@ -69,10 +69,20 @@
 		}
 		// funkcja przekierowywująca do panelu logowania
 		public function goToLogin() {
-			header('Location: ../');
+			header('Location: ' . BM_SETTINGS["url_server"] . "bm/login.php");
 			exit();
 		}
-		// funkcja farsąjąca url, zykły ciąg > sparsowane url | z ciągu na tablice url
+		// funkcja przekierowywująca do głównego okna serwisu
+		public function goToStart() {
+			header('Location: ' . BM_SETTINGS["url_server"]);
+			exit();
+		}
+		// funkcja przekierowywująca do głównego panelu
+		public function goToPanel() {
+			header("Location: ".BM_SETTINGS["url_server"]. "bm/admin/panel.php");
+			exit();
+		}
+		// funkcja Parsąjąca url, zykły ciąg > sparsowane url | z ciągu na tablice url
 		public function parse_url($t){
 			// sprawdzanie czy ciąg nie jest pusty i czy jest ciągiem
 			if(($t != 0) and (is_string($t))){
@@ -156,6 +166,9 @@
 		public function check_url(){
 			// pobieranie url
 			$url =  URL::get_url_bm();
+
+			$url_parse = explode("/", parse_url($this->get_url_bm(), PHP_URL_PATH));
+			$url_parse_string = $url_parse[count($url_parse)-1];
 			
 			// sprawdzanie czy załadować przerwę techniczną
 			if(BM_SETTINGS["bm_maintenance_mode"] == "true"){
@@ -188,6 +201,9 @@
 				// sprawdzanie czy użyto przekierowania do panelu admina Black Min'a
 				}elseif(parse_url(explode("/", $url)[count(explode("/", $url))-1], PHP_URL_PATH) == "admin"){
 					$t = "admin_bm";
+				// sprawdzanie czy załadować stronę
+				}elseif($url_parse_string == "login.php"){
+					$t = "login_bm";
 				// sprawdzanie czy załadować stronę
 				}else{
 					$t = "post_page";				
@@ -261,7 +277,7 @@
 				}		
 			}elseif($c == "admin_bm"){
 				// przekierowanie do panelu BlackMin'a
-				header("Location:".BM_SETTINGS["url_server"]. "bm/admin/admin-panel.php");
+				header("Location:".BM_SETTINGS["url_server"]. "bm/admin/panel.php");
 				exit();
 			}elseif($c == "post_page"){
 				$t["path"] = $s[$z-1];

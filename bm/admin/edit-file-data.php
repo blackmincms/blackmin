@@ -9,7 +9,7 @@
 *	
 *	#file: 2.0
 *
-*	This file is update category\tag | admin panel
+*	This file is update file data | admin panel
 */
 
 
@@ -27,10 +27,10 @@
         Edytuj Kategorie/Tag - Black Min 
 	</section>
 	<section class="tsr tsr-p-10px background-white tsr-mt-20">
-        <section class="tsr" id="blackminload_execute_container" blackmin="input;tytul;bm_name,input;tytul_skrucony;bm_short_name,select;kategoria;bm_type,textarea;opis;bm_description" id-object="<?php echo ($_GET["edit"] ?? 'null') ?>">					
+        <section class="tsr" id="blackminload_execute_container" blackmin="input;nazwa;bm_name,input;folder;bm_folder,textarea;opis;bm_description,section;nazwa;bm_name,section;nazwa_cala;bm_name_orginal,section;nazwa_cala;bm_name_orginal,section;folder;bm_folder,section;autor;autor,section;opis;bm_description,section;datetime;bm_datetime_upload;bm_datetime_changed,section;typ_pliku;bm_file_type,section;path;bm_path,section;img;bm_thumbnail" id-object="<?php echo ($_GET["edit"] ?? 'null') ?>">					
 			<?php 
 				try {
-					$BMROUTER = $BMROUTER->createInstanceWith("load", "CategoryTag", "add");
+					$BMROUTER = $BMROUTER->createInstanceWith("load", "Media", "edit");
 					$BMROUTER->delegate();
 				} catch (\BlackMin\Exception\RouterException $e) {
 					$BMMESSAGE->createView("error", '<b>BlackMIn: </b> <i>ERROR</i> - '. $e->getMessage());

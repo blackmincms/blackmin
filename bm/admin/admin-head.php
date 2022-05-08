@@ -14,6 +14,10 @@
 
 	use BlackMin\Menu\menuAdmin;
 	use BlackMin\Head\HeadAdmin;
+
+	if (!$SM->checkSession()) {
+		$BMURL->goToLogin();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +71,7 @@
 								</a>	
 							</section>
 							<section class="tsr-mt-5">
-								<a href="../logout.php">
+								<a href="<?php echo BM_SETTINGS["url_server"];?>/bm/logout.php">
 									Wyloguj się
 								</a>
 							</section>

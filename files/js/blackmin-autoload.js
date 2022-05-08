@@ -122,7 +122,7 @@
 
             bm_autoeditsenddata(u.trim());
 
-            if (ta != undefined) {
+            if ((ta !== undefined) && (a !== undefined) && (u !== undefined)) {
                 const g = document.getElementById("submit_data");
                 if (g != undefined) {
                     g.addEventListener("click", (e) => {
@@ -174,53 +174,58 @@
         async function bm_autoeditsenddata(a) {
             let form = document.querySelector("#blackminload_execute_container");
 
-            if (form !== undefined) {
+            if ((form !== undefined) && (form !== null)) {
                 let scheme = (form.getAttribute("blackmin") ?? undefined);
                 let id_object = (form.getAttribute("id-object") ?? undefined);
 
-                let inp = form.querySelectorAll("input, textarea, select");
+                if ((scheme !== undefined) && (id_object !== undefined)) {
 
-                // dodawanie id objektu do edycji
-                let inp_id_object = document.createElement("input");
-                inp_id_object.name = "id";
-                inp_id_object.type = "hidden";
-                inp_id_object.value = id_object;
-                inp_id_object.classList.add("tsr-display-none");
-                document.querySelector("#blackminload_execute_container #blackminsend").appendChild(inp_id_object);
-                // aktulizowanie danych do edyji
-                document.querySelector("#blackminload_execute_container #blackminsend").action = "update";
+                    if (scheme === undefined) {
+                        tsr_alert("error", "Wystąpił błąd pod czas pobierania danych!", form, "html", false);
+                    } else if (id_object === undefined) {
+                        tsr_alert("error", "Wystąpił błąd pod czas pobierania danych!", form, "html", false);
+                    } else {
+                        let inp = form.querySelectorAll("input, textarea, select");
 
-                for (let i = 0; i < inp.length; i++) {
-                    inp[i].setAttribute("disabled", "disable");
-                }
-                if ((scheme !== undefined) && (id_object !== undefined) && (id_object !== undefined)) {
+                        // dodawanie id objektu do edycji
+                        let inp_id_object = document.createElement("input");
+                        inp_id_object.name = "id";
+                        inp_id_object.type = "hidden";
+                        inp_id_object.value = id_object;
+                        inp_id_object.classList.add("tsr-display-none");
+                        document.querySelector("#blackminload_execute_container #blackminsend").appendChild(inp_id_object);
+                        // aktulizowanie danych do edyji
+                        document.querySelector("#blackminload_execute_container #blackminsend").action = "update";
+        
+                        for (let i = 0; i < inp.length; i++) {
+                            inp[i].setAttribute("disabled", "disable");
+                        }
 
-                   if (id_object != "null") {
-                        tsr_alert("info", "Ładowanie danych do edycji", form, "before", true);
-                        let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "param": {"id": id_object}})};
-                        tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, "", false, function (out) {
-                            tsr_alert("success", "Dane załadowane prawidłowo!", form, "before", true, 200);
-                            if (typeof out == "object" || is_json(out)) {
-                                    let data = JSON.parse(out);
-                                if (data["num_rows"] === 0) {
-                                    tsr_alert("info", "Brak Danych Do Edycji", form, "html", false);
-                                } else if (data["status"] !== undefined) {
-                                    tsr_alert(data["status"], data["message"], form, "html", false);
-                                } else {
-                                    bm_autoedit(scheme, data, form);
-                                }
-                            } else {
-                                form.innerHTML = out ;
-                            }
-                        }, function () {
-                            tsr_alert("error", "Wystąpił błąd pod czas ładowania danych", form, "html", false);
-                        });
-                   } else {
-                        tsr_alert("error", "Wystąpił błąd pod czas pobierania id objektu do edycji!", form, "html", false);
-                   }
+                        if (id_object != "null") {
+                                tsr_alert("info", "Ładowanie danych do edycji", form, "before", true);
+                                let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "param": {"id": id_object}})};
+                                tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, "", false, function (out) {
+                                    tsr_alert("success", "Dane załadowane prawidłowo!", form, "before", true, 200);
+                                    if (typeof out == "object" || is_json(out)) {
+                                            let data = JSON.parse(out);
+                                        if (data["num_rows"] === 0) {
+                                            tsr_alert("info", "Brak Danych Do Edycji", form, "html", false);
+                                        } else if (data["status"] !== undefined) {
+                                            tsr_alert(data["status"], data["message"], form, "html", false);
+                                        } else {
+                                            bm_autoedit(scheme, data, form);
+                                        }
+                                    } else {
+                                        form.innerHTML = out ;
+                                    }
+                                }, function () {
+                                    tsr_alert("error", "Wystąpił błąd pod czas ładowania danych", form, "html", false);
+                                });
+                        } else {
+                                tsr_alert("error", "Wystąpił błąd pod czas pobierania id objektu do edycji!", form, "html", false);
+                        }
+                    }
 
-                }else{
-                    tsr_alert("error", "Wystąpił błąd pod czas pobierania danych!", form, "html", false);
                 }
             }
         }

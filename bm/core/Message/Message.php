@@ -16,12 +16,12 @@
 
     namespace BlackMin\Message;
 
-    use MessageFormatter;
     use BlackMin\Message\MessageFilter;
+    use MessageFormatter;
 
     class Message extends MessageFilter{
 
-        public const STATUS_CODE = '(error|info|warning|war|normal|success|success_del|success_update)';
+        public const STATUS_CODE = '(error|info|warning|war|normal|success|success_del|success_update|location)';
 
         /**
          * @var MessageFormatter

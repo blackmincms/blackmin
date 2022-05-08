@@ -11,30 +11,34 @@
 
         private $database;
         private $action;
-        private $arg;
-        private $message;
+        private $parm;
 
-        public function __construct(object $t, string $a, array $arg) {
-            $this->database = $t;
+        protected $message;
+
+        public function __construct ($d ,String $a, array $t) {
+            $this->database = $d;
             $this->action = $a;
-            $this->arg = $arg;
+            $this->parm = $t;
 
             $this->message = new Message();
+        }
 
-            if ($this->action == "login") {
-                return User::login();
-            }else if ($this->action == "unset") {
-                // return User::set();
-            }else if ($this->action == "logout") {
-                // return User::del();
-            }else {
-                return false;
+        public function parse(){
+            switch ($this->action) {
+                case 'login':
+                    return $this->login();
+                // case 'del':
+                //     return $this->unset();
+                // case 'add':
+                //     return $this->logout();
+                default:
+                    return false;
             } 
         }
         
         public function check(){
-            $t = $this->database->valid($this->arg["login"]);
-            $p = $this->database->valid($this->arg["haslo"]);
+            $t = $this->database->valid($this->parm["login"]);
+            $p = $this->database->valid($this->parm["haslo"]);
 
             if (strlen($t) != 0) {
                 if ($wiersz = $this->database->query("SELECT * FROM `|prefix|bm_users` WHERE nick = '". $t ."'")) {
@@ -51,23 +55,23 @@
                             $_SESSION['avatar'] = $wiersz[0]['avatar'];
                             $_SESSION['access'] = $wiersz[0]['access'];
                             $_SESSION['rank'] = $wiersz[0]['rank'];
-                            $_SESSION['flag'] = $wiersz[0]['flag'];
+                            $_SESSION['flag'] = $flaga = $wiersz[0]['flag'];
                             $_SESSION['online'] = $wiersz[0]['online'];
                             $_SESSION['last_active'] = $wiersz[0]['last_active'];
-                            $flaga = $wiersz[0]['flag'];
-                            
-                            $_SESSION['session_flag'] = $flaga;
-                            
+
+                            // unset usel login flag
+                            unset($_SESSION["BM_USER_LOGIN"]);
+
                             $user_t = "";
                             
                             if($flaga >= 6){
-                                $user_t = "admin/";
+                                $user_t = "admin";
                             }else{
-                                $user_t = "user/";
+                                $user_t = "user";
                             }
                             
-                            header('Location: '.$user_t.'panel.php');
-                            return $this->message->format("location", $user_t.'panel.php');
+                            // header('Location: '.$user_t.'panel.php');
+                            return $this->message->format("location", ("bm/" . $user_t. '/panel.php'));
                             exit();
 
                             return $this->message->format("success", "BlackMin: Zalogowano Prawidłowo!");
@@ -88,11 +92,6 @@
 
         public function login() {
             return User::check();
-        }
-
-        public function logout () {
-            session_unset();
-            return true;
         }
 
     }

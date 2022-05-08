@@ -16,7 +16,7 @@
 
 	use BlackMin\Router\Url as URL;
 	
-	final class SM extends URL {
+	class SM extends URL {
 
 		public function start () {
 			// tworzenie sesii bm o odpowiednjiej nazwie
@@ -43,12 +43,21 @@
 		}
 
 		public function register () {
-			if (SM::checkSession()) {
-				if (SM::checkTimeOut() === false) {
-
+			if ((!$this->user_login()) && ($this->checkSession())) {
+				if ($this->checkSession()) {
+					if ($this->checkTimeOut() === false) {
+						if ($this->stop()) {
+							URL::goToLogin();
+							exit();
+						}else {
+							URL::goToStart();
+							exit();
+						}
+					}
+				} else {
+					URL::goToLogin();
+					exit();
 				}
-			} else {
-				return false;
 			}
 			
 			// owner administrator moderator editor associate user
@@ -62,22 +71,35 @@
 			}
 		}
 
-		protected function checkTimeOut ():bool|null {
-			$t = time();
+		protected function checkTimeOut ():bool {
+			$time_now = time();
+			$time_plus = $time_now - 900;
 			if (isset($_SESSION["bm_user_active"])) {
-				if ((is_int($_SESSION["bm_user_active"])) && ($_SESSION["bm_user_active"] >= $t)) {
+				if ((is_int($_SESSION["bm_user_active"])) && ($_SESSION["bm_user_active"] <= $time_plus)) {
 					return false;
-				}else if ((is_int($_SESSION["bm_user_active"])) && ($_SESSION["bm_user_active"] <=  $t)) {
-					$_SESSION["bm_user_active"] = $t;
+				}else {
+					$_SESSION["bm_user_active"] = $time_now;
 					return true;
-				} else {
-					return null;
-				}
-				
+				}			
 			}else{
-				$_SESSION["bm_user_active"] = $t;
+				$_SESSION["bm_user_active"] = $time_now;
 				return true;
 			}
+		}
+
+		public function user_login():bool {
+			if (($this->checkSession()) && (!isset($_SESSION["BM_USER_LOGIN"]))) {
+				if (isset($_SESSION["BM_USER_LOGIN"])) {
+					unset($_SESSION["BM_USER_LOGIN"]);
+				}
+				return false;
+			} else {
+				if (!isset($_SESSION["BM_USER_LOGIN"])) {
+					$_SESSION["BM_USER_LOGIN"] = true;
+				}
+				return true;
+			}
+			
 		}
 
 	}

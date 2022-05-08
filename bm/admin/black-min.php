@@ -52,8 +52,7 @@
 	$bm_status = new Status($bm_db);
 	$bm_status_load = $bm_status->load();
 	if (!defined("BM_STATUS")) {
-		define('BM_STATUS', $bm_status_load);
-		
+		define('BM_STATUS', $bm_status_load);		
 	}
 	// pobieranie wartośći z paska url i udostępnianie jej innym algorytmom 
 	$BMURL = new URL();

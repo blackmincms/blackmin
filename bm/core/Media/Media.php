@@ -17,8 +17,6 @@
             $this->parm = $t;
 
             $this->message = new Message();
-            
-            return Media::parse();
         }
 
         public function parse(){
@@ -33,49 +31,65 @@
                     return $this->rename();
                 case 'upload':
                     return $this->upload();
+                case 'update':
+                    return $this->edit();
                 default:
                     return false;
             } 
         }
    
         public function get(){
-            if (isset ($this->parm['roszerzenie'])){
-                $roszerzenie = $this->parm['roszerzenie'];
-            }else{
-                $roszerzenie = "all";
+            if (isset($this->parm['id'])) {          
+                // filtrowanie danych
+                $id = $this->database->valid($this->parm['id']);
+
+                // check param is int
+
+                if ((is_int($id)) || (is_string($id))) {
+                    // zapytanie do db
+                    $zap = $this->database->query("SELECT `|prefix|bm_files`.*, `|prefix|bm_files`.`|prefix|bm_author` as 'id_author' , `|prefix|bm_users`.`nick` as 'autor' FROM `bm_files` LEFT JOIN `|prefix|bm_users` ON `|prefix|bm_files`.`bm_author` = `|prefix|bm_users`.`id` WHERE `id_file` = '$id' LIMIT 1");
+                } else {
+                    $zap = $this->Message->format("war", "Wprowadzone dane nie są liczbą");
+                }
+            } else {
+                if (isset ($this->parm['roszerzenie'])){
+                    $roszerzenie = $this->parm['roszerzenie'];
+                }else{
+                    $roszerzenie = "all";
+                }
+                
+                if (isset ($this->parm['folder'])){
+                    $folder = $this->parm['folder'];
+                }else {
+                    $folder = "";
+                }
+                
+                if (isset ($this->parm['ile_load'])){
+                    $ile_load = $this->parm['ile_load'];
+                }else {
+                    $ile_load = "25";
+                }
+                
+                if (isset ($this->parm['szukaj'])){
+                    $szukaj = $this->parm['szukaj'];
+                }else{
+                    $szukaj = "";
+                }
+            
+                // filtrowanie danych
+                
+                $roszerzenie = $this->database->valid($roszerzenie);
+                $folder = $this->database->valid($folder);
+                $szukaj = $this->database->valid($szukaj);
+                $ile_load = $this->database->valid($ile_load);
+                
+                $roszerzenie = ($roszerzenie == "all" ? "`bm_file_type` LIKE '%%'" : "`bm_file_type` LIKE '%". $roszerzenie ."%'");
+                $folder = (strlen($folder) === 0 ? "`bm_folder` LIKE '%%'" : "`bm_folder` LIKE '%". $folder ."%'");
+                $szukaj = (strlen($szukaj) === 0 ? "(`bm_name` LIKE '%%' OR `bm_name_orginal` LIKE '%%' OR `bm_description` LIKE '%%')" : "(`bm_name` LIKE '%". $szukaj ."%' OR `bm_name_orginal` LIKE '%". $szukaj ."%' OR `bm_description` LIKE '%". $szukaj ."%')");
+                $ile_load = ($ile_load < 0 ? 0 : $ile_load);
+                // zapytanie do db
+                $zap = $this->database->query2("SELECT `|prefix|bm_files`.*, `|prefix|bm_files`.`|prefix|bm_author` as 'id_author' , `|prefix|bm_users`.`nick` as 'autor' FROM `bm_files` LEFT JOIN `|prefix|bm_users` ON `|prefix|bm_files`.`bm_author` = `|prefix|bm_users`.`id` WHERE $roszerzenie AND $folder AND $szukaj ORDER BY `id_file` DESC LIMIT $ile_load");
             }
-            
-            if (isset ($this->parm['folder'])){
-                $folder = $this->parm['folder'];
-            }else {
-                $folder = "";
-            }
-            
-            if (isset ($this->parm['ile_load'])){
-                $ile_load = $this->parm['ile_load'];
-            }else {
-                $ile_load = "25";
-            }
-            
-            if (isset ($this->parm['szukaj'])){
-                $szukaj = $this->parm['szukaj'];
-            }else{
-                $szukaj = "";
-            }
-        
-            // filtrowanie danych
-            
-            $roszerzenie = $this->database->valid($roszerzenie);
-            $folder = $this->database->valid($folder);
-            $szukaj = $this->database->valid($szukaj);
-            $ile_load = $this->database->valid($ile_load);
-            
-            $roszerzenie = ($roszerzenie == "all" ? "`bm_file_type` LIKE '%%'" : "`bm_file_type` LIKE '%". $roszerzenie ."%'");
-            $folder = (strlen($folder) === 0 ? "`bm_folder` LIKE '%%'" : "`bm_folder` LIKE '%". $folder ."%'");
-            $szukaj = (strlen($szukaj) === 0 ? "(`bm_name` LIKE '%%' OR `bm_name_orginal` LIKE '%%' OR `bm_description` LIKE '%%')" : "(`bm_name` LIKE '%". $szukaj ."%' OR `bm_name_orginal` LIKE '%". $szukaj ."%' OR `bm_description` LIKE '%". $szukaj ."%')");
-            $ile_load = ($ile_load < 0 ? 0 : $ile_load);
-            // zapytanie do db
-            $zap = $this->database->query2("SELECT `|prefix|bm_files`.*, `|prefix|bm_files`.`|prefix|bm_author` as 'id_author' , `|prefix|bm_users`.`nick` as 'autor' FROM `bm_files` LEFT JOIN `|prefix|bm_users` ON `|prefix|bm_files`.`bm_author` = `|prefix|bm_users`.`id` WHERE $roszerzenie AND $folder AND $szukaj ORDER BY `id` DESC LIMIT $ile_load");
             return $zap;
         }
 
@@ -199,6 +213,10 @@
                         $a = $this->database->parse($this->parm["content"]);
                         $a = $this->database->valid($a);
                         $nazwa_folderu = $this->database->valid($this->parm["rename"]);
+
+                        if (strlen($nazwa_folderu) === 0) {
+                            $nazwa_folderu = "default";
+                        }
                     
                         // ustawienie odpowiedniej daty do zapisu
                         $datetime = date('Y-m-d H:i:s"');
@@ -225,5 +243,96 @@
             return $this->Message->format("war", "jest gitara");	
             exit();
         }
+
+        public function edit (){
+            if (isset($this->parm["nazwa"])) {
+                // ustawienie odpowiedniej daty do zapisu
+                $datetime = date('Y-m-d H:i');
+
+                // zmianna raportująca o błędach
+                $ad_ok = true;
+                if (isset ($this->parm['nazwa'])){
+                    $nazwa = $this->parm['nazwa'];
+                }else{
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['folder'])){
+                    $folder =$this->parm['folder'];
+                }else{
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['opis'])){
+                    $opis = $this->parm['opis'];
+                }else{
+                    $ad_ok = false;
+                }
+                
+                if (isset ($this->parm['id'])){
+                    $id = $this->parm['id'];
+                }else{
+                    $ad_ok = false;
+                }
+        
+                if ($ad_ok) {
+                    if ((strlen($nazwa)<1) || (strlen($nazwa)>4096))
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if (strlen($folder)>4096)
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if ((strlen($opis )<0) || (strlen($opis )>4096))
+                    {
+                        $ad_ok = false;
+                    }
+                    
+                    if (strlen($id )<0)
+                    {
+                        $ad_ok = false;
+                    }
+        
+                    if ($ad_ok) {
+                        $nazwa = $this->database->valid($nazwa);
+                        $folder = $this->database->valid($folder);
+                        $opis = $this->database->valid($opis);
+        
+                        $zap = $this->database->query("SELECT * FROM `|prefix|bm_files` WHERE `bm_name` LIKE '$nazwa' AND `bm_description` LIKE '$opis' AND `bm_folder` LIKE '$folder'");
+                        if ($zap["num_rows"] === 0) {
+
+                            if (strlen($folder) === 0) {
+                                $folder = "default";
+                            }
+
+                            // usuwanie danych
+                            if ($this->database->update("UPDATE `|prefix|bm_files` SET `bm_name`= '$nazwa', `bm_description`= '$opis',`bm_folder`= '$folder', `bm_datetime_changed`= '$datetime' WHERE `id_file`= $id")) {
+                                return $this->message->format("success_update", "Dane zostały edytowane!");
+                                exit();
+                            }else {
+                                return $this->message->format("error", "Wystąpił błąd pod czas edytowania danych.");
+                                exit();
+                            }
+                        } else {
+                            return $this->message->format("info", "Dane są takie same!");
+                            exit();
+                        }
+                    } else {
+                        return $this->message->format("info", "Wprowadzone dane są za krótkie lub długie.");
+                        exit();
+                    }
+                    
+                }else{
+                    return $this->message->format("info", "Brak danych do edytowania.");
+                    exit();
+                }
+            } else {
+                return $this->message->format("error", "Brak danych wejśćiowych.");
+                exit();
+            }
+        }        
 
     }
