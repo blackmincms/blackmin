@@ -53,9 +53,9 @@
                             }
                         }
                         act = tx.value;
-                    }else if (document.querySelector("#blackminload_execute_container #blackminadd") !== undefined) {
+                    }else if (document.querySelector("#blackminload_execute_container #blackminadd") !== null) {
                         act = "add";
-                    }else if (document.querySelector("#blackminload_execute_container #blackminedit") !== undefined) {
+                    }else if (document.querySelector("#blackminload_execute_container #blackminedit") !== null) {
                         act = "update";
                     }
                     if (a != undefined) {

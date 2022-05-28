@@ -5,7 +5,7 @@
     use BlackMin\Database\Database;
     use BlackMin\Message\Message;
     
-    class Post implements BaseInterface {
+    final class Post implements BaseInterface {
     
         private $database;
         private $action;

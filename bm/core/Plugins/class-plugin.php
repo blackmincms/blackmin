@@ -9,7 +9,7 @@
 	#plik: 1.1
 */
 	
-	class bm_plugin {
+	final class bm_plugin {
 		// zmienne przchowywujące dane o zastosowanych widgetach
 		protected $top_plugin = [],
 					$left_plugin = [],

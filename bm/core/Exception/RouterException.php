@@ -4,8 +4,7 @@
 
     namespace BlackMin\Exception;
 
-    class RouterException extends \Exception
-    {
+    final class RouterException extends \Exception {
 
         public static function invalidDelegatedData(): self
         {

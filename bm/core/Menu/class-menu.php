@@ -12,7 +12,7 @@
 *	This file is rendering menu
 */
 
-	class menu_bm {
+	final class menu_bm {
 		
 		// zmiene do generowania menu black min'abs
 		var $rodzic_tag_menu = "ol";

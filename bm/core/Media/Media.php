@@ -1,9 +1,10 @@
 <?php
     namespace BlackMin\Media;
 
+    use BlackMin\Base\BaseInterface;
     use BlackMin\Message\Message;
 
-    class Media {
+    final class Media implements BaseInterface {
 
         private $database;
         private $action;

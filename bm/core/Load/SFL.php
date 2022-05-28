@@ -14,7 +14,7 @@
 	
 	namespace BlackMin\Load;
 
-	Class SFL {
+	final Class SFL {
 		// zmiene odpwiedzialne za przechowywanie danych do ładowania
 		/**
 		* 	@var array|obiect;

@@ -1,9 +1,10 @@
 <?php
     namespace BlackMin\CategoryTag;
 
+    use BlackMin\Base\BaseInterface;
     use BlackMin\Message\Message;
 
-    class CategoryTag {
+    final class CategoryTag implements BaseInterface {
 
         private $database;
         private $action;
@@ -173,7 +174,7 @@
                         $opis = $this->database->valid($opis);
         
                         $zap = $this->database->query("SELECT * FROM `|prefix|bm_postmeta` WHERE `bm_name` LIKE '$tytul' AND `bm_short_name` LIKE '$tytul_skrucony' AND `bm_description` LIKE '$opis' AND `bm_type` LIKE '$kategoria'");
-                        // var_dump($zap);
+                        
                         if ($zap["num_rows"] === 0) {
                             // usuwanie danych
                             if ($this->database->insert("INSERT INTO `|prefix|bm_postmeta` VALUES (NULL, '$tytul', '$tytul_skrucony', '$opis', '$kategoria')")) {
@@ -269,7 +270,7 @@
                         $opis = $this->database->valid($opis);
         
                         $zap = $this->database->query("SELECT * FROM `|prefix|bm_postmeta` WHERE `bm_name` LIKE '$tytul' AND `bm_short_name` LIKE '$tytul_skrucony' AND `bm_description` LIKE '$opis' AND `bm_type` LIKE '$kategoria'");
-                        // var_dump($zap);
+
                         if ($zap["num_rows"] === 0) {
                             // usuwanie danych
                             if ($this->database->update("UPDATE |prefix|`bm_postmeta` SET `bm_name`= '$tytul', `bm_short_name`= '$tytul_skrucony', `bm_description`= '$opis',`bm_type`= '$kategoria' WHERE `id_postmeta`= $id")) {

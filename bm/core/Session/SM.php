@@ -16,7 +16,7 @@
 
 	use BlackMin\Router\Url as URL;
 	
-	class SM extends URL {
+	final class SM extends URL {
 
 		public function start () {
 			// tworzenie sesii bm o odpowiednjiej nazwie

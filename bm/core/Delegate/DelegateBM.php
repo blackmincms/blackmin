@@ -23,7 +23,7 @@
     
     if (isset($_POST["bm_content"])) {
         // json decode
-        (json_decode($_POST["bm_content"], true) != false ? $content = json_decode($_POST["bm_content"], true) : $content = null);
+        $content = (json_decode($_POST["bm_content"], true) != false ? json_decode($_POST["bm_content"], true) : null);
         if (!is_null($content) && is_array($content)) {
             ini_set('display_errors', 1);
             error_reporting (E_ALL | E_STRICT);
@@ -32,11 +32,11 @@
                 $router = $router->createInstanceFrom($content);
                 echo json_encode($router->delegate(), JSON_THROW_ON_ERROR);
             } catch (RouterException $e) {
-                $message->createView("error", $e->getMessage());
+                $message->formatPrint("error", $e->getMessage(), true);
             }
     
         } else {
-            $message->createView("error", "BMMessage: Błędny format danych!");
+            $message->formatPrint("error", "BMMessage: Błędny format danych!", true);
             exit();
         }
     
@@ -50,10 +50,10 @@
             ]);
             echo json_encode($router->delegate(), JSON_THROW_ON_ERROR);
         } catch (RouterException $e) {
-            $message->createView("error", $e->getMessage());
+            $message->formatPrint("error", $e->getMessage(), true);
         }
     }else{
-        $message->createView("error", "BMMessage: Wystąpił błąd pod czas pobierania danych!");
+        $message->formatPrint("error", "BMMessage: Wystąpił błąd pod czas pobierania danych!", true);
         exit();
     } 
     

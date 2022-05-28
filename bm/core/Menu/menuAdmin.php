@@ -111,19 +111,19 @@
                 "children" => [
                     [
                         "name" => "Ustawienia Witryny",
-                        "url" => "ustawienia-witryny",
+                        "url" => "site-settings",
                         "icon" => null
                     ] , [
                         "name" => "Ustawienia Postów",
-                        "url" => "ustawienia-postow",
+                        "url" => "post-settings",
                         "icon" => null
                     ] , [
                         "name" => "Ustawienia Społeczne",
-                        "url" => "ustawienia-spoleczne",
+                        "url" => "social-settings",
                         "icon" => null
                     ] , [
                         "name" => "Tryb Konserwacji",
-                        "url" => "tryb-konserwacji",
+                        "url" => "maintenance-mode",
                         "icon" => null
                     ]
                 ]
@@ -160,7 +160,7 @@
 
             $ile = count($t);
             for ($i=0; $i < $ile; $i++) {
-                if (menuAdmin::valid($t[$i])) {
+                if ($this->valid($t[$i])) {
                     $temp .= '   
                         <a href="bm/admin/'.$t[$i]["url"].'.php">
                             <section class="menu-left-submenu">
@@ -188,7 +188,7 @@
             $ile = count($this->menuE);
             for ($i=0; $i < $ile; $i++) { 
 
-                if (menuAdmin::valid($this->menuE[$i])) {
+                if ($this->valid($this->menuE[$i])) {
                     if ($this->menuE[$i]["url"] === "__MENU__") {
                         $temp .= '
                             <section class="tsr menu-left tsr-button-menu-left-minimalize">
@@ -228,7 +228,7 @@
         }
 
         public function renderViewOnly(){
-            $t = menuAdmin::render();
+            $t = $this->render();
             if ($t !== false) {
                 echo $t;
             }

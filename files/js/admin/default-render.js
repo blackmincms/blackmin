@@ -58,7 +58,7 @@
                             let odp;
 
                             if (q[i2] === "datetime") {
-                                odp = ((t[i]["datetime"] === t[i]["datetime_change"]) ? t[i]["datetime"] : ("Edytowano: " + t[i]["datetime_change"]));
+                                odp = ((t[i]["datetime"] === t[i]["datetime_change"]) ? dateFormat(t[i]["datetime"]) : ("Edytowano: " + dateFormat(t[i]["datetime_change"])));
                             }else{
                                 odp = ((t[i][q[i2]]).length == 0 ? "brak" : t[i][q[i2]]);
                             }

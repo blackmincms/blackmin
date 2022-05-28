@@ -19,7 +19,7 @@
     use BlackMin\Message\MessageFilter;
     use MessageFormatter;
 
-    class Message extends MessageFilter{
+    final class Message extends MessageFilter{
 
         public const STATUS_CODE = '(error|info|warning|war|normal|success|success_del|success_update|location)';
 
@@ -76,8 +76,13 @@
         }
     
         // this function is only format string to obiect array out structur
-        public function format(string $status, string $message) {
-            return $this->formatter($status, $message);
+        public function format(string $status, string $message, bool $json = false) {
+            return ($json === true ? json_encode($this->formatter($status, $message), JSON_THROW_ON_ERROR) : $this->formatter($status, $message));
+        }
+        
+        // this function is alias function "format" and add print 
+        public function formatPrint(string $status, string $message, bool $json = false):void {
+            echo $this->format($status, $message, $json);
         }
     
         private function is_error(): bool {
