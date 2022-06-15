@@ -1,11 +1,32 @@
 /*
 //
 //				Timonix Styles Rezult - szablon kaskadowy css
-//												V.2.0
+//									V.2.0
 //					Wszelkie Prawa Zaszczeżone by Timonix
 //
 */
 
+@font-face {
+	font-family: 'PT Sans';
+	font-style: normal;
+	src: url(files/font/PT_Sans/PTSans-Regular.ttf) format('ttf');
+}
+@font-face {
+	font-family: 'PT Sans';
+	font-style: italic;
+	src: url(files/font/PT_Sans/PTSans-Italic.ttf) format('ttf');
+}
+@font-face {
+	font-family: 'PT Sans';
+	font-style: bold;
+	src: url(files/font/PT_Sans/PTSans-Bold.ttf) format('ttf');
+}
+@font-face {
+	font-family: 'PT Sans';
+	font-style: bolditalic;
+	src: url(files/font/PT_Sans/PTSans-BoldItalic.ttf) format('ttf');
+}
+  
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i');
 @import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Open+Sans:300,300i,400,400i,600,600i,700,800i');
 
