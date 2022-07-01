@@ -1,0 +1,11 @@
+{
+    "name": "name",
+    "description": "description",
+    "authors": "author",
+    "version": "1.0.0",
+    "main": "pathToMain",
+    "date_created": "18.06.2020",
+    "authors_website": "Timonix.pl",
+    "bm_version": "2.0",
+    "dependencies": {}
+}

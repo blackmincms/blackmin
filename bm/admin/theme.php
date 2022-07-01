@@ -17,6 +17,7 @@
 	require_once "black-min.php";
 
 	// add render media script
+	$SFL->add_js(BM_SETTINGS["url_server"] . "files/js/admin/modal-package-loader.js");
 	$SFL->add_js(BM_SETTINGS["url_server"] . "files/js/admin/gird-render.js");
 
 	require_once ("admin-head.php");

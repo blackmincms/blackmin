@@ -134,11 +134,8 @@
                 $dir = false;
 
                 // scan directory path
-                $glob = glob(($path === '' ? $this->path : $path) . $pattern, $flags | GLOB_MARK);
+                $glob = @glob(($path === '' ? $this->path : $path) . $pattern, $flags | GLOB_MARK);
 
-                if (!$glob) {
-                    $this->addError("FSBM: Wystąpił bład pod czas pobierania wgranych plików!");
-                }
                 if (count($glob) === 0) {
                     $glob = glob(($path === '' ? $this->path : $path) . "*", GLOB_MARK|GLOB_ONLYDIR);
                     $dir = true;
@@ -181,7 +178,7 @@
                             $infoScan["children"] = $children;
                         }
 
-                        if (!$dir) {
+                        if (!$dir || !$onlyPath) {
                             array_push($cache, $infoScan);
                         }
 
@@ -211,7 +208,7 @@
                 $cache = [];
 
                 // check is a dir
-                if (!is_dir($this->path . $path)) {
+                if (!is_dir($this->path . $path)) {var_dump($this->path . $path);
                     $this->addError("FSBM: Podana śćieżka nie jest folderem!");
                     return false;
                 }
@@ -395,8 +392,6 @@
                     }
                 }
 
-                
-
                 $this->data = $cache;
 
                 return $cache;
@@ -411,29 +406,288 @@
             return $this->data;
         }
 
-        // function remove file in directory
-        public function remove() {
-            # code...
+        // function remove all file in directory
+        public function remove(string $path, bool $all = false, bool $delParent = true, bool $empty = false):bool {
+            // check try error
+            try {
+                // check is a dir
+                if (!is_dir($this->path . $path)) {
+                    $this->addError("FSBM: Podana śćieżka nie jest folderem!");
+                    return false;
+                }
+                
+                // check all is true
+                if ($all) {
+                     // use removeDirectory and check error
+                    if (!$this->removeDirectory($path, $delParent, $empty)) {
+                        return false;
+                    }
+                } else {
+                    // remove file in directory use removeFile and check error
+                    if (!$this->removeFile($path)) {
+                        return false;
+                    }
+
+                    // check directory is empty use isEmpty and check error
+                    if ($this->isEmpty($path)) {
+                        // remove directory use rmdir and check error
+                        if (!rmdir($path)) {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
         }
 
         // function remove directory
-        public function removeDirectory() {
-            # code...
+        public function removeDirectory(string|array $path, bool $delParent = true, bool $empty = false):bool {
+            // check try error and remove directory and return info to empty directory
+            try {
+                // check path is string
+                if (is_string($path)) {
+                    if (!is_dir($this->path . $path)) {
+                        $this->addError("FSBM: Podana śćieżka nie jest folderem!");
+                        return false;
+                    }
+    
+                    // scan directory path use function scanDir
+                    $scanDir = $this->scanDir($path, true, false, SCANDIR_SORT_ASCENDING);
+
+                    // check scndir is false
+                    if ($scanDir === false) {
+                        $this->addError("FSBM: Wystąpił błąd z ścieżką do folderu!");
+                        return false;
+                    }
+                } else {
+                    $scanDir = $path;
+                }
+
+                // check scanDir is empty and remove this directory
+                if (count($scanDir) !== 0) {
+                    foreach ($scanDir as $key => $value) {
+                        // check this directory is empty use isEmpty and check error
+                        if (!$this->isEmpty($value["path"], true)) {
+                            // remove file in directory use removeFile and check error
+                            if (!$this->removeFile(str_replace($this->path, "", $value["path"]))) {
+                                return false;
+                            }
+                        }
+
+                        // if this directory has children repeat this function with this directory and check error
+                        if (($value["type"] === "dir") && ($value["children"] !== null) && (count($value["children"]) !== 0)) {
+                            if (!$this->removeDirectory($value["children"], $delParent, $empty)) {
+                                return false;
+                            }
+                        }
+
+                        // check is dir
+                        if ($value["type"] === "dir") {
+                             // check delParent is true
+                            if ($delParent) {
+                                if (!rmdir($value["path"])) {
+                                    $this->addError("FSBM: Wystąpił błąd pod czas usuwania folderu!");
+                                    return false;
+                                }
+                            }
+                        }
+                    }       
+                             
+                } else {
+                    // check delParent is true
+                    if ($delParent) {
+                        if (!rmdir($this->path . $path)) {
+                            $this->addError("FSBM: Wystąpił błąd pod czas usuwania folderu!");
+                            return false;
+                        }
+                    }
+                }
+
+                // check path is string
+                if (is_string($path)) {
+                    // check this directory is empty use isEmpty and check error
+                    if (!$this->isEmpty($path)) {
+                        // remove file in directory use removeFile and check error
+                        if (!$this->removeFile($path)) {
+                            return false;
+                        }
+                    }
+
+                    $tempPath = $this->path . $path;
+                } else {
+                    $tempPath = $path[0]["parent"];
+                }
+
+                // check empty is true
+                if ($empty === true) {
+                    // check delParent is true
+                    if ($delParent === true) {
+                        if ($this->isEmpty($tempPath, true)) {
+                            if (!rmdir($tempPath)) {
+                                $this->addError("FSBM: Wystąpił błąd pod czas usuwania folderu!");
+                                return false;
+                            }
+                        }
+                    }
+                } else {
+                    // check delParent is true
+                    if ($delParent === true) {
+                        if (!$this->isEmpty($tempPath, true)) {
+                            return false;
+                        }
+
+                        if (!rmdir($tempPath)) {
+                            $this->addError("FSBM: Wystąpił błąd pod czas usuwania folderu!");
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
         }
 
         // function remove file
-        public function removeFile(){
-            # code...
+        public function removeFile(string|array $path = ""): bool {
+            // check try error and delete file in directory
+            try {
+                // if path is string use function scanFile else use array path
+                if (is_string($path) && (!is_array($path))) {
+                    // check is a dir
+                    if (!$this->isExistDir($this->path . $path, true)) {
+                        $this->addError("FSBM: Podana śćieżka nie jest folderem!");
+                        return false;
+                    }
+
+                    // scan directory file path
+                    $scanfile = $this->scanFile($path, false, true, SCANDIR_SORT_ASCENDING);
+                } else {
+                    $scanfile = $path;
+                }
+                
+                foreach ($scanfile as $key => $value) {
+                    if (!is_null($value)) {
+                        if (($value["type"] === "file") && ($this->isExistFile($value["path"], true))) {
+                            if (!unlink($value["path"])) {
+                                $this->addError("FSBM: Wystąpił błąd podczas usuwania pliku!");
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
         }
 
         // this function change hmod in directory (only)
-        public function hmod() {
-            # code...
+        public function chmod(string $path = "", int $chmod = 0755): bool {
+            // check try error
+            try {
+                // change hmod
+                if (!chmod($this->path . $path, $chmod)) {
+                    $this->addError("FSBM: Wystąpił błąd podczas zmiany uprawnień!");
+                    return false;
+                }
+                return true;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
         }
 
         // this function is coppy all 
         public function copy() {
             # code...
+        }
+
+        // this function check directory is empty
+        public function isEmpty(string $path, bool $exp = false): bool {
+            // check try error
+            try {
+                // check is a dir
+                if (!is_dir((!$exp ? $this->path : '') . $path)) {
+                    $this->addError("FSBM: Podana śćieżka nie jest folderem!");
+                    return false;
+                }
+                // check is empty
+                if (count(scandir((!$exp ? $this->path : '') . $path)) === 2) {
+                    return true;
+                }
+                return false;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
+        }
+
+        // this function check is directory
+        public function isDir(string $path, bool $exp = false): bool {
+            // check try error
+            try {
+                // check is a dir
+                if (is_dir((!$exp ? $this->path : '') . $path)) {
+                    return true;
+                }
+                return false;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
+        }
+        
+        // this function check directory exist
+        public function isExistDir(string $path, bool $exp = false): bool {
+            // check try error
+            try {
+                // check is file exists
+                if (file_exists((!$exp ? $this->path : '') . $path)) {
+                    return true;
+                }
+                return false;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
+        }
+
+        // this function check directory is file
+        public function isFile(string $path, bool $exp = false): bool {
+            // check try error
+            try {
+                // check is file
+                if (is_file((!$exp ? $this->path : '') . $path)) {
+                    return true;
+                }
+                return false;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
+        }
+
+        // this function check file is exist
+        public function isExistFile(string $path, bool $exp = false): bool {
+            // check try error
+            try {
+                // check is file
+                if (file_exists((!$exp ? $this->path : '') . $path)) {
+                    return true;
+                }
+                return false;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
         }
 
         // function return all error

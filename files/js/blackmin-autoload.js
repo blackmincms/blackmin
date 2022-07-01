@@ -90,6 +90,8 @@
                                     defaultRender(data, b, a, ["bm_short_name", "bm_description", "bm_type"], ["Skr.Nazwa", "Opis", "Typ"], ["id_postmeta", "bm_name"], [25,30,10])
                                 }else if (a == "user") {
                                     defaultRender(data, b, a, ["name", "surname", "access", "rank", "email", "online", "date_join"], ["Imie", "Nazwisko", "Dostęp", "Ranga", "Email", "Online", "Data.Dołączenia"], ["id", "nick"], [15,15,10,10,10,10,10])
+                                }else if (a == "theme") {
+                                    girdRender(data, b, a);
                                 } else {
                                     tsr_alert("error", "Wystąpił nieznany błąd!", b, "html", false);
                                 }

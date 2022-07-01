@@ -2829,7 +2829,7 @@ $(function() {
 	/* This is demo script tsr DOM */
 	// # Juan Carlos
 	
-	Browser.DOM = function (html, scope) {
+	DOM = function (html, scope) {
 		// Creates empty node and injects html string using .innerHTML 
 		// in case the variable isn't a string we assume is already a node
 		var node;

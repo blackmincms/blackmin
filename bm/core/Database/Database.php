@@ -170,12 +170,21 @@
 		}
 		
 		// funkcja zamieniająca enjie tagów na bespieczne odpowiedniki
-		public function valid(string $t):string {
+		public function valid(string $string):string {
 			// parsowanie danych
-			$t = htmlentities($t, ENT_QUOTES, "UTF-8");
-			$t = htmlspecialchars($t, ENT_QUOTES, "UTF-8");
+			$data = htmlentities($string, ENT_QUOTES, "UTF-8");
+			$out = htmlspecialchars($data, ENT_QUOTES, "UTF-8");
 			// zwracanie danych
-			return $t;
+			return $out;
+		}
+		
+		// funkcja zamieniająca encjie tagów na na normalny tekst
+		public function unvalid(string $string):string {
+			// parsowanie danych
+			$data = htmlspecialchars_decode($string, ENT_QUOTES);
+			$out = html_entity_decode($data, ENT_QUOTES, "UTF-8");
+			// zwracanie danych
+			return $out;
 		}
 
 		// funkcja usuwająca array według merge
@@ -336,7 +345,29 @@
 			}
 
 			return $new_array;
-		}	
+		}
+		
+		// this function is serialize data
+		public function serialize($data):string|bool {
+			// sprawdzanie typów
+			if(is_array($data)){
+				// zwracanie wyniku
+				return serialize($data);
+			}else{
+				return false;
+			}
+		}
+
+		// this function is unserialize data
+		public function unserialize($data):array|bool {
+			// sprawdzanie typów
+			if(is_string($data)){
+				// zwracanie wyniku
+				return unserialize($data);
+			}else{
+				return false;
+			}
+		}
 		
 		// pierwsza nazwa zapytania query(kwerenda) mysql
 		public function query($query, $isjson = false, $data_output = null){
