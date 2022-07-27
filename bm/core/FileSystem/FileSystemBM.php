@@ -610,6 +610,46 @@
             # code...
         }
 
+        // this function is save file in directory
+        public function saveFile(string $path = "", string $file = "", string $content = "", bool $replace = true, int $flag = 0): bool {
+            // check try error
+            try {
+                // check path is string
+                if (is_string($path)) {
+                    // check is a dir
+                    if (!$this->isExistDir($this->path . $path, true)) {
+                        $this->addError("FSBM: Podana śćieżka nie jest folderem!");
+                        return false;
+                    }
+                }
+                
+                // check replace file
+                if (!$replace) {
+                    // check file is string
+                    if (is_string($file)) {
+                        // check file is exist
+                        if ($this->isExistFile($this->path . $path . $file, true)) {
+                            $this->addError("FSBM: Plik o podanej nazwie już istnieje!");
+                            return false;
+                        }
+                    }
+                }
+                
+                // check content is string
+                if (is_string($content)) {
+                    // save file
+                    if (!file_put_contents($this->path . $path . $file, $content, $flag)) {
+                        $this->addError("FSBM: Wystąpił błąd podczas zapisu pliku!");
+                        return false;
+                    }
+                }
+                return true;
+            } catch (\Throwable $th) {
+                throw $this->addError($th);
+                return false;
+            }
+        }
+
         // this function check directory is empty
         public function isEmpty(string $path, bool $exp = false): bool {
             // check try error

@@ -348,7 +348,7 @@
 		}
 		
 		// this function is serialize data
-		public function serialize($data):string|bool {
+		public function serialize(mixed $data):string|bool {
 			// sprawdzanie typów
 			if(is_array($data)){
 				// zwracanie wyniku
@@ -359,7 +359,7 @@
 		}
 
 		// this function is unserialize data
-		public function unserialize($data):array|bool {
+		public function unserialize($data):array|string|bool {
 			// sprawdzanie typów
 			if(is_string($data)){
 				// zwracanie wyniku

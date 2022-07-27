@@ -58,7 +58,7 @@
     
                     // sprawdzanie czy input ma element klikalny
                     let at = document.querySelector('section[type="search"], div[type="search"]');
-                    if (at.length != 0) {
+                    if (at !== null && at.length != 0) {
                         for (let x = 0; x < at.length; x++) {
                             const ate = at[x];
                             
@@ -91,6 +91,12 @@
                                 }else if (a == "user") {
                                     defaultRender(data, b, a, ["name", "surname", "access", "rank", "email", "online", "date_join"], ["Imie", "Nazwisko", "Dostęp", "Ranga", "Email", "Online", "Data.Dołączenia"], ["id", "nick"], [15,15,10,10,10,10,10])
                                 }else if (a == "theme") {
+                                    girdRender(data, b, a);
+                                }else if (a == "widget") {
+                                    adminWidget(data, b, a);
+                                }else if (a == "menu") {
+                                    adminEditMenu(data, b, a);
+                                }else if (a == "plugin") {
                                     girdRender(data, b, a);
                                 } else {
                                     tsr_alert("error", "Wystąpił nieznany błąd!", b, "html", false);
@@ -237,7 +243,13 @@
         function clear_form(t) {
             for (let i = 0; i < t.length; i++) {
                 if ((t[i].tagName.toLowerCase() == "input") || (t[i].tagName.toLowerCase() == "textarea")) {
-                    t[i].value = '';
+                    if (t[i].getAttribute("noclear") !== undefined) {
+                        if (t[i].getAttribute("noclear") === "false") {
+                            t[i].value = "";
+                        }
+                    } else {
+                        t[i].value = '';   
+                    }
                 }               
             }
         }

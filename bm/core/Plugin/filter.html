@@ -1,0 +1,56 @@
+<form accept-charset="UTF-8"  action="Plugin" method="post" id="blackminload">	
+    <section class="tsr tsr-p-5px tsr-mb-10">
+        <section class="col-ms15 col-ms20-2 col-ms100-1 tsr-p-5px">
+            <input type="number" name="ile_load" class="input" value="<?php echo BM_SETTINGS["bm_default_load_post"];?>" placeholder="ile załadować?">
+        </section>
+        <section class="col-ms85 col-ms80-2 col-ms100-1 tsr-p-5px">
+            <section class="tsr tsr-position-relative">
+                <input type="search" name="szukaj" class="input tsr-icons-left col-ms90 tsr-width-webkit-fill-available col-ms90" placeholder="Szukaj">
+                <section type="search" name="szukaj" class="tsr-width-50px input tsr-icons-right tsr-icons-box-right col-st10" id="load_post">
+                    <img src="<?php echo BM_SETTINGS["url_server"];?>pliki/ikony/szukaj.png">
+                </section>
+            </section>
+        </section>
+    </section>
+</form>
+
+<style>
+    
+    .bm-gird-render {
+        grid-template-columns: repeat(5, calc(20% - 4px));
+    }
+    @media (max-width: 1600px) {
+        .bm-gird-render {
+            grid-template-columns: repeat(4, calc(25% - 4px));
+        }
+    }
+    @media (max-width: 1200px) {
+        .bm-gird-render {
+            grid-template-columns: repeat(3, calc(33% - 4px));
+        }
+    }
+    @media (max-width: 992px) {
+        .bm-gird-render {
+            grid-template-columns: repeat(2, calc(50% - 4px));
+        }
+    } 
+    @media (max-width: 768px) {
+        .bm-gird-render {
+            grid-template-columns: repeat(1, calc(100% - 4px));
+        }
+    }
+
+    #blackminload {
+        position: sticky;
+        top: 50px;
+        width: 100%;
+        height: 60px;
+        clear: both;
+        background-color: white;
+        transition: top 0.3s;
+        z-index: 10;
+    }
+</style>
+
+<section class="tsr" id="blackminload_container">							
+</section>

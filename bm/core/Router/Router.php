@@ -22,7 +22,7 @@
 
     final class Router {
 
-        public const ACTION_METHOD = '(load|get|add|del|update|rename|upload|login|activation)';
+        public const ACTION_METHOD = '(load|get|add|del|update|rename|upload|login|activation|deactivation)';
 
         /**
          * @var Database

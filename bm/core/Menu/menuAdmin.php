@@ -74,11 +74,11 @@
                         "name" => "Edytuj Menu",
                         "url" => "edit-menu",
                         "icon" => null
-                    ] , [
+                    ]/*  , [
                         "name" => "Edytuj Motyw",
                         "url" => "edit-theme",
                         "icon" => null
-                    ] , [
+                    ]  */, [
                         "name" => "Widżety",
                         "url" => "widget",
                         "icon" => null

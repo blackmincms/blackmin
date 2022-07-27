@@ -1430,7 +1430,7 @@ $(function() {
 		// pominięcie interfeisu drag and drop ze względu na małąkompatebilnośći ze smartfonami (testowane rozwiązanie)
 		
 		// zmienna przechowywująca 
-		let statY = 0,
+		var statY = 0,
 			statX = 0,
 			pozcY = 0,
 			pozcX = 0;

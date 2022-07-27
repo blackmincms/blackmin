@@ -50,7 +50,7 @@
                     // zapytanie do db
                     $zap = $this->database->query("SELECT `|prefix|bm_files`.*, `|prefix|bm_files`.`|prefix|bm_author` as 'id_author' , `|prefix|bm_users`.`nick` as 'autor' FROM `bm_files` LEFT JOIN `|prefix|bm_users` ON `|prefix|bm_files`.`bm_author` = `|prefix|bm_users`.`id` WHERE `id_file` = '$id' LIMIT 1");
                 } else {
-                    $zap = $this->Message->format("war", "Wprowadzone dane nie są liczbą");
+                    $zap = $this->message->format("war", "Wprowadzone dane nie są liczbą");
                 }
             } else {
                 if (isset ($this->parm['roszerzenie'])){
@@ -105,7 +105,7 @@
                         // sprawdzanie czy dane są do usunięcja
                         $t = count($this->parm["content"]);
                         if ($t === 0) {
-                            return $this->Message->format("info", "Brak danych do usunięcja.");
+                            return $this->message->format("info", "Brak danych do usunięcja.");
                             exit();
                         }else {
                             $a = $this->database->parse($this->parm["content"]);
@@ -152,10 +152,10 @@
                                     if($is_ok === true){
                                         // usuwanie danych
                                         if ($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")) {
-                                            return $this->Message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
+                                            return $this->message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
                                             exit();
                                         }else {
-                                            return $this->Message->format("error", "Wystąpił błąd pod czas usuwania danych.");
+                                            return $this->message->format("error", "Wystąpił błąd pod czas usuwania danych.");
                                             exit();
                                         }
                                     }else{
@@ -164,40 +164,40 @@
                                             // sprawdzanie czy usunięto już dane
                                             if($this->database->query("SELECT `id_file` FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")["num_rows"] != 0){
                                                 if($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")){
-                                                    return $this->Message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
+                                                    return $this->message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
                                                     exit();
                                                 }else{
-                                                    return $this->Message->format("error", "Wystąpił błąd pod czas usuwania danych.");
+                                                    return $this->message->format("error", "Wystąpił błąd pod czas usuwania danych.");
                                                     exit();
                                                 }
                                             }else{
-                                                return $this->Message->format("info", "Plik(i) zostały już usunięte!");
+                                                return $this->message->format("info", "Plik(i) zostały już usunięte!");
                                                 exit();					
                                             }
                                         }else{
-                                            return $this->Message->format("error", "Kod błędu: [ERROR_DELETE_FILE] - Błąd podczas usuwania plik(ów)!");
+                                            return $this->message->format("error", "Kod błędu: [ERROR_DELETE_FILE] - Błąd podczas usuwania plik(ów)!");
                                             exit();		
                                         }
                                     }
                                 } else {
-                                    return $this->Message->format("info", "Brak danych do usunięcja..");	
+                                    return $this->message->format("info", "Brak danych do usunięcja..");	
                                     exit();
                                 }
                             } else {
-                                return $this->Message->format("error", "Wystąpił błąd pod czas zapytania do bazy danych.");	
+                                return $this->message->format("error", "Wystąpił błąd pod czas zapytania do bazy danych.");	
                                 exit();
                             }
                         }
                     }else{
-                        return $this->Message->format("info", "Brak danych do usunięcja...");	
+                        return $this->message->format("info", "Brak danych do usunięcja...");	
                         exit();
                     }
                 }else{
-                    return $this->Message->format("error", "Błędne danye wejśćiowye.");	
+                    return $this->message->format("error", "Błędne danye wejśćiowye.");	
                     exit();
                 }
             } else {
-                return $this->Message->format("error", "Brak danych wejśćiowych.");	
+                return $this->message->format("error", "Brak danych wejśćiowych.");	
                 exit();
             }	
         }
@@ -208,7 +208,7 @@
                     // sprawdzanie czy dane są do usunięcja
                     $t = count($this->parm["content"]);
                     if ($t === 0) {
-                        return $this->Message->format("info", "Brak danych do zmiany.");	
+                        return $this->message->format("info", "Brak danych do zmiany.");	
                         exit();
                     }else {
                         $a = $this->database->parse($this->parm["content"]);
@@ -223,25 +223,25 @@
                         $datetime = date('Y-m-d H:i:s"');
                         // usuwanie danych
                         if ($this->database->update("UPDATE `|prefix|bm_files` SET `bm_folder`='$nazwa_folderu', `bm_datetime_changed` = '$datetime' WHERE `id_file` IN ($a)")) {
-                            return $this->Message->format("success", "Nazwa folderu pliku została poprawnie zmieniona!");	
+                            return $this->message->format("success", "Nazwa folderu pliku została poprawnie zmieniona!");	
                             exit();
                         }else {
-                            return $this->Message->format("error", "Wystąpił Błąd podczas zmieniania nazwy folderu pliku.");	
+                            return $this->message->format("error", "Wystąpił Błąd podczas zmieniania nazwy folderu pliku.");	
                             exit();
                         }
                     }
                 }else{
-                    return $this->Message->format("info", "Brak danych do zmiany.");	
+                    return $this->message->format("info", "Brak danych do zmiany.");	
                     exit();
                 }
             } else {
-                return $this->Message->format("error", "Brak danych wejśćiowych.");	
+                return $this->message->format("error", "Brak danych wejśćiowych.");	
                 exit();
             }
         }
 
         public function upload() {
-            return $this->Message->format("war", "jest gitara");	
+            return $this->message->format("war", "jest gitara");	
             exit();
         }
 

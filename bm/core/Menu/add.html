@@ -1,0 +1,69 @@
+<form accept-charset="UTF-8"  action="add" url="Menu" method="post" id="blackminsend" autocomplete="off" class="col-ms40">	
+    <section class="tsr-p-5px">
+        <section class="tsr fs-70">
+            Dodaj element do menu
+        </section>
+        <section class="tsr fs-70 tsr-border-solid-all tsr tsr-mt-20">
+            <section class="tsr tsr-mt-20 fs-100">
+                Własne linki
+            </section>
+            <section class="tsr tsr-mt-10 fs-100 tsr-p-10px add-text-alert">
+                <section class="tsr fs-100">
+                    <section class="col-ms40 tsr-mt-10">
+                        Własny url
+                    </section>
+                    <section class="col-ms60">
+                        <input type="text" name="url-menu" class="input" placeholder="Dodaj url"/>
+                    </section>
+                </section>
+                <section class="tsr fs-100">									
+                    <section class="col-ms40 tsr-mt-10">
+                        Własny Tytuł
+                    </section>
+                    <section class="col-ms60">
+                        <input type="text" name="title-menu" class="input" placeholder="Dodaj Tytuł"/>
+                    </section>
+                </section>	
+                <section class="tsr tsr-mt-20">
+                    <button type="button" class="submit" value="Dodaj do menu" action="add" url="Menu" id="submit_data" class="submit_data" />
+                        Dodaj do menu
+                    </button>
+                </section>
+            </section>
+            <section class="tsr-inp tsr-mt-50 tsr-p-10px">
+                <div id="blackminsend_container"></div>
+            </section>	
+        </section>
+    </section>					
+</form>	
+
+<form accept-charset="UTF-8" action="Menu" method="post" id="blackminload" class="col-ms60">	
+    <section class="tsr-p-5px">
+        <section class="tsr fs-70">
+            Struktura Menu Głównego
+        </section>
+        <section class="tsr tsr-psort-container tsr-sortbox" id="blackminload_container">
+            <section class="tsr fs-100 tsr-mt-20">
+                <section class="tsr-inp tsr-mt-50">
+                    <span>Ładowanie struktury menu</span>
+                </section>	
+            </section>						
+        </section>
+        <section class="tsr tsr-mt-20">
+            <button type="button" class="submit" value="Zapisz Dane" action="update" url="Menu" id="submit_data">
+                Zapisz Dane
+            </button>
+        </section>
+        
+        <section class="tsr fs-70 tsr-mt-50 tsr-border-inset-bottom bm-container-item-dellete">
+            Dodaj do menu
+        </section>
+        <section class="tsr bm-container-item-dellete tsr-psort-container-item tsr-sortbox1" id="blackminload_container_item" >
+            <section class="tsr fs-100 tsr-mt-20">
+                <section class="tsr-inp tsr-mt-50">
+                    <span>Ładowanie struktury menu</span>
+                </section>	
+            </section>						
+        </section>	
+    </section>
+</form>	

@@ -11,7 +11,7 @@
 *	this file is render gird table to view preview data | admin panel
 */
 
-    function girdRender(t, p) {
+    function girdRender(t, p, nameAction) {
         let parent = $(document).find(p);
         
         if (typeof t == "object" || is_json(t)) {
@@ -38,6 +38,27 @@
                     }
                     if (!package) {
                         tsr_alert("alert", "BlackMin: Wystąpił w pobieraniu ustawień! - " + name, parent, "append", true);
+                    }
+
+                    let deactivate = "";
+
+                    if ((element["active"] !== undefined) && (nameAction !== "theme")) {
+
+                        deactivate = `
+                            <section class="tsr-fr tsr-button tsr-success tsr-mr-10 tsr-visable-hover-element">
+                                <span class="tsr-pmodal">
+                                    DezAktywuj
+                                    <section class="tsr-modal tsr-width-100 tsr-height-100" tsr-modal-close="true" tsr-modal-max="false">
+                                        <section class="tsr-fr tsr-button tsr-success tsr-visable-hover-element tsr-float-inherit deactivate-post" bm-name="${name}">
+                                            <span>DezAktywuj</span>
+                                        </section>
+                                        <section class="tsr-fr tsr-button tsr-error tsr-mr-10 tsr-float-inherit tsr-modal-closed-button">
+                                            <span>Anuluj</span>
+                                        </section>
+                                    </section>
+                                </span>	
+                            </section>
+                        `;
                     }
 
                     out += (`
@@ -171,6 +192,10 @@
                                                     </section>
                                                 `)
                                             }
+                                            
+                                            ${
+                                                deactivate
+                                            }
 
                                         </section>
                                         
@@ -240,14 +265,23 @@
         sendData(name, "del");
     });
 
+    // click to button with deactivate-post class
+    $(document).on("click", ".deactivate-post", function () {
+        const name = $(this).attr("bm-name");
+        // send data to server
+        sendData(name, "deactivation");
+    });
+
     // crate function send data to server
     function sendData(data, action) {
         const parent = $(document).find(".tsr-modal-container.tsr-modal-active").find(".tsra");
 
+        let url = $("#blackminload_execute_container #blackminload").attr("action");
+
         let out = {
             "bm_content": JSON.stringify({
             "action": action,
-            "url":"Theme",
+            "url": url,
             "param":{
                 "data": data
             }
