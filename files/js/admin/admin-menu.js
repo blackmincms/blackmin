@@ -40,7 +40,7 @@
 			let id = item_menu.attr("tsr-index");
 			let url = item_menu.find('input[name="adres-url-rename"]').val();
 			let title = item_menu.find('input[name="tytul-menu-rename"]').val();
-			let data = {"bm_content": JSON.stringify({"action": "rename", "url": "Menu", "param": {"id": id, "url": url, "title": title}})};
+			let data = {"bm_content": JSON.stringify({"action": "rename", "url": "Menu", "params": {"id": id, "url": url, "title": title}})};
 
 			tsr_ajax("bm/core/Delegate/DelegateBM.php", data, "", false, function (info){
 				const dataMenu = JSON.parse(info);
@@ -65,7 +65,7 @@
 			e.preventDefault();
 			let parent = $(".tsr-modal-active").find(".tsra");
 			let id = $(this).attr("bm-action-data");
-			let data = {"bm_content": JSON.stringify({"action": "del", "url": "Menu", "param": {"id": id}})};
+			let data = {"bm_content": JSON.stringify({"action": "del", "url": "Menu", "params": {"id": id}})};
 
 			tsr_ajax("bm/core/Delegate/DelegateBM.php", data, "", false, function (info){
 				const dataMenu = JSON.parse(info);
@@ -95,7 +95,7 @@
 		$("#blackminload").on("click", "#submit_data", function(e){
 			e.preventDefault();
 			let bm_menu_structur = tsr_sortiner_index(".tsr-psort-container", ".tsr-sortiner", "tsr-index", ".tsr-sortitem");
-			let data = {"bm_content": JSON.stringify({"action": "update", "url": "Menu", "param": {"bm_menu_structur": bm_menu_structur}})};
+			let data = {"bm_content": JSON.stringify({"action": "update", "url": "Menu", "params": {"bm_menu_structur": bm_menu_structur}})};
 
 			tsr_ajax("bm/core/Delegate/DelegateBM.php", data, "", false, function (info){
 				const dataMenu = JSON.parse(info);
@@ -112,7 +112,7 @@
     }
 
     function LoadEditMenu (parent) {
-        let data = {"bm_content": JSON.stringify({"action": "get", "url": "Menu", "param": []})};
+        let data = {"bm_content": JSON.stringify({"action": "get", "url": "Menu", "params": []})};
 
         tsr_ajax("bm/core/Delegate/DelegateBM.php", data, "", false, function (info){
             const dataMenu = JSON.parse(info);
@@ -329,7 +329,7 @@
 		}else {
 
 			// const data = {};
-			let data = {"bm_content": JSON.stringify({"action": "add", "url": "menu", "param": {"url": url, "title": title}})};
+			let data = {"bm_content": JSON.stringify({"action": "add", "url": "menu", "params": {"url": url, "title": title}})};
 
 			// send data to server
 			$.ajax({

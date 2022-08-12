@@ -76,8 +76,8 @@
         }
     
         // this function is only format string to obiect array out structur
-        public function format(string $status, string $message, bool $json = false) {
-            return ($json === true ? json_encode($this->formatter($status, $message), JSON_THROW_ON_ERROR) : $this->formatter($status, $message));
+        public function format(string $status, string $message, bool $json = false, array $data = []) {
+            return ($json === true ? json_encode($this->formatter($status, $message, $data), JSON_THROW_ON_ERROR) : $this->formatter($status, $message, $data));
         }
         
         // this function is alias function "format" and add print 
@@ -97,7 +97,7 @@
             self::$jsonStatus = $isJson;
         }
     
-        public function formatter(string $status, string $message, string $data = null) {
+        public function formatter(string $status, string $message, string|array $data = null) {
             if (preg_match('/^'.self::STATUS_CODE.'$/', $status)) {
                 ($status === "war" ? $status = "warning" : "");
                 return [

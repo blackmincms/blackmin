@@ -77,7 +77,7 @@
             }
 
             // const data = {};
-            let data = {"bm_content": JSON.stringify({"action": "update", "url": "Widget", "param": form})};
+            let data = {"bm_content": JSON.stringify({"action": "update", "url": "Widget", "params": form})};
             
             $.ajax({
                 type:"POST",

@@ -71,7 +71,7 @@
 
                 function send(a, t, c, b, action = "get") {
                     tsr_alert("info", "Ładowanie danych", b, "html", false);
-                    let x = {"bm_content": JSON.stringify({"action": action, "url": a.trim(), "param": getValue(t)})};
+                    let x = {"bm_content": JSON.stringify({"action": action, "url": a.trim(), "params": getValue(t)})};
                     tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, c, false, function (out) {
                         tsr_alert("success", "Dane załadowane prawidłowo!", b, "before", true, 250);
                         if (typeof out == "object" || is_json(out)) {
@@ -83,7 +83,7 @@
                             } else {
                                 a = a.trim().toLowerCase();
                                 if (a == "media") {
-                                    mediaRender(data, b, a);
+                                    mediaRender(data, b, a, ["autor","bm_description", "bm_folder", "bm_file_type", "bm_datetime_upload"], ["Dodający", "Opis", "Folder", "Roszerzenie", "data"], ["id_file", "bm_name"])
                                 }else if (a == "post") {
                                     defaultRender(data, b, a, ["authores","status", "type", "tag", "category", "datetime"], ["Dodający", "status", "typ", "tag", "kategoria", "data"], ["id_post", "title", "url"])
                                 }else if (a == "categorytag") {
@@ -143,7 +143,7 @@
                         u = ta.getAttribute("url");
                         if (a != undefined) {
                             if (a.trim() != 0) {
-                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "param": getValue(ta)})};
+                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "params": getValue(ta)})};
                                 tsr_ajax("bm/core/Delegate/DelegateBM.php", x, "", false, function (e){
                                     const b = JSON.parse(e);
                                     if (b["status"] == "error") {
@@ -213,7 +213,7 @@
 
                         if (id_object != "null") {
                                 tsr_alert("info", "Ładowanie danych do edycji", form, "before", true);
-                                let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "param": {"id": id_object}})};
+                                let x = {"bm_content": JSON.stringify({"action": "get", "url": a.trim(), "params": {"id": id_object}})};
                                 tsr_ajax ("bm/core/Delegate/DelegateBM.php", x, "", false, function (out) {
                                     tsr_alert("success", "Dane załadowane prawidłowo!", form, "before", true, 200);
                                     if (typeof out == "object" || is_json(out)) {
