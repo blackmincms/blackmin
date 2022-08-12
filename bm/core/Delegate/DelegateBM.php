@@ -46,7 +46,7 @@
             $router = $router->createInstanceFrom([
                 "action" => "upload",
                 "url" => "media",
-                "parm" => [$_FILES["file"]]
+                "params" => $_FILES
             ]);
             echo json_encode($router->delegate(), JSON_THROW_ON_ERROR);
         } catch (RouterException $e) {

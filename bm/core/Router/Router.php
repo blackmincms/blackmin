@@ -42,7 +42,7 @@
         /**
          * @var string|array
          */
-        private $param;
+        private $params;
 
         /**
          * @var string
@@ -70,7 +70,7 @@
             $url = $this->actionOrUrlExist('url', $payload);
 
             if ($action && $url) {
-                return $this->routerFactory($payload["action"], $payload["url"], $payload["param"] ?? []);
+                return $this->routerFactory($payload["action"], $payload["url"], $payload["params"] ?? []);
             }
 
             throw RouterException::invalidDelegatedData();
@@ -83,10 +83,10 @@
             $result = null;
             $url = $this->normalizeUrl($this->url);
             if ($this->action === "load") {
-                if (is_string($this->param) && $this->param !== '') {
-                    $path = $this->pathDirectory . "/" . $url . "/" . $this->param;
+                if (is_string($this->params) && $this->params !== '') {
+                    $path = $this->pathDirectory . "/" . $url . "/" . $this->params;
                     $ext = '.php';
-                    if (($this->param === "filter") || ($this->param === "add")) {
+                    if (($this->params === "filter") || ($this->params === "add")) {
                         $ext = '.html';
                     }
 
@@ -97,7 +97,7 @@
                 return $result;
             }
 
-            $class = $this->delegatedClassFactory($url, [$this->database, $this->action, $this->param]);
+            $class = $this->delegatedClassFactory($url, [$this->database, $this->action, $this->params]);
             $result = $class->parse();
 
             if ($result === null) {
@@ -119,7 +119,7 @@
                 $self = clone $this;
                 $self->action = $action;
                 $self->url = $url;
-                $self->param = $params;
+                $self->params = $params;
 
                 return $self;
             }

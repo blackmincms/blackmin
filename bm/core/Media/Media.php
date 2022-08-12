@@ -2,20 +2,22 @@
     namespace BlackMin\Media;
 
     use BlackMin\Base\BaseInterface;
+    use BlackMin\Database\Database;
     use BlackMin\Message\Message;
+    use BlackMin\FileSystem\FileSystemBM;
 
     final class Media implements BaseInterface {
 
         private $database;
         private $action;
-        private $parm;
+        private $params;
 
         protected $message;
 
-        public function __construct ($d ,String $a, array $t) {
-            $this->database = $d;
-            $this->action = $a;
-            $this->parm = $t;
+        public function __construct (Database $database , string $action, array $params) {
+            $this->database = $database;
+            $this->action = $action;
+            $this->params = $params;
 
             $this->message = new Message();
         }
@@ -26,8 +28,6 @@
                     return $this->get();
                 case 'del':
                     return $this->del();
-                case 'add':
-                    return $this->add();
                 case 'rename':
                     return $this->rename();
                 case 'upload':
@@ -40,9 +40,9 @@
         }
    
         public function get(){
-            if (isset($this->parm['id'])) {          
+            if (isset($this->params['id'])) {          
                 // filtrowanie danych
-                $id = $this->database->valid($this->parm['id']);
+                $id = $this->database->valid($this->params['id']);
 
                 // check param is int
 
@@ -53,26 +53,26 @@
                     $zap = $this->message->format("war", "Wprowadzone dane nie są liczbą");
                 }
             } else {
-                if (isset ($this->parm['roszerzenie'])){
-                    $roszerzenie = $this->parm['roszerzenie'];
+                if (isset ($this->params['roszerzenie'])){
+                    $roszerzenie = $this->params['roszerzenie'];
                 }else{
                     $roszerzenie = "all";
                 }
                 
-                if (isset ($this->parm['folder'])){
-                    $folder = $this->parm['folder'];
+                if (isset ($this->params['folder'])){
+                    $folder = $this->params['folder'];
                 }else {
                     $folder = "";
                 }
                 
-                if (isset ($this->parm['ile_load'])){
-                    $ile_load = $this->parm['ile_load'];
+                if (isset ($this->params['ile_load'])){
+                    $ile_load = $this->params['ile_load'];
                 }else {
                     $ile_load = "25";
                 }
                 
-                if (isset ($this->parm['szukaj'])){
-                    $szukaj = $this->parm['szukaj'];
+                if (isset ($this->params['szukaj'])){
+                    $szukaj = $this->params['szukaj'];
                 }else{
                     $szukaj = "";
                 }
@@ -93,100 +93,101 @@
             }
             return $zap;
         }
-
-        public function add(){
-            # code...
-        }
         
         public function del(){
-            if (isset($this->parm["name"])) {
-                if ($this->parm["name"] == "dysk") {
-                    if (isset($this->parm["content"])) {
+            if (isset($this->params["name"])) {
+                if ($this->params["name"] === "media") {
+                    if (isset($this->params["content"])) {
+                        $content = $this->params["content"];
                         // sprawdzanie czy dane są do usunięcja
-                        $t = count($this->parm["content"]);
-                        if ($t === 0) {
+                        $ile = count($content);
+                        if ($ile == 0) {
                             return $this->message->format("info", "Brak danych do usunięcja.");
                             exit();
-                        }else {
-                            $a = $this->database->parse($this->parm["content"]);
-                            $a = $this->database->valid($a);
-        
-                            if ($x = $this->database->query("SELECT `id_file`, `bm_path`, `bm_thumbnail`, `bm_name` FROM `|prefix|bm_files` WHERE `id_file` IN (". $a .")")) {
-                                if ($x["num_rows"] != 0) {
-                                    $is_ok = true;
-                                    $count_check_sum = 0;
-                                    $error_del = "";
-                                    
-                                    // główna ścieżka
-                                    $real_path = realpath("../../../") . "/bm-content//";
-                                    
-                                    for($i = 0; $i < $t; $i++){
-                                        // validate
-                                        $path_file = $this->database->valid(str_replace(BM_SETTINGS["url_server"], $real_path, $x[$i]["bm_path"]));
-                                        $path_thumbnail =$this->database->valid(str_replace(BM_SETTINGS["url_server"], $real_path, $x[$i]["bm_thumbnail"]));
-                                        
-                                        if(file_exists($path_file)){
-                                            if(@unlink($path_file)){
-                                                // sprawdzanie czy miniaturka istnieje
-                                                if($x[$i]["bm_thumbnail"] != "null"){
-                                                    if(file_exists($path_thumbnail)){
-                                                        @unlink($path_thumbnail);
-                                                    }else{
-                                                        $error_del .= $x[$i]["bm_name"] . " ,";
-                                                        $is_ok = false;
-                                                    }
-                                                }
-                                            }else{
-                                                $error_del .= $x[$i]["bm_name"] . " ,";
-                                                $is_ok = false;
-                                            }
-                                            
-                                            // check sum count
-                                            $count_check_sum++;
-                                        }else{
-                                            $is_ok = false;
-                                        }
-                                    }
-        
-                                    // sprawdzanie czy nie ma błlędów pod czas usuwania plików
-                                    if($is_ok === true){
-                                        // usuwanie danych
-                                        if ($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")) {
-                                            return $this->message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
-                                            exit();
-                                        }else {
-                                            return $this->message->format("error", "Wystąpił błąd pod czas usuwania danych.");
-                                            exit();
-                                        }
-                                    }else{
-                                        // sprawdzanie czy suma kontrolna wynosi zero
-                                        if($count_check_sum === 0){
-                                            // sprawdzanie czy usunięto już dane
-                                            if($this->database->query("SELECT `id_file` FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")["num_rows"] != 0){
-                                                if($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` IN (". $a .")")){
-                                                    return $this->message->format("success_del", "Usunięto '. $t .' plik(ów) poprawnie!");
-                                                    exit();
-                                                }else{
-                                                    return $this->message->format("error", "Wystąpił błąd pod czas usuwania danych.");
-                                                    exit();
-                                                }
-                                            }else{
-                                                return $this->message->format("info", "Plik(i) zostały już usunięte!");
-                                                exit();					
-                                            }
-                                        }else{
-                                            return $this->message->format("error", "Kod błędu: [ERROR_DELETE_FILE] - Błąd podczas usuwania plik(ów)!");
-                                            exit();		
-                                        }
-                                    }
-                                } else {
-                                    return $this->message->format("info", "Brak danych do usunięcja..");	
-                                    exit();
-                                }
-                            } else {
-                                return $this->message->format("error", "Wystąpił błąd pod czas zapytania do bazy danych.");	
+                        }
+
+                        $count_check_sum = 0;
+
+                        for ($i=0; $i < $ile; $i++) { 
+                            // id valid
+                            $id = $this->database->valid($content[$i]);
+                            // check param is int
+                            if (!is_string($id)) {
+                                return $this->message->format("war", "Wprowadzone dane nie są liczbą");
                                 exit();
                             }
+
+                            // get data from db
+                            $zap = $this->database->query("SELECT `id_file`, `bm_path`, `bm_thumbnail`, `bm_name` FROM `_prefix_bm_files` WHERE `id_file` = '$id' LIMIT 1");
+                            if ($zap["num_rows"] === 0) {
+                                return $this->message->format("war", "Nie znaleziono danych do usunięcia");
+                                exit();
+                            }
+                            if ($zap === false) {
+                                return $this->message->format("error", "Wystąpił błąd pod czas szukania danych do usunięcia");
+                                exit();
+                            }
+
+                            // set path
+                            $path = $zap[0]['bm_path'];
+                            $thumbnail = $zap[0]['bm_thumbnail'];
+
+                            $path = str_replace(BM_SETTINGS["url_server"], "", $path);
+                            $thumbnail = str_replace(BM_SETTINGS["url_server"], "", $thumbnail);
+
+                            $error_sum = 0;
+                            // set FSBM
+                            $FSBM = new FileSystemBM();
+                            // check if file exists
+                            if (!$FSBM->isExistFile($path)) {
+                                $error_sum++;
+                            }
+                            // check if file exists
+                            if (!$FSBM->isExistFile($thumbnail)) {
+                                $error_sum++;
+                            }
+
+                            if (isset($error_sum) && $error_sum === 2) {
+                                return $this->message->format("war", "Nie znaleziono pliku do usunięcia.");
+                                exit();
+                            }
+
+                            // set check sum
+                            $check_sum = 0;
+                            // delete file
+                            if ($FSBM->removeFile($path)) {
+                                $check_sum++;
+                            }
+                            if ($FSBM->removeFile($thumbnail)) {
+                                $check_sum++;
+                            }
+
+                            // remove from db
+                            if ($this->database->delete("DELETE FROM `_prefix_bm_files` WHERE `id_file` = '$id'")) {
+                                $check_sum++;
+                            }
+                            
+                            // check if all is ok
+                            if ($check_sum !== 3) {
+                                return $this->message->format("war", "Nie udało się usunąć pliku: ". $zap[0]['bm_name']);
+                                break;
+                            }
+
+                            // add check sum
+                            $count_check_sum++;
+                        }
+
+                        // return message
+                        if (isset($this->params["multiply"])) {
+                            if ($count_check_sum === $ile) {
+                            return $this->message->format("success", "Usunięto ". $count_check_sum ." plik(ów).");
+                            }
+                        }
+                        
+                        if ($count_check_sum === $ile) {
+                            return $this->message->format("success_del", "Usunięto ". $count_check_sum ." plik(ów).");
+                        } else {
+                            return $this->message->format("error", "Wystąpił błąd podczas usuwania plik(ów).");
                         }
                     }else{
                         return $this->message->format("info", "Brak danych do usunięcja...");	
@@ -203,17 +204,17 @@
         }
 
         public function rename(){
-            if (isset($this->parm["name"])) {
-                if (isset($this->parm["content"])) {
+            if (isset($this->params["name"])) {
+                if (isset($this->params["content"])) {
                     // sprawdzanie czy dane są do usunięcja
-                    $t = count($this->parm["content"]);
+                    $t = count($this->params["content"]);
                     if ($t === 0) {
                         return $this->message->format("info", "Brak danych do zmiany.");	
                         exit();
                     }else {
-                        $a = $this->database->parse($this->parm["content"]);
+                        $a = $this->database->parse($this->params["content"]);
                         $a = $this->database->valid($a);
-                        $nazwa_folderu = $this->database->valid($this->parm["rename"]);
+                        $nazwa_folderu = $this->database->valid($this->params["rename"]);
 
                         if (strlen($nazwa_folderu) === 0) {
                             $nazwa_folderu = "default";
@@ -240,38 +241,171 @@
             }
         }
 
-        public function upload() {
-            return $this->message->format("war", "jest gitara");	
-            exit();
+        public function upload(int $size = 4000000, string $roszerzenie = "audio/*,video/*,image/*", int $permission = 0755, int $quality = 75) {
+            try {
+
+                // check data i  not empty
+                if (!isset($this->params["file"])) {
+                    return ["result" => "error", "message" => "Brak danych wejśćiowych."];
+                }
+
+                // check user is logged
+                if (!isset($_SESSION["id"]) && $_SESSION["id"] === 0) {
+                    return ["result" => "error", "message" => "Nie jesteś zalogowany."];
+                }
+
+                // set file
+                $file = $this->params["file"];
+                // set temp path
+                $temp_path = $file["tmp_name"];
+
+                // check file is upload
+                if (!is_uploaded_file($temp_path)) {
+                    return ["result" => "error", "message" => "Plik nie został wysłany poprawnie!"];
+                }
+
+                // check file error
+                if ($file["error"] > 0) {	
+                    return ["result" => "error", "message" => "Wystąpił błąd podczas wysyłania pliku!"];
+                }
+
+                // set path to save
+                $path = "bm-content" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR;
+                $pathWWW = "bm-content/uploads/";
+
+                // set filesystembm
+                $FSBM = new FileSystemBM($path);
+                // check FSBM error
+                if ($FSBM->intErrorCode() !== 0) {
+                    return ["result" => "error", "message" => "Wystąpił nie znany bład!"];
+                }
+                // check if folder exist
+                if (!$FSBM->isDir("")) {
+                    // return error
+                    return ["result" => "error", "message" => "Folder główny nie istnieje!"];
+                }
+                // createStructure
+                if (!$savePath = $FSBM->createStructure("", $permission, "Y", "m", "d", false)) {
+                    // return error
+                    return ["result" => "error", "message" => "Nie można utworzyć struktury folderu!"];
+                }
+
+                // get mime type
+                $mime = mime_content_type($temp_path);
+
+                // set pathinfo
+                $pathinfo = pathinfo($temp_path, PATHINFO_ALL);
+                // set file name
+                $filename = $pathinfo["filename"];
+                // set file extension
+                $extension = $pathinfo["extension"];
+                // set file basename
+                $basename = $pathinfo["basename"];
+                // set file dirname
+                $dirname = $pathinfo["dirname"];
+
+                // set name file upload
+                $name = basename($file["name"]);
+
+                // check file extension
+                if (!$FSBM->isExtension($temp_path, $roszerzenie, true)) {
+                    // return error
+                    return ["result" => "error", "message" => "Nieprawidłowe rozszerzenie pliku!"];
+                }
+                // check file size
+                if (!$FSBM->isSize($temp_path, $size, true)) {
+                    // return error
+                    return ["result" => "error", "message" => "Plik jest za duży!"];
+                }
+
+                $pathT = str_replace(DIRECTORY_SEPARATOR, "/", $savePath[0]);
+                $pathThumbnail = str_replace(DIRECTORY_SEPARATOR, "/", $savePath[1]);
+
+                // set error info
+                $addIsSet = 0;
+
+                // crate file createMiniaturs
+                $Thumbnail = $FSBM->createMiniaturs($pathThumbnail, $temp_path, $name, 250, 170, $quality);
+                if ($Thumbnail === false) {
+                    // return error
+                    return ["result" => "error", "message" => "Nie można utworzyć miniaturki! ->". $name];
+                };
+                
+                // check if file exist
+                if (!$FSBM->isExistFile($pathT . $name)) {
+                    // save file
+                    if (!$FSBM->saveUploadFile($pathT, $temp_path, $name)) {
+                        // return error
+                        return ["result" => "error", "message" => "Nie można zapisać pliku! -> ". $name];
+                    }
+                } else {
+                    $addIsSet++;
+                }
+
+                // check if file exit in database
+                $checkDB = $this->database->query("SELECT `id_file` FROM `|prefix|bm_files` WHERE `bm_name_orginal` = '$name'");
+                if (!$checkDB) {
+                    // return error
+                    return ["result" => "error", "message" => "Nie można sprawdzić czy plik istnieje w bazie danych! -> ". $name];
+                }
+                if ($checkDB["num_rows"] > 0) {
+                    $addIsSet++;
+                }
+                
+                if (isset($addIsSet) && $addIsSet === 2) {
+                    // return error
+                    return ["result" => "error", "message" => "Plik już istnieje! -> ". $name];
+                }
+
+                // set data
+                $datetime = date('Y-m-d H:i:s');
+                // name cut
+                $nameCut = substr($name, 0, -strlen($extension) - 1);
+
+                $pathThumb = (is_null($Thumbnail) ? "null" : BM_SETTINGS["url_server"] . $pathWWW . $pathThumbnail. $name);
+
+                // add file to database
+                if ($this->database->insert("INSERT INTO `|prefix|bm_files` (`id_file`, `bm_author`, `bm_name`, `bm_name_orginal`, `bm_description`, `bm_file_type`, `bm_thumbnail`, `bm_folder`, `bm_path`, `bm_datetime_upload`, `bm_datetime_changed`) VALUES (NULL , '". $_SESSION["id"] ."', '$nameCut', '$name', '','$mime', '". $pathThumb ."', 'default', '". BM_SETTINGS["url_server"] . $pathWWW . $pathT . $name ."', '$datetime', '$datetime')")) {
+                    // return success
+                    return ["result" => "success", "message" => "Plik został zapisany poprawnie! -> ". $name];  
+                }
+
+                // return error upload
+                return ["result" => "error", "message" => "Wystąpił błąd pod czas zapisywania pliku!"];
+
+            } catch (\Throwable $th) {
+                // throw $th;
+                return ["result" => "error", "message" => "Wystąpił nie znany bład!"];
+            }
         }
 
         public function edit (){
-            if (isset($this->parm["nazwa"])) {
+            if (isset($this->params["tytul"])) {
                 // ustawienie odpowiedniej daty do zapisu
                 $datetime = date('Y-m-d H:i');
 
                 // zmianna raportująca o błędach
                 $ad_ok = true;
-                if (isset ($this->parm['nazwa'])){
-                    $nazwa = $this->parm['nazwa'];
+                if (isset ($this->params['tytul'])){
+                    $nazwa = $this->params['tytul'];
                 }else{
                     $ad_ok = false;
                 }
                 
-                if (isset ($this->parm['folder'])){
-                    $folder =$this->parm['folder'];
+                if (isset ($this->params['folder'])){
+                    $folder =$this->params['folder'];
                 }else{
                     $ad_ok = false;
                 }
                 
-                if (isset ($this->parm['opis'])){
-                    $opis = $this->parm['opis'];
+                if (isset ($this->params['opis'])){
+                    $opis = $this->params['opis'];
                 }else{
                     $ad_ok = false;
                 }
                 
-                if (isset ($this->parm['id'])){
-                    $id = $this->parm['id'];
+                if (isset ($this->params['id'])){
+                    $id = $this->params['id'];
                 }else{
                     $ad_ok = false;
                 }

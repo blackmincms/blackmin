@@ -282,7 +282,7 @@
             "bm_content": JSON.stringify({
             "action": action,
             "url": url,
-            "param":{
+            "params":{
                 "data": data
             }
         })};

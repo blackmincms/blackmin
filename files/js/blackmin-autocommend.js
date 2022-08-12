@@ -59,7 +59,7 @@
                         act = "update";
                     }
                     if (a != undefined) {
-                        let xe = {"bm_content": JSON.stringify({"action": act, "url": a.trim(), "param": x})};
+                        let xe = {"bm_content": JSON.stringify({"action": act, "url": a.trim(), "params": x})};
                         tsr_ajax("bm/core/Delegate/DelegateBM.php", xe, "", false, function (e){
                             const f = JSON.parse(e);
                             if (f["status"] == "error") {
@@ -107,10 +107,10 @@
                                         // pobieranie dancyhh z zaznaczonych checkbox
                                         let c = tab.getAttribute("bm-action-data");
                                         let f = document.querySelector("#blackminload_container .bm-pcheckbox").getAttribute("bm-data");
-                                        let c2 = {"name": f, "content": {"0" : c}};
+                                        let c2 = {"name": f, "content": {0 : c}, "multiply": true};
                                         let a = t.getAttribute("action");
                                         if (a != undefined) {
-                                            let xe = {"bm_content": JSON.stringify({"action": "del", "url": a.trim(), "param": c2})};
+                                            let xe = {"bm_content": JSON.stringify({"action": "del", "url": a.trim(), "params": c2})};
                                             tsr_ajax("bm/core/Delegate/DelegateBM.php", xe, "", false, function (e){
                                                 const b = JSON.parse(e);
                                                 if (b["status"] == "error") {
