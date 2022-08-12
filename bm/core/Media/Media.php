@@ -240,7 +240,7 @@
                 exit();
             }
         }
-
+ 
         public function upload(int $size = 4000000, string $roszerzenie = "audio/*,video/*,image/*", int $permission = 0755, int $quality = 75) {
             try {
 
