@@ -3,26 +3,13 @@
 @		>>>> AQUAY <<<<
 @
 @	Timonix Aquay Edytor
-@	Edytor Tekstowy i blokowy
+@	Edytor Blokowy (Tekstowy)
 @	Versja: 1.0
 @	Autor: Timonix
-@  Cobright: Wszelkie prawa zasczeżone 
 @
 @		>>>> AQUAY <<<<
 @
 */
-/*
-	CMS ,,Black Min''  Został stworzony przez di_Timonix'a
-	
-	ten plik służy do kompilowania kody zrozumiałego dla black min'a
-	
-	Black Min cms,
-	
-	#plik: 1.4
-*/
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 	function aquayCompiler(aquay_container_path = ".aquay-editor-container") {
 
