@@ -55,16 +55,29 @@
                                     out = `<a href="${cache[inp[2]]}"> ${cache[inp[2]]} </a>`;
                                 }else if (inp[1] === "img") {
                                     out = `<img src="${cache[inp[2]]}" alt="${cache[inp[2]]}"></img>`;
+                                }else if (inp[1] === "img-bg") {
+                                    form.querySelector(inp[0] + "." + inp[2]).setAttribute("src", cache[inp[3]]["src"]);
+                                    form.querySelector(inp[0] + "." + inp[2]).setAttribute("title", cache[inp[3]]["title"]);
+                                    form.querySelector(inp[0] + "." + inp[2]).setAttribute("src-orginal", cache[inp[3]]["src_orginal"]);
+                                    form.querySelector(inp[0] + "." + inp[2]).setAttribute("title-orginal", cache[inp[3]]["title_orginal"]);
+                                    form.querySelector(inp[0] + "." + inp[2]).style.backgroundImage = `url("${cache[inp[3]]["src"]}")`;
+                                    
+                                }else if (inp[1] === "val") {
+                                    form.querySelector(inp[0] + "." + inp[2]).setAttribute("value", cache[inp[3]]);
+                                    form.querySelector(inp[0] + "." + inp[2]).value = cache[inp[3]];
+                                    
                                 }else{
                                     out = (inp[2] !== undefined ? cache[inp[2]] : cache[inp[1]]);
                                 }
     
-                                if (inp[2] == "--h" ?? false) {
-                                    form.querySelector(inp[0] + "." + inp[1]).remove();
-                                }else if (inp[2] == "--d" ?? false) {
-                                    form.querySelector(inp[0] + '[name="'+ inp[1] +'"]').removeAttribute("disabled", "disable");
-                                } else {
-                                    form.querySelector(inp[0] + "." + inp[1]).innerHTML = (out);
+                                if (out !== "") {
+                                    if (inp[2] == "--h" ?? false) {
+                                        form.querySelector(inp[0] + "." + inp[1]).remove();
+                                    }else if (inp[2] == "--d" ?? false) {
+                                        form.querySelector(inp[0] + '[name="'+ inp[1] +'"]').removeAttribute("disabled", "disable");
+                                    } else {
+                                        form.querySelector(inp[0] + "." + inp[1]).innerHTML = (out);
+                                    }
                                 }
                             } else {
                                 if (inp[2] == "--h" ?? false) {

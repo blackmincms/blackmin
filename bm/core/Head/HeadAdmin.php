@@ -35,6 +35,7 @@
             Head::add_script(BM_SETTINGS["url_server"] . "files/js/timonix_styles_rezult.js", "bm");
             Head::add_script(BM_SETTINGS["url_server"] . "files/js/blackmin-autoload.js", "bm");
             Head::add_script(BM_SETTINGS["url_server"] . "files/js/blackmin-autocommend.js", "bm");
+            Head::add_script(BM_SETTINGS["url_server"] . "files/js/admin/blackmin-dataLoader.js", "bm");
         }
 
         public function Load (){

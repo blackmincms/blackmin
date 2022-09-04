@@ -28,75 +28,60 @@
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-quote">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/quote">
             <div class="aquay-type-title tsr-sort-handle">edytuj cytat</div>
-            <div class="aquay-edytor-quote aquay-edytuj-text" aquay-type="type/quote" tabindex="0" contenteditable="true" >abc</div>
+            <blockquote class="aquay-edytor-quote aquay-edytuj-text aquay-html-referer" aquay-type="type/quote" tabindex="0" contenteditable="true" >abc</blockquote>
         </div>
     </section>
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-heading">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/heading">
             <div class="aquay-type-title tsr-sort-handle">edytuj Nagłówek</div>
-            <div class="aquay-edytor-heading aquay-edytuj-text" aquay-type="type/heading" tabindex="0" contenteditable="true" ><h1>abc</h1></div>
+            <h1 class="aquay-edytor-heading aquay-edytuj-text aquay-html-referer" aquay-type="type/heading" tabindex="0" contenteditable="true" >abc</h1>
         </div>
     </section>	
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-code">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/code">
             <div class="aquay-type-title tsr-sort-handle">edytuj kod</div>
-            <div class="aquay-edytor-code aquay-edytuj-text" aquay-type="type/code" tabindex="0" contenteditable="true" ><code>abc</code></div>
+            <code class="aquay-edytor-code aquay-edytuj-text aquay-html-referer" aquay-type="type/code" tabindex="0" contenteditable="true" >abc</code>
         </div>
     </section>
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-own_code">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/own_code">
             <div class="aquay-type-title tsr-sort-handle">edytuj własny kod html</div>
-            <div class="aquay-edytor-own_code aquay-edytuj-text" aquay-type="type/own_code" tabindex="0" contenteditable="true" ><pre>abc</pre></div>
+            <pre class="aquay-edytor-own_code aquay-edytuj-text aquay-html-referer" aquay-type="type/own_code" tabindex="0" contenteditable="true" >abc</pre>
         </div>
     </section>
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-picture">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/picture" aquay-obiect="get_obiect">
             <div class="aquay-type-title tsr-sort-handle">edytuj obrazek</div>
-            <div class="aquay-edytor-picture aquay-edytuj-obrazek" aquay-type="type/picture" tabindex="0" >
+            <div class="aquay-edytor-picture aquay-edytuj-obrazek" tabindex="0" >
                 <div class="aquay-obrazek-url">
                     <input type="url" name="aquay-url-parse" class="input aquay-input aquay-link" placeholder="Wklej własny obrazek" autocomplete="off"/>
                 </div>
-                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-get-miniaturka"  aquay-type="image" aquay-multiply="false" aquay-obiect-type="img" >
+                <div class="aquay-add-media aquay-add-media-image aquay-top-separator" aquay-obiect-put=".aquay-get-miniaturka"  aquay-object="image" aquay-multiply="false" aquay-obiect-type="img" >
                     Dodaj z Dysku
-                    <div class="tsr-modal">
-                        <section class="tsr load-aquay">
-                            <section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
-                        </section>
-                    </div>
                 </div>
-                <div class="aquay-load-obrazek aquay-top-separator"></div>
+                <div class="aquay-load-obrazek aquay-top-separator aquay-html-referer" aquay-type="type/picture"></div>
             </div>
         </div>
     </section>	
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-gallery">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/gallery" aquay-obiect="get_obiect">
             <div class="aquay-type-title tsr-sort-handle">edytuj galerie</div>
-            <div class="aquay-edytor-gallery aquay-edytuj-galerie" aquay-type="type/gallery" tabindex="0" >
-                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-load-galeria"  aquay-type="image" aquay-multiply="true" aquay-obiect-type="img" >
+            <div class="aquay-edytor-gallery aquay-edytuj-galerie" tabindex="0" >
+                <div class="aquay-add-media aquay-add-media-gallery aquay-top-separator" aquay-obiect-put=".aquay-load-galeria"  aquay-object="image" aquay-multiply="true" aquay-obiect-type="img" >
                     Dodaj z Dysku
-                    <div class="tsr-modal">
-                        <section class="tsr load-aquay">
-                            <section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
-                        </section>
-                    </div>
                 </div>
-                <div class="aquay-load-galeria aquay-top-separator"></div>
+                <div class="aquay-load-galeria aquay-top-separator aquay-html-referer" aquay-type="type/gallery"></div>
             </div>
         </div>
     </section>	
     <section class="aquay-edytuj-blok-kopiuj aquay-kopia-blok-file">
         <div class="aquay-edytuj-container aquay-placeholders" aquay-blok-type="type_blok/file" aquay-obiect="get_obiect">
             <div class="aquay-type-title tsr-sort-handle">pobierz plik</div>
-            <div class="aquay-edytor-file aquay-edytuj-plik" aquay-type="type/file" tabindex="0" >
-                <div class="aquay-add-media aquay-top-separator tsr-xpmodal" tsr-modal-max="width"  aquay-obiect-put=".aquay-load-plik"  aquay-type="all" aquay-multiply="false" aquay-obiect-type="text" >
+            <div class="aquay-edytor-file aquay-edytuj-plik" tabindex="0" >
+                <div class="aquay-add-media aquay-add-media-file aquay-top-separator" aquay-obiect-put=".aquay-load-plik"  aquay-object="all" aquay-multiply="false" aquay-obiect-type="text" >
                     Dodaj z Dysku
-                    <div class="tsr-modal">
-                        <section class="tsr load-aquay">
-                            <section class="tsr-alert tsr-alert-info">Ładowanie danych</section>
-                        </section>
-                    </div>
                 </div>
-                <button type="button" class="aquay-load-plik aquay-top-separator aquay-edytuj-text aquay-input aquay-button-pobierz" formtarget="_blank" target="_blank" aquay-type="type/text" tabindex="0" contenteditable="true" data-download="" download >Pobierz!</button>
+                <div type="button" class="aquay-load-plik aquay-top-separator aquay-edytuj-text aquay-input aquay-button-pobierz aquay-html-referer" formtarget="_blank" target="_blank" aquay-type="type/file" tabindex="0" contenteditable="true" download> Pobierz! </div>
             </div>
         </div>
     </section>	
