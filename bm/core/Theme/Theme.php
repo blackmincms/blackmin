@@ -6,6 +6,7 @@
     use BlackMin\Message\Message;
     use BlackMin\FileSystem\FileSystemBM;
     use BlackMin\FileSystem\FileSystemDB;
+    use BlackMin\View\View;
     
     final class Theme implements BaseInterface {
     
@@ -33,6 +34,8 @@
                     return $this->activation();
                 case 'update':
                     return $this->update();
+                case 'start':
+                    return $this->start();
                 default:
                     return false;
             }
@@ -231,6 +234,26 @@
             } else {
                 return $this->message->format("error", "Wystąpił błąd podczas zapisywania danych.");
             }
+        }
+    
+        // this function is load active theme
+        public function start() {
+            // check if BM_SETTINGS 
+            if (defined("BM_SETTINGS")) {
+                // check acrive theme not empty
+                if (strlen(BM_SETTINGS["bm_theme_active"]) !== 0) {
+                    try {
+                        $View = new View($this->params[0] . "bm-content/themes/" . BM_SETTINGS["bm_theme_active"] . "/index.php");
+                        return $View->renderViewOnly();
+                    } catch (\Throwable $th) {
+                        return false;
+                        //throw $th;
+                    }
+                }
+                return false;
+            }
+
+            return false;
         }
     }
     

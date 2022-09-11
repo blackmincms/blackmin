@@ -37,17 +37,25 @@
         }
     
         public function get(){
-            if (isset($this->params['id'])) {          
+            if ((isset($this->params['id'])) || isset($this->params['url'])) {          
                 // filtrowanie danych
-                $id = $this->database->valid($this->params['id']);
+                if (isset($this->params['id'])) {
+                    $id = "`id_post` = '". $this->database->valid($this->params['id']) ."'";
+                }
+                if (isset($this->params['url'])) {
+                    $id = "`url` = '". $this->database->valid($this->params['url']) ."'";
+                }
+                
 
                 // check param is int
 
                 if ((is_int($id)) || (is_string($id))) {
                     // zapytanie do db
-                    $zap = $this->database->query("SELECT * FROM `|prefix|bm_posts` WHERE `id_post` = '$id' LIMIT 1");
-                    $zap[0]["thumbnail"] = $this->database->unserialize($zap[0]["thumbnail"]);
-                    $zap[0]["content"] = $this->database->unvalid($zap[0]["content"]);
+                    $zap = $this->database->query("SELECT `|prefix|bm_posts`.*, `|prefix|bm_posts`.`|prefix|author` as 'id_author' , `|prefix|bm_users`.`nick` as 'authores' FROM `|prefix|bm_posts` LEFT JOIN `|prefix|bm_users` ON `|prefix|bm_posts`.`author` = `|prefix|bm_users`.`id` WHERE $id LIMIT 1");
+                    if ($zap["num_rows"] !== 0) {
+                        $zap[0]["thumbnail"] = $this->database->unserialize($zap[0]["thumbnail"]);
+                       $zap[0]["content"] = $this->database->unvalid($zap[0]["content"]);
+                    }
                 } else {
                     $zap = $this->Message->format("war", "Wprowadzone dane nie są liczbą");
                 }
@@ -69,6 +77,8 @@
     
             if (isset ($this->params['ile_load'])){
                 $ile_load = $this->params['ile_load'];
+            }else if (isset ($this->params['max'])){
+                $ile_load = $this->params['max'];
             }else {
                 $ile_load = "25";
             }
@@ -78,8 +88,12 @@
             }else{
                 $szukaj = "";
             }
+
+            if (isset($this->params['search'])) {
+                $search = $this->params['search'];
+            }
     
-            // // filtrowanie danych
+            // filtrowanie danych
     
             $typ = $this->database->valid($typ);
             $status = $this->database->valid($status);
@@ -92,6 +106,11 @@
             $ile_load = ($ile_load < 0 ? 0 : $ile_load);
             // zapytanie do db
             $zap = $this->database->query2("SELECT `|prefix|bm_posts`.*, `|prefix|bm_posts`.`|prefix|author` as 'id_author' , `|prefix|bm_users`.`nick` as 'authores' FROM `|prefix|bm_posts` LEFT JOIN `|prefix|bm_users` ON `|prefix|bm_posts`.`author` = `|prefix|bm_users`.`id` WHERE $szukaj AND $typ AND $status ORDER BY `id_post` DESC LIMIT $ile_load");
+
+            for ($i=0; $i < $zap["num_rows"]; $i++) { 
+                $zap[$i]["thumbnail"] = (($zap[$i]["thumbnail"] === "null") ? $zap[$i]["thumbnail"] : $this->database->unserialize($zap[$i]["thumbnail"]));
+                $zap[$i]["content"] = $this->database->unvalid($zap[$i]["content"]);
+            }
     
             return $zap;
         }

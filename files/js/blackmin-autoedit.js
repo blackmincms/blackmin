@@ -86,6 +86,7 @@
                                     form.querySelector(inp[0] + '[name="'+ inp[1] +'"]').removeAttribute("disabled", "disable");
                                 } else {
                                     form.querySelector(inp[0] + '[name="'+ inp[1] +'"]').value = (inp[2] !== undefined ? cache[inp[2]] : cache[inp[1]]);
+                                    form.querySelector(inp[0] + '[name="'+ inp[1] +'"]').setAttribute("value", (inp[2] !== undefined ? cache[inp[2]] : cache[inp[1]]));
                                     form.querySelector(inp[0] + '[name="'+ inp[1] +'"]').removeAttribute("disabled", "disable");   
                                 }
                             }

@@ -139,8 +139,6 @@
             let u = ta.getAttribute("url");
             let bm_fun = null;
 
-            bm_autoeditsenddata(u.trim());
-
             if ((ta !== undefined) && (a !== undefined) && (u !== undefined)) {
                 const g = document.getElementById("submit_data");
                 if (g != undefined) {
@@ -158,7 +156,6 @@
                                     let aquay_code = aquayCompiler(".aquay-editor-container");
                                     let thumbnail = $(".bm-fsbm-url");
                                     let thumbnailSrc = thumbnail.attr("src"), thumbnailSrcOrginal = thumbnail.attr("src-orginal"), thumbnailTitle = thumbnail.attr("title"), thumbnailTitleOrginal = thumbnail.attr("title-orginal");
-                                    console.log(thumbnail, thumbnail.attr("src"));
                                     if ((thumbnailSrc === undefined) || (thumbnailSrcOrginal === undefined) || (thumbnailTitle === undefined) || (thumbnailTitleOrginal) === undefined) {
                                         tsr_alert ("war", "Brak Miniaturki!", ta, "after", true, 500);
                                         return;
@@ -205,6 +202,7 @@
                     tsr_alert("error", "Wystąpił błąd pod czas formatowania danych html!", ta, "after", true);
                 }
             }
+            bm_autoeditsenddata(u.trim());
         }
 
         async function bm_autoeditsenddata(a) {

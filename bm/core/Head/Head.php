@@ -167,7 +167,7 @@
 				if($flaga == "bm" OR $flaga == "black_min" OR $flaga == "blackmin"){
 					$this->add_css .= '<link rel="stylesheet" href="'. $add .'">'. " \n ";
 				}else{
-					$this->add_css .= '<link rel="stylesheet" href="'.BM_SETTINGS["url_server"]. "a/motywy/" . BM_SETTINGS["bm_theme_active"] . "/" . $add .'">'. " \n ";
+					$this->add_css .= '<link rel="stylesheet" href="'.BM_SETTINGS["url_server"]. "bm-content/themes/" . BM_SETTINGS["bm_theme_active"] . "/" . $add .'">'. " \n ";
 				}
 			}	
 		}
@@ -183,7 +183,7 @@
 				if($flaga == "bm" OR $flaga == "black_min" OR $flaga == "blackmin"){
 					$this->add_script .= '<script src="'. $add .'"></script>'. " \n ";
 				}else{
-					$this->add_script .= '<script src="'.BM_SETTINGS["url_server"]. "a/motywy/" . BM_SETTINGS["bm_theme_active"]  . "/" . $add .'"></script>'. " \n ";
+					$this->add_script .= '<script src="'.BM_SETTINGS["url_server"]. "bm-content/themes/" . BM_SETTINGS["bm_theme_active"]  . "/" . $add .'"></script>'. " \n ";
 				}	
 			}	
 		}

@@ -37,7 +37,7 @@
         Dodaj Post - Black Min 
 	</section>
 	<section class="tsr tsr-p-10px background-white tsr-mt-20">
-        <section class="tsr" id="blackminload_execute_container"  blackmin="input;title,input;url,select;status,select;type,select;category,input;tag,section;img-bg;bm-fsbm-url;thumbnail,div;val;aquay-editor-container;content" id-object="<?php echo ($_GET["edit"] ?? 'null') ?>">					
+        <section class="tsr" id="blackminload_execute_container"  blackmin="input;title,input;url,select;status,select;type,select;category,input;tag,section;img-bg;bm-fsbm-url;thumbnail,div;val;aquay-editor-container;content,input;password" id-object="<?php echo ($_GET["edit"] ?? 'null') ?>">					
 			<?php 
 				try {
 					$BMROUTER = $BMROUTER->createInstanceWith("load", "Post", "add");

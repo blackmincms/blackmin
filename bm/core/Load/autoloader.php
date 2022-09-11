@@ -17,8 +17,21 @@
             $t = realpath(str_replace("BlackMin", "core", (BMPATH . "../" . $class_name . '.php')));
             if (file_exists( $t )) {
                 require_once ( $t );
+                return true;
             }
         }else {
-            
+            try {
+                $t = realpath(str_replace("BlackMin", "core", (dirname( __FILE__ ).'/' . "../../" . $class_name . '.php')));
+                if (file_exists( $t )) {
+                    require_once ( $t );
+                    return true;
+                }
+            } catch (\Throwable $th) {
+                // throw $th;
+                if (!defined("BM_AUTOLOAD_ERROR")) {
+                    define('BM_AUTOLOAD_ERROR', 'true');
+                    
+                }
+            }
         }    
 	});

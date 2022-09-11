@@ -37,10 +37,12 @@
 
             for (let index = 0; index < data["num_rows"]; index++) {
                 tag.push(data[index]["bm_name"]);
+            }
+            queueMicrotask(() => {
                 $('input[name="tag"]').timonixSuggestags({
                     type : 'timonix_styles_rezult',
                     suggestions: tag});
-            }
+            });
         }, false);
         
         if (tag === false) {
@@ -65,6 +67,10 @@
                 option.value = data[index]["bm_name"];
                 option.innerHTML = data[index]["bm_name"];  
                 select.appendChild(option);
+            }
+
+            if (select.hasAttribute("value")) {
+                select.value = select.getAttribute("value");
             }
         }, false);
         

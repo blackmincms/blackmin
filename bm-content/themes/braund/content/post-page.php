@@ -1,69 +1,84 @@
 <?php
 
-	// load posts
-	$drt->load_post_bm();
-	
+	$posts = $router->createInstanceWith("get", "Post", ["url" => $url->get_url_bm()])->delegate();
+	$gos = true;
 	// check error post
-	if ($drt->status_post() == "ERROR_404"){
-		require_once "post-404.php";
-	}elseif ($drt->status_post() == "protect_password"){
+	if ($posts["num_rows"] == 0) {
+		require_once("post-404.php");
+		$gos = false;
+	}elseif ($posts[0]["status"] == "protect_password"){
 		if (isset($_POST["acces_to_protect_post"])){
 			// weryfikowania hasła
-			$drt->change_password(htmlspecialchars($_POST["acces_to_protect_post"]));
-			$drt->load_post_bm();
+			if (!$_POST["acces_to_protect_post"] === $posts[0]["password"]) {
+				$gos = false;
+			}
 		}
 	}
-	
-	if(($drt->status_post() == "public") OR ($drt->status_post() == "protect_password")){
-		if($drt->tag_post() != "protect password"){
+
+	$view->set(BMPATH . "bm/core/load/date-format.php");
+	$view->renderViewOnly();
+
+	if ($gos) {
+		$posts = $posts[0];
+		
+		if(($posts["status"] == "public") OR ($posts["status"] == "protect_password")){
+			if($posts["title"] != "protect password"){
 ?>
 
-			<section class="tsr fs-100 l-0 tsr-mt-10 tsr-post-auto braund-post-<?php echo $drt->id_post(); ?>">
-				<?php if($drt->thumbnail_post() != NULL){?>
-				<section class="tsr col-ms20">
-					<?php echo $drt->thumbnail_post(); ?>
-				</section>
-				<section class="tsr col-ms80 tsr-p-10px">
-					<?php echo $drt->title_post(); ?>
-				</section>
-				<section class="tsr col-ms80 fs-100 tsr-p-10px">
-					opublikowano dnia <?php echo data_format($drt->datetime_post(), "m.d.Y"); ?> o godzinie <?php echo data_format($drt->datetime_post(), "H:i"); ?> przez <?php echo $drt->author_post(); ?>
-				</section>
-				<?php }else{?>
-				<section class="tsr tsr-p-10px">
-					<?php echo $drt->title_post(); ?>
-				</section>
-				<section class="tsr fs-100 tsr-p-10px">
-					opublikowano dnia <?php echo data_format($drt->datetime_post(), "m.d.Y"); ?> o godzinie <?php echo data_format($drt->datetime_post(), "H:i"); ?> przez <?php echo $drt->author_post(); ?>
-				</section>
-				<?php }?>
-				<section class="tsr tsr-border-solid-bottom tsr-mt-10"></section>
-				<section class="tsr fs-100 tsr-mt-10 tsr-post-auto tsr-za-wi">
-					<?php echo $drt->contents_post(); ?>
-				</section>
-			</section>
-			<section class="tsr tsr-border-solid-bottom tsr-mt-10"></section>
+				<article class="tsr fs-100 l-0 tsr-mt-10 tsr-post-auto tsr-border-solid-bottom braund-post-<?php echo $posts["id_post"]; ?>">
+					<?php if($posts["thumbnail"] !== null){?>
+					<section class="tsr col-ms20">
+						<img src="<?php echo $posts['thumbnail']['src']; ?>" alt="<?php echo $posts['thumbnail']['title_orginal']; ?>" title="<?php echo $posts['thumbnail']['title']; ?>" />
+					</section>
+					<section class="tsr col-ms80 tsr-p-10px">
+						<?php echo $posts["title"]; ?>
+					</section>
+					<section class="tsr col-ms80 fs-100 tsr-p-10px">
+						opublikowano dnia <?php echo data_format($posts["datetime"], "m.d.Y"); ?> o godzinie <?php echo data_format($posts["datetime"], "H:i"); ?> przez <?php echo $posts["authores"]; ?>
+					</section>
+					<?php }else{?>
+					<section class="tsr tsr-p-10px">
+						<?php echo $posts["title"]; ?>
+					</section>
+					<section class="tsr fs-100 tsr-p-10px">
+						opublikowano dnia <?php echo $posts["datetime"]; data_format($posts["datetime"], "m.d.Y"); ?> o godzinie <?php echo data_format($posts["datetime"], "H:i"); ?> przez <?php echo $posts["authores"]; ?>
+					</section>
+					<?php }?>
+					<section class="tsr fs-100 tsr-mt-10 tsr-post-auto tsr-za-wi braund-post">
+						<?php 
+						if($posts["content"] == "protect_password"){
+							echo "Post Zabespieczony Hasłem!";
+						}else{
+							echo $posts["content"];
+						}						
+						?>
+					</section>
+					<section class="tsr fs-80 r-0 tsr-mb-10">
+					</section>
+				</article>
 	
 <?php 
-		}
-		
-		if ($drt->status_post() == "protect_password"){
-			if($drt->validate_password_post() == false){
-
-				echo'
-				<form accept-charset="UTF-8" action="" method="post" id="add_post" autocomplete="off">	
-					<section class="tsr tsr-p-10px tsr-algin-left">Wpisz hasło aby zobaczyć zawartość posta!</section>
-					<input type="text" name="acces_to_protect_post" class="tsr-mt-10" />
-					<button type="submit" class="tsr-mt-10" >Wyśli hasło</button>
-				</form>
-				';
 			}
-		}		
-	} 
+		
+			/* temporay unset */
+			/* if ($drt->status_post() == "protect_password"){
+				if($drt->validate_password_post() == false){
+
+					echo'
+					<form accept-charset="UTF-8" action="" method="post" id="add_post" autocomplete="off">	
+						<section class="tsr tsr-p-10px tsr-algin-left">Wpisz hasło aby zobaczyć zawartość posta!</section>
+						<input type="text" name="acces_to_protect_post" class="tsr-mt-10" />
+						<button type="submit" class="tsr-mt-10" >Wyśli hasło</button>
+					</form>
+					';
+				}
+			} */		
+		} 
+	}
 ?>	
 
 	<section class="tsr tsr-mt-50 tsr-float-left l-0">
-		<a href="<?php echo url_site_bm(); ?>" class="tsr-button tsr-normal"> 
+		<a href="<?php echo BM_SETTINGS["url_site"]; ?>" class="tsr-button tsr-normal"> 
 			Home
 		</a>
 	</section>	

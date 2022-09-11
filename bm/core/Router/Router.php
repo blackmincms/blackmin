@@ -22,7 +22,7 @@
 
     final class Router {
 
-        public const ACTION_METHOD = '(load|get|add|del|update|rename|upload|login|activation|deactivation)';
+        public const ACTION_METHOD = '(load|get|add|del|update|rename|upload|login|activation|deactivation|start)';
 
         /**
          * @var Database
@@ -148,4 +148,9 @@
 
             return ucfirst($url);
         }
+
+        public function getPathDirectory():string {
+            return $this->pathDirectory;
+        }
     }
+    
