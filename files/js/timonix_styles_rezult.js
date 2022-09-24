@@ -237,7 +237,7 @@
 			li = ss.getItem('tsr_alert_count_schift');
 			ss.setItem('tsr_alert_count_schift', li++);
 		}
-		if ((/^(error|info|warning|war|normal|success)$/).test(type.toString())) {
+		if ((/^(error|info|warning|war|normal|success|location)$/).test(type.toString())) {
 			if (type === "war") {
 				type = "warning";
 			}
@@ -248,6 +248,10 @@
 				console.error("tsr Alert: Błedna metoda dodająca");
 				return false;
 			} else {
+				if (type === "location") {
+					window.location.href = message;
+					return true;
+				}
 				if (h === true) {
 					if (ht == "append") {
 						$(pb).append('<div class="tsr-alert tsr-alert-'+ type +'" tsr-alert-id="'+ li +'">'+ message +'</div>');
@@ -290,6 +294,20 @@
 	}
 
 	/* funkcja zarządzająca alertami tsr OFF */
+
+	/* funkcja sprawdzająca czy ciąg jest html (prosta) ON */
+	function isHtmlSimple(input) {
+		return /<[a-z]+\d?(\s+[\w-]+=("[^"]*"|'[^']*'))*\s*\/?>|&#?\w+;/i.test(input);
+	}
+
+	function isHtml (text) {
+		try {
+		  const fragment = new DOMParser().parseFromString(text,"text/html");
+		  return fragment.body.children.length>0
+		} catch(error) { ; }  
+		return false;
+	}
+	/* funkcja sprawdzająca czy ciąg jest html (prosta) OFF */
 	
 	$(function() {
 		
@@ -787,9 +805,20 @@ $(function() {
 	function tsr_modal(t = false, pm = ".tsr-pmodal", p = ".tsr-modal", callback = null){
 		var ileModal = 0, // zmienna przechowuje ilość otworzonych modal boxów (otwieranie tego samego nie nowego)
 			scroll,
-			pa;		
+			pa;	
+			
+			// set cokkies integrer
+			if (getCookie("tsr_modal_integrer") === '') {
+				setCookie("tsr_modal_integrer", ileModal, 1);
+			}
 
-		$(document).on("click.modal", pm, function(){
+		$(document).on("click.modal", pm, function(oEvent){
+			// set cokkies integrer
+			if (getCookie("tsr_modal_integrer") === '') {
+				setCookie("tsr_modal_integrer", ileModal, 1);
+			} else {
+				ileModal = parseInt(getCookie("tsr_modal_integrer"));
+			}
 			// pobieranie pozycji scrolbar
 			scroll = $(window).scrollTop();
 			// ukrywanie scrolvar
@@ -799,8 +828,8 @@ $(function() {
 			tsr_modal_hide(t, true);
 			
 			var pmodal = $(this);
-			var modal = pmodal.find(p);
-			var modal_html = (modal.html() != undefined ? modal.html() : p);
+			var modal = (isHtmlSimple(p)) ? null : pmodal.find(p);
+			var modal_html = (modal === null ? p : modal.html());
 			var modalPi = pmodal.attr("tsr-modal-pi");
 			var modalmax = pmodal.attr("tsr-modal-max");
 			var modalI = $('div.tsr-modal-container[tsr-modal-i="'+ pmodal.attr("tsr-modal-pi") +'"]').attr("tsr-modal-i");
@@ -816,6 +845,7 @@ $(function() {
 			}else if((modalPi == modalI) && (modalPi != undefined)){
 				modal_container.removeClass("tsr-display-none").addClass("tsr-modal-active");
 			}else{
+				ileModal++ // dodawanie o jeden liczy modal boxów
 				pmodal.attr("tsr-modal-pi", ileModal); // dodawanie zliczania modal boxa
 				// sprawdzanie czy modal istnieje w rodzicu
 				if(modal_html == undefined){
@@ -837,7 +867,7 @@ $(function() {
 				}
 
 				$(".tsr-modal-active").attr("tsr-modal-i", ileModal); // dodawanie zliczania modal boxa
-				ileModal++ // dodawanie o jeden liczy modal boxów
+				setCookie("tsr_modal_integrer", ileModal);
 				
 				// wykonywanie ustawień modal boxa
 				if(modal_close === undefined){
@@ -881,7 +911,7 @@ $(function() {
 					// is function
 					if(typeof callback == 'function'){
 						// wywoływanie funkcji
-						callback(ileModal, pmodal, modal, $("tsr-modal-container tsr-modal-active"));
+						callback(ileModal, pmodal, modal, $("tsr-modal-container tsr-modal-active"), pm);
 					}
 				}
 			}
@@ -1333,18 +1363,44 @@ $(function() {
 		var pchec_container = $(document).find(pchec_container);
 	
 		// zaznaczanie checkbox po kliknięciu w głowny checkbox
-		$(pchec_container).on("click", pchec,function() {    
-			$(pchec_container).find(':checkbox.tsr-checkbox').prop('checked', this.checked);  
-			$(pchec_container).find(':checkbox.tsr-pcheckbox').prop('checked', this.checked);    
+		$(pchec_container).on("click", pchec,function(oEvent) {
+			$(pchec_container).find(':checkbox'+chec).prop('checked', this.checked);  
+			$(pchec_container).find(':checkbox'+pchec).prop('checked', this.checked);    
 		 });
 		 
-		$(pchec_container).on("click", chec,function() {     
+		 $(pchec_container).on("click", "label.checkboxs",function(oEvent) {
+				let parentCheckbox = $(this).find(pchec).not('[disabled="disabled"]');
+				let childrentCheckbox = $(this).find(chec);
+
+				let pchecB = (parentCheckbox.length !== 0 ? parentCheckbox[0].checked : null);
+				let checB = (childrentCheckbox.length !== 0 ? childrentCheckbox[0].checked : null);
+
+				if (pchecB !== null) {
+					$(pchec_container).find(chec).attr("checked", !pchecB).prop('checked', !pchecB);
+					$(pchec_container).find(pchec).not(parentCheckbox, '[disabled="disabled"]').attr("checked", !pchecB).prop('checked', !pchecB);
+				}
+
+				if (checB !== null) {
+					setTimeout(() => {
+						queueMicrotask(() => {
+							if($(pchec_container).find(chec).length === $(pchec_container).find(chec+'[checked="checked"]').length){
+								$(pchec_container).find(':checkbox'+pchec).prop('checked', true).attr('checked', true); 
+							}else{
+								$(pchec_container).find(':checkbox'+pchec).prop('checked', false).attr('checked', false);
+							}
+						})
+					}, 0);
+				}
+			   
+		 });
+		 
+		$(pchec_container).on("click", chec,function(oEvent) {
 			// sprawdzanie czy checkbox = zaznaczonymi checkbox
 			// jeśli tak zaznaczanie głównego checkbox jeśli nie odznaczonie głównego checkbox
 			if($(pchec_container).find(chec).length == $(pchec_container).find(chec+":checked").length){
-				$(pchec_container).find(':checkbox.tsr-pcheckbox').prop('checked', true); 
+				$(pchec_container).find(':checkbox'+pchec).prop('checked', true); 
 			}else{
-				$(pchec_container).find(':checkbox.tsr-pcheckbox').prop('checked', false);
+				$(pchec_container).find(':checkbox'+pchec).prop('checked', false);
 				tsr_get_checkbox_data();
 			}
 		});
@@ -1355,7 +1411,7 @@ $(function() {
 	function tsr_checkboxall2(pchec_container = ".tsr-checkbox-container", pchec = ".tsr-pcheckbox", chec = ".tsr-checkbox"){
 		var pchec_container = $(document).find(pchec_container);
 		// zaznaczanie checkbox po kliknięciu w głowny checkbox
-		$(pchec_container).on("click", pchec+':not(:disabled)',function() {    
+		$(pchec_container).on("click", pchec+':not(:disabled)',function() {
 			// zmienna przechowywuje zmiene o dyfoltowych checkbox'ach
 			let x = $(this).closest("label.checkboxs").find('input[type="checkbox"]');
 			// sprawdzenie czy znaleziono objekt

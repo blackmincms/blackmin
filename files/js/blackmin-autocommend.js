@@ -35,6 +35,11 @@
                 // request post
                 t.addEventListener("click", (e) => {
                     tsr_blocked_submit(2500,"#blackminload_container .bm-row-delete");
+                    if (tx !== undefined) {
+                        if (tx.value === "add") {
+                            return true;
+                        }
+                    }
                     // pobieranie dancyhh z zaznaczonych checkbox
                     let x = tsr_get_checkbox_data("bm-data", "#blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
                     let a = t.getAttribute("action");

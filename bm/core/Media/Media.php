@@ -56,7 +56,7 @@
                 if (isset ($this->params['roszerzenie'])){
                     $roszerzenie = $this->params['roszerzenie'];
                 }else{
-                    $roszerzenie = "all";
+                    $roszerzenie = "*";
                 }
                 
                 if (isset ($this->params['folder'])){
@@ -84,7 +84,7 @@
                 $szukaj = $this->database->valid($szukaj);
                 $ile_load = $this->database->valid($ile_load);
                 
-                $roszerzenie = ($roszerzenie == "all" ? "`bm_file_type` LIKE '%%'" : "`bm_file_type` LIKE '%". $roszerzenie ."%'");
+                $roszerzenie = ($roszerzenie == "*" ? "`bm_file_type` LIKE '%%'" : "`bm_file_type` LIKE '%". $roszerzenie ."%'");
                 $folder = (strlen($folder) === 0 ? "`bm_folder` LIKE '%%'" : "`bm_folder` LIKE '%". $folder ."%'");
                 $szukaj = (strlen($szukaj) === 0 ? "(`bm_name` LIKE '%%' OR `bm_name_orginal` LIKE '%%' OR `bm_description` LIKE '%%')" : "(`bm_name` LIKE '%". $szukaj ."%' OR `bm_name_orginal` LIKE '%". $szukaj ."%' OR `bm_description` LIKE '%". $szukaj ."%')");
                 $ile_load = ($ile_load < 0 ? 0 : $ile_load);
@@ -103,7 +103,6 @@
                         $ile = count($content);
                         if ($ile == 0) {
                             return $this->message->format("info", "Brak danych do usunięcja.");
-                            exit();
                         }
 
                         $count_check_sum = 0;
@@ -114,18 +113,15 @@
                             // check param is int
                             if (!is_string($id)) {
                                 return $this->message->format("war", "Wprowadzone dane nie są liczbą");
-                                exit();
                             }
 
                             // get data from db
                             $zap = $this->database->query("SELECT `id_file`, `bm_path`, `bm_thumbnail`, `bm_name` FROM `_prefix_bm_files` WHERE `id_file` = '$id' LIMIT 1");
                             if ($zap["num_rows"] === 0) {
                                 return $this->message->format("war", "Nie znaleziono danych do usunięcia");
-                                exit();
                             }
                             if ($zap === false) {
                                 return $this->message->format("error", "Wystąpił błąd pod czas szukania danych do usunięcia");
-                                exit();
                             }
 
                             // set path
@@ -133,7 +129,9 @@
                             $thumbnail = $zap[0]['bm_thumbnail'];
 
                             $path = str_replace(BM_SETTINGS["url_server"], "", $path);
-                            $thumbnail = str_replace(BM_SETTINGS["url_server"], "", $thumbnail);
+                            if ($thumbnail !== "null") {
+                                $thumbnail = str_replace(BM_SETTINGS["url_server"], "", $thumbnail);
+                            }
 
                             $error_sum = 0;
                             // set FSBM
@@ -143,13 +141,18 @@
                                 $error_sum++;
                             }
                             // check if file exists
-                            if (!$FSBM->isExistFile($thumbnail)) {
+                            if ($thumbnail !== "null" && !$FSBM->isExistFile($thumbnail)) {
                                 $error_sum++;
                             }
 
-                            if (isset($error_sum) && $error_sum === 2) {
+                            $conttrolSum = 2;
+
+                            if ($thumbnail === "null") {
+                                $conttrolSum = 1;
+                            }
+
+                            if (isset($error_sum) && $error_sum === $conttrolSum) {
                                 return $this->message->format("war", "Nie znaleziono pliku do usunięcia.");
-                                exit();
                             }
 
                             // set check sum
@@ -170,7 +173,6 @@
                             // check if all is ok
                             if ($check_sum !== 3) {
                                 return $this->message->format("war", "Nie udało się usunąć pliku: ". $zap[0]['bm_name']);
-                                break;
                             }
 
                             // add check sum
@@ -191,15 +193,12 @@
                         }
                     }else{
                         return $this->message->format("info", "Brak danych do usunięcja...");	
-                        exit();
                     }
                 }else{
                     return $this->message->format("error", "Błędne danye wejśćiowye.");	
-                    exit();
                 }
             } else {
                 return $this->message->format("error", "Brak danych wejśćiowych.");	
-                exit();
             }	
         }
 
@@ -362,7 +361,7 @@
                 // name cut
                 $nameCut = substr($name, 0, -strlen($extension) - 1);
 
-                $pathThumb = (is_null($Thumbnail) ? "null" : BM_SETTINGS["url_server"] . $pathWWW . $pathThumbnail. $name);
+                $pathThumb = (is_null($Thumbnail) === true ? "null" : BM_SETTINGS["url_server"] . $pathWWW . $pathThumbnail. $name);
 
                 // add file to database
                 if ($this->database->insert("INSERT INTO `|prefix|bm_files` (`id_file`, `bm_author`, `bm_name`, `bm_name_orginal`, `bm_description`, `bm_file_type`, `bm_thumbnail`, `bm_folder`, `bm_path`, `bm_datetime_upload`, `bm_datetime_changed`) VALUES (NULL , '". $_SESSION["id"] ."', '$nameCut', '$name', '','$mime', '". $pathThumb ."', 'default', '". BM_SETTINGS["url_server"] . $pathWWW . $pathT . $name ."', '$datetime', '$datetime')")) {

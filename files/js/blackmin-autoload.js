@@ -12,14 +12,18 @@
 */
 
     window.addEventListener("load", () => {
-        const t = document.forms.namedItem("blackminload");
+        bm_autoload();
+    })
+
+    function bm_autoload (formSet = false, callback = false) {
+        const t = (formSet === false ? document.forms.namedItem("blackminload") : document.querySelector(formSet).querySelector("form#blackminload"));
 
         console.log("BlackMin autoload: start");
         
         if (t != undefined) {
         let a = t.getAttribute("action");
             if (a.trim().length != 0) {
-                let b = document.getElementById("blackminload_container");
+                let b = (formSet === false ? document.getElementById("blackminload_container") : document.querySelector(formSet).querySelector("#blackminload_container"));
 
                 if (b) {
 
@@ -106,6 +110,10 @@
                             b.innerHTML = out ;
                         }
                         bm_autocomment();
+
+                        if (typeof callback == "function") {
+                            callback();
+                        }
                     }, function () {
                         tsr_alert("error", "Wystąpił błąd pod czas ładowania danych", b, "html", false);
                     });
@@ -126,11 +134,10 @@
         }
 
         if (t == undefined) {
-            const ta = document.forms.namedItem("blackminsend");
+            const ta = (formSet === false ? document.forms.namedItem("blackminsend") : document.querySelector(formSet).querySelector("form#blackminsend"));
             let a = ta.getAttribute("action");
             let u = ta.getAttribute("url");
-
-            bm_autoeditsenddata(u.trim());
+            let bm_fun = null;
 
             if ((ta !== undefined) && (a !== undefined) && (u !== undefined)) {
                 const g = document.getElementById("submit_data");
@@ -141,9 +148,21 @@
                         // refresh data
                         a = ta.getAttribute("action");
                         u = ta.getAttribute("url");
+
                         if (a != undefined) {
                             if (a.trim() != 0) {
-                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "params": getValue(ta)})};
+                                var par = getValue(ta);
+                                if ((a === "Post") || (u === "Post")) {
+                                    let aquay_code = aquayCompiler(".aquay-editor-container");
+                                    let thumbnail = $(".bm-fsbm-url");
+                                    let thumbnailSrc = thumbnail.attr("src"), thumbnailSrcOrginal = thumbnail.attr("src-orginal"), thumbnailTitle = thumbnail.attr("title"), thumbnailTitleOrginal = thumbnail.attr("title-orginal");
+                                    if ((thumbnailSrc === undefined) || (thumbnailSrcOrginal === undefined) || (thumbnailTitle === undefined) || (thumbnailTitleOrginal) === undefined) {
+                                        tsr_alert ("war", "Brak Miniaturki!", ta, "after", true, 500);
+                                        return;
+                                    }
+                                    Object.assign(par, {"aquay_formatted": aquay_code}, {"src": thumbnailSrc}, {"src-orginal": thumbnailSrcOrginal}, {"titleM": thumbnailTitle}, {"title-orginal": thumbnailTitleOrginal});
+                                }
+                                let x = {"bm_content": JSON.stringify({"action": a.trim(), "url": u.trim(), "params": par})};
                                 tsr_ajax("bm/core/Delegate/DelegateBM.php", x, "", false, function (e){
                                     const b = JSON.parse(e);
                                     if (b["status"] == "error") {
@@ -167,6 +186,10 @@
                                     } else {
                                         tsr_alert ("error", "Błąd serwera - nie prawidłowe dane!", ta, "after", true, 1500);
                                     }
+
+                                    if (typeof callback == "function") {
+                                        callback();
+                                    }
                                 });
                             } else {
                                 tsr_alert("war", "Błędne dane docelowych!", ta, "after", true);
@@ -179,10 +202,11 @@
                     tsr_alert("error", "Wystąpił błąd pod czas formatowania danych html!", ta, "after", true);
                 }
             }
+            bm_autoeditsenddata(u.trim());
         }
 
         async function bm_autoeditsenddata(a) {
-            let form = document.querySelector("#blackminload_execute_container");
+            let form = (formSet === false ? document.querySelector("#blackminload_execute_container") : document.querySelector(formSet).querySelector("#blackminload_execute_container"));
 
             if ((form !== undefined) && (form !== null)) {
                 let scheme = (form.getAttribute("blackmin") ?? undefined);
@@ -203,10 +227,18 @@
                         inp_id_object.type = "hidden";
                         inp_id_object.value = id_object;
                         inp_id_object.classList.add("tsr-display-none");
-                        document.querySelector("#blackminload_execute_container #blackminsend").appendChild(inp_id_object);
+                        if (formSet === false) {
+                            document.querySelector("#blackminload_execute_container #blackminsend").appendChild(inp_id_object);
+                        } else {
+                            document.querySelector(formSet).querySelector("#blackminload_execute_container #blackminsend").appendChild(inp_id_object);
+                        }
                         // aktulizowanie danych do edyji
-                        document.querySelector("#blackminload_execute_container #blackminsend").action = "update";
-        
+                        if (formSet === false) {
+                            document.querySelector("#blackminload_execute_container #blackminsend").action = "update";
+                        } else {
+                            document.querySelector(formSet).querySelector("#blackminload_execute_container #blackminsend").action = "update";
+                        }
+
                         for (let i = 0; i < inp.length; i++) {
                             inp[i].setAttribute("disabled", "disable");
                         }
@@ -227,6 +259,10 @@
                                         }
                                     } else {
                                         form.innerHTML = out ;
+                                    }
+
+                                    if (typeof callback == "function") {
+                                        callback();
                                     }
                                 }, function () {
                                     tsr_alert("error", "Wystąpił błąd pod czas ładowania danych", form, "html", false);
@@ -253,4 +289,4 @@
                 }               
             }
         }
-    })
+    }

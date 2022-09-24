@@ -69,6 +69,37 @@
     
                         }
 
+                        let imgM = "";
+                        let imgMa = "";
+
+                        if (t[i]['bm_thumbnail'] !== "null") {
+                            imgM = `
+                                <img src="${t[i]['bm_thumbnail']}" title="${t[i]['bm_name_orginal']}" src-orginal="${t[i]['bm_path']}" class="img tsr-miniaturka tsr-vertical-align-middle" style="max-width: 75px;" loading="lazy">
+                            `;
+
+                            imgMa = `
+                                <section class="fs-100 tsr-button tsr-visable-hover-element tsr-visibility-visable-2 bm-row-view">		
+                                            
+                                    <span class="tsr-pmodal" tsr-modal-close="true">
+                                        Zobacz
+                                        <section class="tsr-modal" tsr-modal-close="true">
+                                            <section class="tsr">
+                                                <img src="${t[i]['bm_path']}" title="${t[i]['bm_name_orginal']}" class="img tsr-miniaturka tsr-vertical-align-middle" loading="lazy">  
+                                            </section>
+                                        </section>
+                                    </span>
+
+                                </section>
+                            `;
+                        }
+
+                        let package = {
+                                "src": t[i]['bm_thumbnail'],
+                                "srcOrginal": t[i]['bm_path'],
+                                "name": t[i][ids[1]],
+                                "nameOrginal": t[i]['bm_name_orginal']
+                            };
+
                         out += ( `
                             <tr class="tsr-color-table bm-row-dl" bm-row-data="${i}">
                                 <th bm-data="bm-r-id"> 
@@ -77,9 +108,9 @@
                                         <span class="checkbox "></span>
                                     </label>
                                 </th>
-                                <td class="tsr-display-block-2 tsr-p-5px tsr-word-break tsr-algin-left" bm-data="bm-title">
-                                    <img src="${t[i]['bm_thumbnail']}" title="${t[i]['bm_name_orginal']}" class="img tsr-miniaturka tsr-vertical-align-middle" style="max-width: 75px;" loading="lazy">    
-                                    ${t[i][ids[1]]}  
+                                <td class="tsr-display-block-2 tsr-p-5px tsr-word-break tsr-algin-left" bm-data="bm-title" meta="${btoa(JSON.stringify(package))}">
+                                    ${imgM}
+                                    ${t[i][ids[1]]} 
                                     <section class="tsr fs-80 tsr-mt-20">${t[i]['bm_name_orginal']}</section>
                                     <section class="tsr fs-80 tsr-visable-hover tsr-visibility-visable-2">
                                         <section class="fs-100 tsr-button tsr-visable-hover-element tsr-visibility-visable-2 bm-row-delete">		
@@ -101,18 +132,9 @@
                                                 Edytuj	
                                             </a>
                                         </section>
-                                        <section class="fs-100 tsr-button tsr-visable-hover-element tsr-visibility-visable-2 bm-row-view">		
-                                            
-                                            <span class="tsr-pmodal" tsr-modal-close="true">
-                                                Zobacz
-                                                <section class="tsr-modal" tsr-modal-close="true">
-                                                    <section class="tsr">
-                                                        <img src="${t[i]['bm_path']}" title="${t[i]['bm_name_orginal']}" class="img tsr-miniaturka tsr-vertical-align-middle" loading="lazy">  
-                                                    </section>
-                                                </section>
-                                            </span>
-
-                                        </section>
+                                        ${
+                                            imgMa
+                                        }
                                     </section>
                                 </td>
                                 ${lt}
@@ -130,7 +152,11 @@
                     `);
                     
                     parent.html(out);
-                    tsr_checkboxall("#blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
+                    queueMicrotask(() => {
+                        tsr_checkboxall("#blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
+                        tsr_checkboxall(".tsr-modal-active #blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
+                        tsr_checkboxall2(".tsr-modal-active #blackminload_container", ".bm-pcheckbox", ".bm-checkbox");
+                    })
                 } else {
                     tsr_alert("info", "BlackMin: Brak danych do wyświetlenia.", parent, "html", false);
                 }

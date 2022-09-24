@@ -75,9 +75,10 @@
                 
                 $KT = ($KT == "all" ? "`bm_type` LIKE '%%'" : "`bm_type` LIKE '%". $KT ."%'");
                 $szukaj = (strlen($szukaj) === 0 ? "(`bm_name` LIKE '%%' OR `bm_short_name` LIKE '%%' OR `bm_description` LIKE '%%')" : "(`bm_name` LIKE '%". $szukaj ."%' OR `bm_short_name` LIKE '%". $szukaj ."%' OR `bm_description` LIKE '%". $szukaj ."%')");
-                $ile_load = ($ile_load < 0 ? 0 : $ile_load);
+                $ile_load = ($ile_load < -1 ? 0 : $ile_load);
+                $ile_load = ($ile_load === -1 ? "" : "LIMIT ". $ile_load);
                 // zapytanie do db
-                $zap = $this->database->query2("SELECT * FROM `|prefix|bm_postmeta` WHERE $szukaj AND $KT ORDER BY `id_postmeta` DESC LIMIT $ile_load");
+                $zap = $this->database->query2("SELECT * FROM `|prefix|bm_postmeta` WHERE $szukaj AND $KT ORDER BY `id_postmeta` DESC $ile_load");
             }
             
             return $zap;

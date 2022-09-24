@@ -132,7 +132,7 @@
 						</span>
 					</section>
 				<section class="col-inp-75 tsr-p-10px fs-90 aquay-modal-container-colision">
-					<input type="url" name="url_add" class="input" placeholder="https://blackmin.pl" autocomplete="off" focus="false" />
+					<input type="url" name="url_add" class="input" placeholder="https://example.pl" autocomplete="off" focus="false" />
 				</section>
 				</section><section class="tsr aquay-modal-container-colision">
 					<section class="col-inp-25 tsr-p-10px fs-90 ">
@@ -197,25 +197,31 @@
 			return elem;
 		};
 
+		/* let time = storage.getItem("aquay_settings_time");
+		if (time !== null) {
+			// sprawdzanie czy ustawienia nie sa starsze niz 24 godzine
+			if (time < (new Date().getTime() - (1000 * 60 * 60 * 24))) {
+				// jesli tak to pobieranie ustawien
+				load("settings.json", "json");
+			} else {
+				// jesli nie to pobieranie ustawien z cache
+				return JSON.parse(storage.getItem("aquay_settings"));
+			}
+		} else {
+			storage.setItem("aquay_settings_time", Date.now());
+		} */
+
 		// load aquay editors
 		window.addEventListener("load", () => {
 			try {
 				if (CheckModuls()) {
-					// check download moduls
-					if (setting() !== false || block_scheme() !== false) {
-						add_font();
-						uis();
-						blocks();
-						load_block();
-					} else {
-						setTimeout(() => {
-							loading();
-						}, 500);
-					}
-					
+					setting();
+					block_scheme();
+					loading();					
 				}
 			} catch (error) {
 				console.error("Aquay: Not 'tsr' modules avaliable | " + error);
+				window.alert("Aquay: Not 'tsr' modules avaliable");
 			}
 		});
 
@@ -226,20 +232,30 @@
 
 		function loading() {
 			setTimeout(() => {
-				if (buffor == 2) {
+				if (setting() === undefined) {
+				 	setting();
+				}
+				 if (block_scheme() === undefined) {
+					block_scheme();
+				}
+				
+				if (buffor <= 2) {
 					add_font();
 					uis();
 					blocks();
 					load_block();
-				}else{
+					de_compiler_action();
+					return true;
+				} else {
 					if (error_count != 50) {
 						error_count++;
-						loading();
+						return loading();
 					} else {
 						console.error("Aquay: ERROR load editors");
+						tsr_alert("error", "Aquay: ERROR load editors");
 					}
 				}
-			}, 500);
+			}, 250);
 		}
 
 		// check tsr moduls
@@ -355,6 +371,20 @@
 			}
 		}
 
+		/* let time = storage.getItem("aquay_settings_time");
+		if (time !== null) {
+			// sprawdzanie czy ustawienia nie sa starsze niz 24 godzine
+			if (time < (new Date().getTime() - (1000 * 60 * 60 * 24))) {
+				// jesli tak to pobieranie ustawien
+				load("settings.json", "json");
+			} else {
+				// jesli nie to pobieranie ustawien z cache
+				return JSON.parse(storage.getItem("aquay_settings"));
+			}
+		} else {
+			storage.setItem("aquay_settings_time", Date.now());
+		} */
+
 		// load function
 		async function load (url = "settings.json", type = "json") {
 
@@ -426,6 +456,7 @@
 				if (d === "json") {
 					if (cache_test("sessionStorage")) {
 						storage.setItem("aquay_settings", JSON.stringify(odp));
+						storage.setItem("aquay_settings_time", Date.now());
 						return true;
 					} else {
 						return odp;
@@ -434,6 +465,7 @@
 			}else if (d = "text") {
 				if (cache_test("sessionStorage")) {
 					storage.setItem("aquay_block_schemat", JSON.stringify(odp));
+					storage.setItem("aquay_block_schemat_time", Date.now());
 					return true;
 				} else {
 					return odp;
@@ -443,18 +475,52 @@
 			}
 		}
 
+		// this funnction is check has settings property and add do settings
+		function parse_settings(settingss) {
+			// test a settingss is Object
+			// if (!Object.settingss) {
+			// 	console.warn("Aquay: settings is not array!");
+			// }
+
+			let keys = Object.keys(settingss);
+			let ile = keys.length;
+			for (let i = 0; i < ile; i++) {
+				// add property to settings
+				settings[keys[i]] = settingss[keys[i]];			
+			}
+		}
+
 		// function get settings (json parse string)
 		function setting(t = "all") {
 			if (cache_test("sessionStorage")) {
 				let storage = window.sessionStorage;
 				if (t === "all") {
 					if (storage.getItem("aquay_settings")) {
+						// let time = storage.getItem("aquay_settings_time");
+						// if (time !== null) {
+						// 	// sprawdzanie czy ustawienia nie sa starsze niz 24 godzine
+						// 	if (time >= (new Date().getTime() - (1000 * 60 * 60 * 24))) {
+						// 		// jesli tak to pobieranie ustawien
+						// 		return load("settings.json", "json");
+						// 	} else {
+						// 		// jesli nie to pobieranie ustawien z cache
+						// 		return JSON.parse(storage.getItem("aquay_settings"));
+						// 	}
+						// } else {
+						// 	// storage.setItem("aquay_settings_time", Date.now());
+						// 	return JSON.parse(storage.getItem("aquay_settings"));
+						// }
+						parse_settings(JSON.parse(storage.getItem("aquay_settings")));
 						return JSON.parse(storage.getItem("aquay_settings"));
 					} else {
-						load("settings.json", "json");
+						let set = load("settings.json", "json");
+						parse_settings(set);
+						return set;
 					}
 				} else {
 					if (storage.getItem("aquay_settings")) {
+						
+
 						let x = Array.prototype.search(JSON.parse(storage.getItem("aquay_settings")), t);
 						if (x != false) {
 							return x;
@@ -505,7 +571,7 @@
 			if (cache_test("sessionStorage")) {
 				let storage = window.sessionStorage;
 				if (storage.getItem("aquay_block_schemat")) {
-					let x = $(JSON.parse(storage.getItem("aquay_block_schemat"))).find("section.aquay-edytuj-blok-kopiuj.aquay-kopia-blok-" + t).find(".aquay-edytuj-container");					
+					let x = (t === "*" ? JSON.parse(storage.getItem("aquay_block_schemat")): $(JSON.parse(storage.getItem("aquay_block_schemat"))).find("section.aquay-edytuj-blok-kopiuj.aquay-kopia-blok-" + t).find(".aquay-edytuj-container"));					
 					if (x != undefined) {
 						return x;
 					} else {
@@ -610,7 +676,6 @@
 
 			window.setTimeout(() => {
 				head.on("click", ".aquay-edytor-menu-icons", (t) => {
-					console.log($(t.currentTarget),$(t.currentTarget).attr("data-blok"));
 					blocks ($(t.currentTarget).attr("data-blok"));
 				})
 			}, 0);
@@ -650,6 +715,13 @@
 			t.innerHTML = html;
 			return t.content;
 		}
+		// function decompilar action
+		function de_compiler_action() {
+			// check is deCompiler action 
+			if (document.querySelector(__t).hasAttribute("value")) {
+				aquayDecompiler(__t, block_scheme("*"));
+			}
+		}
 		// function add addEventListener
 		function listener() {
 			window.queueMicrotask( () => {
@@ -681,8 +753,6 @@
 				}
 
 				$(document).on("click mouseup keydown mousedown keyup", __t + " .aquay-edytuj-text", (t) => {
-					console.log(t);
-					console.log(GetSelection());
 					let storage = window.sessionStorage;
 
 					if (cache_test("sessionStorage")) {
@@ -693,8 +763,6 @@
 						}
 					}
 					(GetSelection() === undefined ? aquaySelection = ($(__t).find(t.target).hasClass("aquay-edytuj-text") === true ? $(__t).find(t.target) : ($(t.target).closest(".aquay-edytuj-text").hasClass("aquay-edytuj-text") === true ? $(t.target).closest(".aquay-edytuj-text") : undefined )) : aquaySelection = GetSelection() );
-					console.log(aquaySelection);
-					console.log(t.target);
 
 					aquaySelectText = getCaretCharOffset(t.currentTarget);
 					aquaySelectNode = window.getSelection();
@@ -702,10 +770,9 @@
 						"focus": aquaySelectNode.extentNode,
 						"goTo": aquaySelectNode.extentOffset
 					};
-					console.log(aquaySelectNode, window.getSelection(), document.getSelection());
 				});
 
-				tsr_modal(false , __t + " .link", parseHTML(aquay_links));
+				tsr_modal(false , __t + " .link", aquay_links);
 				
 				$(document).on("click", __t + " .link", (t) => {
 					$(__t + " .link").attr("tsr-modal-close", "false");
@@ -713,13 +780,13 @@
 						if (aquaySelection != undefined) {
 							let url = ($(aquaySelection.selection.focusNode.parentNode).attr("href") === undefined ? undefined : $(aquaySelection.selection.focusNode.parentNode).attr("href"));
 							let tar = ($(aquaySelection.selection.focusNode.parentNode).attr("target") === undefined ? undefined : $(aquaySelection.selection.focusNode.parentNode).attr("target"));
-							console.log($(aquaySelection.selection.focusNode.parentNode), url, tar);
-							console.log($('.tsr-modal-active input[name="url_add"]'), $('.tsr-modal-active select[name="target_add"]'));
 							if (url != undefined) {
-								 $('.tsr-modal-active input[name="url_add"]').value = url;
+								$('.tsr-modal-active input[name="url_add"]').val(url);
+							} else {
+								$('.tsr-modal-active input[name="url_add"]').val("");
 							}
 							if (tar != undefined) {
-								 aquaySelectedOption($('.tsr-modal-active select[name="target_add"]'), tar);
+								$('.tsr-modal-active select[name="target_add"]').val(tar);
 							}
 						}
 					}, 0);
@@ -731,7 +798,6 @@
 						let parent = $(document).find(".tsr-modal-active"),
 							url = parent.find('input[name="url_add"]').val(),
 							target = parent.find('select[name="target_add"]').val();
-							console.log(url, target);
 						(target === undefined ? "_blank" : target);
 						if (url.length === 0) {
 							
@@ -761,46 +827,52 @@
 								} else {
 									
 								}
-								console.log("sa");
 							} else {
-								console.log("sa2");
-								console.log(aquaySelection,aquaySelection.boundary, aquaySelection.clone(), aquaySelection.orginal(), aquaySelection.orginalStart(), aquaySelection.orginalStop(), aquaySelection.parent, aquaySelection.range, aquaySelection.selection, aquaySelection.start(), aquaySelection.stop());
-								console.log($(aquaySelection));
+
 
 								if ($(aquaySelection.parent).hasClass("aquay-edytuj-text")) {
-									// $(aquaySelection[0]).append(`<a href="${url}" target="${target}" title="${url}" >${url}</a>`);
-									// $(aquaySelection.parent).focus();
-									console.log($(aquaySelection.parent));
-									// aquay_editables('createLink', url);
-									// document.execCommand('createLink', false, "aquay_link_to_editable");
-
-
-
-
-
 									// fokusowanie elementu
 									aquaySelection.parent.focus();
 									// tworzenie nowego objektu range
 									let range = new Range();
 									// ustawianie zakresów do zaznaczenia
-									range.setStart(aquaySelection.start().target.firstChild, aquaySelection.start().lenght);
-									range.setEnd(aquaySelection.stop().target.firstChild, aquaySelection.stop().lenght);
+									range.setStart(aquaySelection.range.startContainer, aquaySelection.range.startOffset);
+									range.setEnd(aquaySelection.range.endContainer, aquaySelection.range.endOffset);
 									// usuwanie poprzedniego zaznaczenia
 									window.getSelection().removeAllRanges();
 									// zaznaczenie odpowiedniego zakresu
 									window.getSelection().addRange(range);
 
+									// new a hrew changer
+									// const ranges = aquaySelection.range;
+									// const wrapper = document.createElement('a');
+									// wrapper.setAttribute("href", url);
+									// wrapper.setAttribute("target", target);
+									
+									// wrapper.appendChild(ranges.extractContents());
+									// wrapper.querySelectorAll("a[href]").forEach((value, key, array) => {
+									// 	return value.setAttribute("target", target);
+									// });
+									// ranges.insertNode(wrapper);
+									// console.log(wrapper, wrapper.innerHTML);
 
-
-
-									console.log(aquay_editables('createLink', url));
 									if (aquay_editables('createLink', url)) {
 										setTimeout(() => {
-											// (GetSelection() === undefined ? aquaySelection = ($(__t).find(t.target).hasClass("aquay-edytuj-text") === true ? $(__t).find(t.target) : undefined) : aquaySelection = GetSelection() );
-											console.log(aquaySelection);
 
 											$(aquaySelection.selection.focusNode.parentNode).attr("target", target);
-											console.log($(aquaySelection.selection.focusNode.parentNode));
+											$(aquaySelection.selection.focusNode.anchorNode).attr("target", target);
+
+											let selection = GetSelection();
+											if ((selection !== undefined) || (selection.same())) {
+												const ranges = selection.range;
+												const wrapper = document.createElement('span');
+												
+												wrapper.appendChild(ranges.extractContents());
+												wrapper.querySelectorAll("a[href]").forEach((value, key, array) => {
+													return value.setAttribute("target", target);
+												});
+												ranges.insertNode(wrapper);
+											}
 										}, 0);
 									}
 									$('.tsr-modal-active input[name="url_add"]')[0].value = '';
@@ -810,14 +882,12 @@
 								}
 							}
 						}
-					}else{
-						console.log("saa");
 					}
 				});
 
-				$(__t).on("dblclick", ".aquay-type-title", (t) => {
-					$(t).closest(".aquay-edytuj-container").remove();
-				});
+				$(__t).on("dblclick", ".aquay-type-title", function (oEvent) {
+					$(this).closest(".aquay-edytuj-container").remove();
+				})
 
 				$(__t).on("click", function (event) {
 					if(!$(event.target).closest('.add').length && !$(event.target).is('.add')) {
@@ -827,112 +897,54 @@
 				});
 			} );
 
-			// file system db
-			tsr_modal (false, __t + ".aquay-add-media", parseHTML(aquay_file), () => {
-				queueMicrotask(() => {
-					tsr_ajax ("laduj/get-file-system-db.php", {}, "", false, (t) => {
-						$(".tsr-modal-active .load-aquay").html(t);
-						console.log(t);
-/* 						// zaznaczenie odpowiedniej opcji
-						selectedOption($(".bm-get-file-system-db").find('select[name="roszerzenie"]'), '<?php if(isset($_POST["file_type"])){ echo $_POST["file_type"]; }else{ echo "all"; } ?>');
-						changeDisabled('<?php if(isset($_POST["file_type"])){ echo $_POST["file_type"]; }else{ echo "all"; } ?>', $(".bm-get-file-system-db").find('select[name="roszerzenie"]'));
-						changeMultiply($(".bm-file-system-db"), ".bm-checkbox", <?php if(isset($_POST["multiply"])){ echo $_POST["multiply"]; }else{ echo "true"; } ?>);
-						sentForm($(".bm-get-file-system-db"), ".load_post_bm");
-						// zmienne przechowywują konfiguracje ładowanych danych
-						let r = ($('select[name="roszerzenie"]').val() != undefined ? $('select[name="roszerzenie"]').val() : "all"),
-							i = ($('input[name="ile_load"]').val() != undefined ? $('input[name="ile_load"]').val() : "25"),
-							f = ($('input[name="folder"]').val() != "" ? $('input[name="folder"]').val() : "null"),
-							s = ($('input[name="szukaj"]').val() != "" ? $('input[name="szukaj"]').val() : "null"),
-							a = ($('select[name="akcja_pliku"]').val() != undefined ? $('select[name="akcja_pliku"]').val() : "add_media");
-						// ładowanie plików wgranych na serwer	
-						load_upload_file_db(i, r, <?php if(isset($_POST["multiply"])){ echo $_POST["multiply"]; }else{ echo "true"; } ?>); */
-					}), () => {
-						
-					};
-				});
-			});
 			$(__t).on("click", ".aquay-add-media", (t) => {
 				aquayAddFile = t;
-
 				let ob = $(t.target).attr("aquay-type"),
-					mul = $(t.target).attr("aquay-multiply");
-					console.log(t, ob, mul);
-				console.log("load data");
-				queueMicrotask(() => {
-					tsr_ajax ("laduj/get-file-system-db.php", {}, "", false, (t) => {
-						$(".tsr-modal-active .load-aquay").html(t);
-						console.log(t);
+					mul = $(t.target).attr("aquay-multiply");			
 
-						if (ob !== undefined && mul !== undefined) {
-							// zaznaczenie odpowiedniej opcji
-							selectedOption($(".tsr-modal-active .bm-get-file-system-db").find('select[name="roszerzenie"]'), ob);
-							changeDisabled(ob, $(".tsr-modal-active .bm-get-file-system-db").find('select[name="roszerzenie"]'));
-							changeMultiply($(".tsr-modal-active .bm-file-system-db"), ".bm-checkbox", mul);
-							sentForm($(".tsr-modal-active .bm-get-file-system-db"), ".load_post_bm");
-							// zmienne przechowywują konfiguracje ładowanych danych
-							let r = ($('select[name="roszerzenie"]').val() != undefined ? $('select[name="roszerzenie"]').val() : "all"),
-								i = ($('input[name="ile_load"]').val() != undefined ? $('input[name="ile_load"]').val() : "25"),
-								f = ($('input[name="folder"]').val() != "" ? $('input[name="folder"]').val() : "null"),
-								s = ($('input[name="szukaj"]').val() != "" ? $('input[name="szukaj"]').val() : "null"),
-								a = ($('select[name="akcja_pliku"]').val() != undefined ? $('select[name="akcja_pliku"]').val() : "add_media");
-							// ładowanie plików wgranych na serwer	
-							load_upload_file_db(i, r, mul);	
+				// check is "disk_manager" in settings
+				if (settings["disk_manager"] === undefined) {
+					console.log("Aquay: use default disk manager");
+					queueMicrotask(() => {
+						// check if search class is false
+						if ($(aquayAddFile.target).hasClass("aquay-add-media-image")) {
+							fileSystemBM(".aquay-edytor-picture", ".aquay-add-media-image", ".aquay-load-obrazek", "image", true, false, "img");
+						} else if ($(aquayAddFile.target).hasClass("aquay-add-media-gallery")) {
+							fileSystemBM(".aquay-edytor-gallery", ".aquay-add-media-gallery", ".aquay-load-galeria", "image", false, true, "img");
+						} else if ($(aquayAddFile.target).hasClass("aquay-add-media-file")) {
+							fileSystemBM(".aquay-edytor-file", ".aquay-add-media-file", ".aquay-load-plik", "*", false, true, "data");
 						} else {
-							
+							console.error("Aquay: Add File Button is undefined!");
+							return false;
 						}
-					}), () => {
-						
-					};
-				});
-			});
-			// get obiect db
-			$(document).on("click", ".tsr-modal-active #action_file_system_db", (t) => {
-				let get_obiect = $('.tsr-modal-active input.bm-checkbox[checked="checked"]');
-				let ob = $(aquayAddFile.target).attr("aquay-type"),
-					mul = $(aquayAddFile.target).attr("aquay-multiply");
-				console.log(get_obiect, ob, mul);
-				console.log($('input.bm-checkbox'));
-				if (aquayAddFile != undefined) {
-					if(ob == "image" && mul == "false") {
-						let set_obiect = $(aquayAddFile.target).eq(0).closest(".aquay-edytor-picture").find(".aquay-load-obrazek");
+					});
+					return true;
+				}
 
-						for (let i = 0; i < get_obiect.length; i++) {
-							const e = $(get_obiect[i]).closest(".col-flex-3").find(".col-fl-30-static"),
-								a = $(e).find(".tsr-display-block-3").val(),
-								b = $(e).find("img").attr("src");
-		
-							// if (set_obiect.length != 0) {
-								$(set_obiect[0]).html(`<img src="${b}" alt="${a}" title="${a}" class="aquay-image">`);console.log("add");
-							// }
-						}
-						console.log("add", set_obiect, set_obiect[0], $(aquayAddFile.target).eq(0).hasClass("aquay-load-obrazek"), $(aquayAddFile.target)[0], $(aquayAddFile.target).eq(0).closest(".aquay-edytor-picture").find(".aquay-load-obrazek"));
-					}else if (ob == "image" && mul == "true") {
-
-					}else{
-
-					}
-				} else {
-					
+				if (settings["disk_manager"] !== undefined) {
+					queueMicrotask(() => {
+						console.log("Aquay: use costam disk manager.");
+					});
+					return true;
 				}
 			});
 
 			// replace input data to aquay picture
-			$(__t).on("keyup", 'input[name="aquay-url-paste"]', (t) => {
+			$(__t).on("keyup", 'input[name="aquay-url-parse"]', (t) => {
 				let url = $(t.target).val();
 				let set_img = $(t.target).closest(".aquay-edytor-picture").find(".aquay-load-obrazek");
 				let add_media = $(t.target).closest(".aquay-edytor-picture").find(".aquay-add-media");
 				if (url.length != 0) {
-					set_img.html(`<img src="${url}" alt="${url}" title="${url}" class="aquay-image">`);
+					set_img.html(`<img src="${url}" alt="${url}" title="${url}" src-orginal="${url}" title-orginal="${url}" class="aquay-image" loading="lazy">`);
 					if (!add_media.hasClass("aquay-hidden")) {
 						add_media.addClass("aquay-hidden");
 					}
 				} else {
-					set_img.remove();
+					set_img.find("img").remove();
 					if (add_media.hasClass("aquay-hidden")) {
 						add_media.removeClass("aquay-hidden");
 					}
 				}
-				console.log(t, url,set_img,add_media);
 			});
 		}
 		// function aquay_event listener

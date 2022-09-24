@@ -13,7 +13,7 @@
 
         public static function unknownError(): self
         {
-            return new self('<b>DelegateBM</b>: Wystąpił <b>Nie Znany Błąd');
+            return new self('<b>DelegateBM</b>: Wystąpił <i>Nie Znany</i> <b>Błąd</b>');
         }
         
     }

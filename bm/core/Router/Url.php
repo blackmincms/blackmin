@@ -166,8 +166,8 @@
 		public function check_url(){
 			// pobieranie url
 			$url =  URL::get_url_bm();
-
-			$url_parse = explode("/", parse_url($this->get_url_bm(), PHP_URL_PATH));
+			
+			$url_parse = explode("/", (is_null(parse_url($this->get_url_bm(), PHP_URL_PATH)) ? "" : parse_url($this->get_url_bm(), PHP_URL_PATH))); 
 			$url_parse_string = $url_parse[count($url_parse)-1];
 			
 			// sprawdzanie czy załadować przerwę techniczną
@@ -237,7 +237,8 @@
 				"path" => "error_bm",
 				"checked_url" => "error_bm",
 				"url_parse" => $r,
-				"url_full" => "$url"
+				"url_full" => "$url",
+				"active_theme_path" => BM_SETTINGS["url_server"] . "bm-content/themes/" . BM_SETTINGS["bm_theme_active"] . "/"
 			];
 			
 			if (strstr(URL::get_orginal_url_bm(), BM_SETTINGS["url_site"]) === false) {

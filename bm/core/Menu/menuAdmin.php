@@ -24,13 +24,13 @@
                 "name" => "Panel",
                 "url" => "panel",
                 "icon" => "home.png",
-                "children" => [
+                "children" => NULL /* [
                    [
                         "name" => "Update",
                         "url" => "update",
                         "icon" => null
                    ]
-                ]
+                ] */
             ] , [
                 "name" => "Dodaj Post",
                 "url" => "add-post",

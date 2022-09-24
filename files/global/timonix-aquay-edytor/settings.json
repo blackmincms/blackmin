@@ -1,7 +1,11 @@
 {
     "aquay": "Aquay_Block_Editor",
-    "versjon": 1,
+    "versjon": 1.0,
+    "title": "Aquay Block Editor",
+    "titleShort": "Aquay",
+    "description": "Aquay Block Editor",
     "error_timer": 1000,
+    "message_timer": 500,
     "load_editor_item": [
         "all"
     ]

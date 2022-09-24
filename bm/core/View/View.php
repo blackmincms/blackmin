@@ -61,18 +61,20 @@
             return $out;
         }
     
-        public function renderViewOnly(bool $isOnce = false): void {
+        public function renderViewOnly(bool $isOnce = false):bool {
             try {
                 if ($this->view !== null && file_exists($this->view)) {
                     if ($isOnce) {
-                        require ($this->view);
-                    } else {
                         require_once ($this->view);
+                    } else {
+                        require ($this->view);
                     }
+                    return true;
                 }
+                return false;
             } catch (\Throwable $th) {
                 //throw $th;
-                // return false;
+                return false;
             }
         }
 

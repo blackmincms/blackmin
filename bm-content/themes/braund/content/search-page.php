@@ -1,67 +1,69 @@
 <?php
 
-	// load posts
-	$drt->load_post_bm();
+	$view->set(BMPATH . "bm/core/load/date-format.php");
+	$view->renderViewOnly();
 
-	if($drt->query_load_post() == "0"){
+	$posts = $router->createInstanceWith("get", "Post", ["max" => "100", "status" => "public", "url" => $url->bm_url()["path"]])->delegate();
+
+	if($posts["num_rows"] == "0"){
 		echo '
 			<section class="tsr tsr-p-10px tsr-mt-20 tsr-mb-20 fs-120 l-0" style="background-color: #eeeeee;">
-				Nie znaleziono postów dla wyniku wyszukiwania: '.$ur->bm_url()["path"].'.
+				Nie znaleziono postów dla wyniku wyszukiwania: '.$url->bm_url()["path"].'.
 			</section>
 		';
 	}
 
-	if($drt->query_load_post() >= "1"){
+	if($posts["num_rows"] >= "1"){
 		echo '
 			<section class="tsr tsr-p-10px tsr-mt-20 tsr-mb-20 fs-90 l-0" style="background-color: #eeeeee;">
-				Wynik wyszukiwania dla: '.$ur->bm_url()["path"].'. Znalezionych Postów: '.$drt->query_load_post().'
+				Wynik wyszukiwania dla: '. $url->bm_url()["path"] .'. Znalezionych Postów: '. $posts["num_rows"] .'
 			</section>
 		';
 	}
 
-	for($i=0; $i < $drt->query_load_post(); $i++){	
+	for($i=0; $i < $posts["num_rows"]; $i++){	
 
-		if(($drt->status_post()[$i] == "public") OR ($drt->status_post()[$i] == "protect_password")){
-			if($drt->title_post()[$i] != "protect_password"){
+		if(($posts[$i]["status"] == "public") OR ($posts[$i]["status"] == "protect_password")){
+			if($posts[$i]["title"] != "protect_password"){
 ?>
 
-				<section class="tsr fs-100 l-0 tsr-mt-10 tsr-post-auto tsr-border-solid-bottom braund-post-<?php echo $drt->id_post()[$i]; ?>">
-					<?php if($drt->thumbnail_post()[$i] != NULL){?>
+				<article class="tsr fs-100 l-0 tsr-mt-10 tsr-post-auto tsr-border-solid-bottom braund-post-<?php echo $posts[$i]["id_post"]; ?>">
+					<?php if($posts[$i]["thumbnail"] != NULL){?>
 					<section class="tsr col-ms20">
-						<?php echo $drt->thumbnail_post()[$i]; ?>
+						<img src="<?php echo $posts[$i]['thumbnail']['src']; ?>" alt="<?php echo $posts[$i]['thumbnail']['title_orginal']; ?>" title="<?php echo $posts[$i]['thumbnail']['title']; ?>" />
 					</section>
 					<section class="tsr col-ms80 tsr-p-10px">
-						<?php echo $drt->title_post()[$i]; ?>
+						<?php echo $posts[$i]["title"]; ?>
 					</section>
 					<section class="tsr col-ms80 fs-100 tsr-p-10px">
-						opublikowano dnia <?php echo data_format($drt->datetime_post()[$i], "m.d.Y"); ?> o godzinie <?php echo data_format($drt->datetime_post()[$i], "H:i"); ?> przez <?php echo $drt->author_post()[$i]; ?>
+						opublikowano dnia <?php echo data_format($posts[$i]['datetime'], "m.d.Y"); ?> o godzinie <?php echo data_format($posts[$i]['datetime'], "H:i"); ?> przez <?php echo $posts[$i]['authores']; ?>
 					</section>
 					<?php }else{?>
 					<section class="tsr tsr-p-10px">
-						<?php echo $drt->title_post()[$i]; ?>
+						<?php echo $posts[$i]["title"]; ?>
 					</section>
 					<section class="tsr fs-100 tsr-p-10px">
-						opublikowano dnia <?php echo data_format($drt->datetime_post()[$i], "m.d.Y"); ?> o godzinie <?php echo data_format($drt->datetime_post()[$i], "H:i"); ?> przez <?php echo $drt->author_post()[$i]; ?>
+						opublikowano dnia <?php echo $posts[$i]["datetime"]; data_format($posts[$i]["datetime"], "m.d.Y"); ?> o godzinie <?php echo data_format($posts[$i]["datetime"], "H:i"); ?> przez <?php echo $posts[$i]["authores"]; ?>
 					</section>
 					<?php }?>
-					<section class="tsr fs-100 tsr-mt-10 tsr-post-auto tsr-za-wi">
+					<section class="tsr fs-100 tsr-mt-10 tsr-post-auto tsr-za-wi braund-post">
 						<?php 
-						if($drt->contents_post()[$i] == "protect_password"){
+						if($posts[$i]["content"] == "protect_password"){
 							echo "Post Zabespieczony Hasłem!";
 						}else{
-							echo $drt->contents_post()[$i];
+							echo $posts[$i]["content"];
 						}						
 						?>
 					</section>
 					<section class="tsr fs-80 r-0 tsr-mb-10">
-						<a href="<?php echo  $get_ustawienia_bm["bm_url_site"] . $drt->url_post()[$i]; ?>">
+						<a href="<?php echo  BM_SETTINGS["url_site"] . $posts[$i]["url"]; ?>">
 							Pokaż więcej!
 						</a>
 					</section>
-				</section>
+				</article>
 	
 <?php 
-			}			
+			}	
 		} 
 	}
 ?>	
