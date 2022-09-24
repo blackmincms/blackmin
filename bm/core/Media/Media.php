@@ -103,7 +103,6 @@
                         $ile = count($content);
                         if ($ile == 0) {
                             return $this->message->format("info", "Brak danych do usunięcja.");
-                            exit();
                         }
 
                         $count_check_sum = 0;
@@ -114,18 +113,15 @@
                             // check param is int
                             if (!is_string($id)) {
                                 return $this->message->format("war", "Wprowadzone dane nie są liczbą");
-                                exit();
                             }
 
                             // get data from db
                             $zap = $this->database->query("SELECT `id_file`, `bm_path`, `bm_thumbnail`, `bm_name` FROM `_prefix_bm_files` WHERE `id_file` = '$id' LIMIT 1");
                             if ($zap["num_rows"] === 0) {
                                 return $this->message->format("war", "Nie znaleziono danych do usunięcia");
-                                exit();
                             }
                             if ($zap === false) {
                                 return $this->message->format("error", "Wystąpił błąd pod czas szukania danych do usunięcia");
-                                exit();
                             }
 
                             // set path
@@ -157,7 +153,6 @@
 
                             if (isset($error_sum) && $error_sum === $conttrolSum) {
                                 return $this->message->format("war", "Nie znaleziono pliku do usunięcia.");
-                                exit();
                             }
 
                             // set check sum
@@ -178,7 +173,6 @@
                             // check if all is ok
                             if ($check_sum !== 3) {
                                 return $this->message->format("war", "Nie udało się usunąć pliku: ". $zap[0]['bm_name']);
-                                break;
                             }
 
                             // add check sum
@@ -199,15 +193,12 @@
                         }
                     }else{
                         return $this->message->format("info", "Brak danych do usunięcja...");	
-                        exit();
                     }
                 }else{
                     return $this->message->format("error", "Błędne danye wejśćiowye.");	
-                    exit();
                 }
             } else {
                 return $this->message->format("error", "Brak danych wejśćiowych.");	
-                exit();
             }	
         }
 
