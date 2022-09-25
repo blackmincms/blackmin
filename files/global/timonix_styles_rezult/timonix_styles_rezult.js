@@ -2,7 +2,7 @@
 //
 //				Timonix Script Rezult - reguły javascript\jquery
 //												V.2.0
-//					Wszelkie Prawa Zaszczeżone by Timonix
+//					Wszelkie Prawa Zastrzeżone by Timonix
 //
 */
 
